@@ -1,0 +1,29 @@
+{
+  "name": "ps-student-profile",
+  "version": "0.1.0",
+  "description": "A student profile page for PowerSchool.",
+  "scripts": {
+    "test": ""
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/IronCountySchoolDistrict/sams.git"
+  },
+  "author": "IronCountySchoolDistrict",
+  "license": "Apache-2.0",
+  "bugs": {
+    "url": "https://github.com/IronCountySchoolDistrict/sams/issues"
+  },
+  "homepage": "https://github.com/IronCountySchoolDistrict/sams#readme",
+  "dependencies": {
+    "bootstrap": "^4.0.0-alpha.2",
+    "css-loader": "^0.23.1",
+    "file-loader": "^0.8.5",
+    "style-loader": "^0.13.0"
+  },
+  "devDependencies": {
+    "babel": "^6.3.26",
+    "gulp": "^3.9.0",
+    "webpack": "^1.12.12"
+  }
+}

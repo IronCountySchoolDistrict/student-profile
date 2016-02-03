@@ -1,0 +1,9 @@
+<script type="text/template" id="template">
+    ~[if.~(studentscreenaccess;generaldemographics.html)=1]
+    <li>
+        <a href="/scripts/student-profile/html/index.html?frn=~(studentfrn)">Profile</a>
+    </li>
+    [/if]
+</script>
+
+<script src="/scripts/student-profile/js/insert-link.js"></script>
