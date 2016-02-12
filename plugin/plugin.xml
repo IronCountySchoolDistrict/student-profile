@@ -3,7 +3,7 @@
         xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
         description="A student profile page for PowerSchool"
         name="Student Profile"
-        version="1.0.0"
+        version="0.1.0"
         xsi:schemaLocation="http://plugin.powerschool.pearson.com plugin.xsd">
     <publisher name="Iron County School District Data Team">
         <contact email="data@ironmail.org"/>
