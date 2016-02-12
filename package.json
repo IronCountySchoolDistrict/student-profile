@@ -15,15 +15,11 @@
     "url": "https://github.com/IronCountySchoolDistrict/sams/issues"
   },
   "homepage": "https://github.com/IronCountySchoolDistrict/sams#readme",
-  "dependencies": {
-    "bootstrap": "^4.0.0-alpha.2",
-    "css-loader": "^0.23.1",
-    "file-loader": "^0.8.5",
-    "style-loader": "^0.13.0"
-  },
+  "dependencies": {},
   "devDependencies": {
     "babel": "^6.3.26",
-    "gulp": "^3.9.0",
-    "webpack": "^1.12.12"
+    "babel-plugin-transform-es2015-modules-commonjs": "^6.4.5",
+    "babel-register": "^6.4.3",
+    "gulp-ps-tasks": "^0.3.2"
   }
 }
