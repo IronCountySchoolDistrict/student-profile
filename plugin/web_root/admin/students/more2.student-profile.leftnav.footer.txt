@@ -1,7 +1,7 @@
 <script type="text/template" id="new-prof-template">
     ~[if.~(studentscreenaccess;generaldemographics.html)=1]
     <li>
-        <a href="/scripts/student-profile/html/index.html?frn=~(studentfrn)">Student Profile</a>
+        <a href="/admin/students/student-profile/student-profile.html?frn=~(studentfrn)">Student Profile</a>
     </li>
     [/if]
 </script>

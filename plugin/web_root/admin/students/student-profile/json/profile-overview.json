@@ -1,0 +1,52 @@
+~[tlist_sql;
+SELECT
+  students.id,
+  students.first_name,
+  students.middle_name,
+  students.last_name,
+  students.grade_level,
+  students.dob,
+  students.home_room,
+  students.entrydate,
+  students.exitdate,
+  students.mother,
+  students.father,
+  students.home_phone,
+  students.street,
+  students.city,
+  students.state,
+  students.zip,
+  students.mailing_street,
+  students.mailing_city,
+  students.mailing_state,
+  students.mailing_zip,
+  students.enroll_status,
+  schools.name
+FROM students
+  JOIN schools ON students.schoolid = SCHOOLS.school_number
+WHERE students.dcid = ~[gpv:students_dcid];nonemessage={}]
+  {
+    "student_id": "~(id)",
+    "first_name": "~(first_name)",
+    "middle_name": "~(middle_name)",
+    "last_name": "~(last_name)",
+    "grade_level": "~(grade_level)",
+    "dob": "~(dob)",
+    "home_room": "~(home_room)",
+    "entrydate": "~(entrydate)",
+    "exitdate": "~(exitdate)",
+    "mother": "~(mother)",
+    "father": "~(father)",
+    "home_phone": "~(home_phone)",
+    "street": "~(street)",
+    "city": "~(city)",
+    "state": "~(state)",
+    "zip": "~(zip)",
+    "mailing_street": "~(mailing_street)",
+    "mailing_city": "~(mailing_city)",
+    "mailing_state": "~(mailing_state)",
+    "mailing_zip": "~(mailing_zip)",
+    "enroll_status": "~(enroll_status)",
+    "school_name": "~(schools.name)"
+  }
+[/tlist_sql]
