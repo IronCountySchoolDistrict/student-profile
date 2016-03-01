@@ -6,8 +6,16 @@ Handlebars.registerHelper('statusLabel', function(options) {
 	return enrollStatusToLabel(options.fn(this));
 });
 
-Handlebars.registerHelper('toFullName', function(options) {
-	return enrollStatusToLabel(options.fn(this));
+Handlebars.registerHelper('toFullName', function(firstName, middleName, lastName, options) {
+	return toFullName(firstName, middleName, lastName);
+});
+
+Handlebars.registerHelper('toContactFullName', function(firstName,  lastName, options) {
+	return toFullName(firstName, null, lastName);
+});
+
+Handlebars.registerHelper('isLegalGuardian', function(legalGuardian, options) {
+	return isLegalGuardian(legalGuardian);
 });
 
 function getAge(dateString) {
@@ -22,9 +30,13 @@ function getAge(dateString) {
 }
 
 function enrollStatusToLabel(enrollStatus) {
-	if (enrollStatus === 1) {
+	if (enrollStatus === '0') {
 		return 'Active';
 	}
+}
+
+function isLegalGuardian(legalGuardian) {
+	return legalGuardian === '1' ? 'Yes' : 'No';
 }
 
 function toFullName(firstName, middleName, lastName) {

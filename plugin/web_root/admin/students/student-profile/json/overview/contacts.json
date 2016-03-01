@@ -1,0 +1,62 @@
+[
+  ~[tlist_sql;
+  SELECT
+    u_student_contacts.id,
+    u_student_contacts.priority,
+    u_student_contacts.employer,
+    u_student_contacts.legal_guardian,
+    u_student_contacts.relationship,
+    u_student_contacts.residence_street,
+    u_student_contacts.residence_city,
+    u_student_contacts.residence_state,
+    u_student_contacts.residence_zip,
+    u_student_contacts.mailing_street,
+    u_student_contacts.mailing_city,
+    u_student_contacts.mailing_state,
+    u_student_contacts.mailing_zip,
+    u_student_contacts.first_name,
+    u_student_contacts.last_name,
+    u_sc_email.email_address,
+    phones.phonesjson AS phones
+  FROM u_student_contacts
+    LEFT JOIN
+    (
+      SELECT
+        u_student_contacts.id,
+        chr(91) ||
+        listagg(
+            '{' ||
+            '"phone_number"' || chr(58) || ' "' || u_sc_phone.phone_number || '",' ||
+            '"phone_type"' || chr(58) || ' "' || u_sc_phone.phone_type || '"' ||
+            '}', ',')
+        WITHIN GROUP (
+          ORDER BY 1)
+        || chr(93) phonesjson
+      FROM
+        u_student_contacts
+        JOIN u_sc_phone ON u_student_contacts.id = u_sc_phone.contactdcid
+      GROUP BY u_student_contacts.id
+    ) phones ON u_student_contacts.id = phones.id
+    LEFT JOIN u_sc_email ON u_student_contacts.id = u_sc_email.contactdcid
+  WHERE u_student_contacts.studentsdcid = ~[gpv:students_dcid];nonemessage={}]
+    {
+      "contactdcid": "~(contactdcid)",
+      "contact_priority": "~(contact_priority)",
+      "employer": "~(employer)",
+      "legal_guardian": "~(legal_guardian)",
+      "relationship": "~(relationship)",
+      "residence_street": "~(residence_street)",
+      "residence_city": "~(residence_city)",
+      "residence_state": "~(residence_state)",
+      "residence_zip": "~(residence_zip)",
+      "mailing_street": "~(mailing_street)",
+      "mailing_city": "~(mailing_city)",
+      "mailing_state": "~(mailing_state)",
+      "mailing_zip": "~(mailing_zip)",
+      "first_name": "~(first_name)",
+      "last_name": "~(last_name)",
+      "email_address": "~(email_address)",
+      "phones": ~(phones)
+    },
+  [/tlist_sql]{}
+]

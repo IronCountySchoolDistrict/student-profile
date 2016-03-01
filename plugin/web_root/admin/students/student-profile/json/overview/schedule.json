@@ -1,0 +1,69 @@
+[
+  ~[tlist_sql;
+    SELECT
+  cc.dcid,
+  cc.id,
+  TO_CHAR(cc.dateenrolled, 'MM/DD/YYYY') AS dateenrolled,
+  courses.course_name,
+  sections.expression,
+  t.abbreviation,
+  cc.termid,
+  cc.sectionid,
+  cc.studentid,
+  grades.gradesjson,
+  teachers.lastfirst,
+  students.grade_level,
+  s.low_grade,
+  TO_CHAR(cc.dateleft, 'MM/DD/YYYY')     AS dateleft
+FROM
+  cc cc
+  LEFT JOIN (SELECT
+               cc.sectionid AS sectionid,
+               chr(91) ||
+               listagg(
+                   '{' ||
+                   '"finalgradename"' || chr(58) || ' "' || pgfinalgrades.finalgradename || '",' ||
+                   '"percent"' || chr(58) || ' "' || pgfinalgrades.percent || '",' ||
+                   '"grade"' || chr(58) || ' "' || pgfinalgrades.grade || '"' ||
+                   '}', ',')
+               WITHIN GROUP (
+                 ORDER BY 1)
+               || chr(93)      gradesjson
+             FROM
+               cc cc
+               LEFT JOIN students students ON cc.studentid = students.id
+               LEFT JOIN pgfinalgrades
+                 ON students.id = pgfinalgrades.studentid AND pgfinalgrades.sectionid = cc.sectionid
+             WHERE
+               cc.studentid = (SELECT id
+                               FROM students
+                               WHERE dcid = ~[gpv:students_dcid]) AND
+               cc.termid LIKE '~[gpv:yearid]%'
+             GROUP BY cc.sectionid) grades ON cc.sectionid = grades.sectionid
+  LEFT JOIN sections sections ON cc.sectionid = sections.id
+  LEFT JOIN courses courses ON cc.course_number = courses.course_number
+  LEFT JOIN students students ON cc.studentid = students.id
+  LEFT JOIN teachers teachers ON cc.teacherid = teachers.id
+  LEFT JOIN schools s ON cc.schoolid = s.school_number
+  LEFT JOIN terms t ON t.id = cc.termid AND t.schoolid = cc.schoolid
+WHERE
+  cc.studentid = (SELECT id
+                  FROM students
+                  WHERE dcid = ~[gpv:students_dcid]) AND
+  cc.termid LIKE '~[gpv:yearid]%';nonemessage={}]
+    {
+      "date_enrolled": "~(dateenrolled)",
+      "course_name": "~(course_name)",
+      "expression": "~(abbreviation)",
+      "abbreviation": "~(abbreviation)",
+      "termid": "~(termid)",
+      "sectionid": "~(sectionid)",
+      "studentid": "~(studentid)",
+      "grades": "~(gradesjson)",
+      "teacher": "(teacher)",
+      "grade_level": "~(grade_level)",
+      "low_grade": "~(low_grade)",
+      "date_left": "~(date_left)"
+    },
+  [/tlist_sql]{}
+]
