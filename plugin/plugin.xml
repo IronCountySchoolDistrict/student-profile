@@ -1,11 +1,55 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <plugin xmlns="http://plugin.powerschool.pearson.com"
-        xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
-        description="A student profile page for PowerSchool"
-        name="Student Profile"
-        version="0.1.0"
-        xsi:schemaLocation="http://plugin.powerschool.pearson.com plugin.xsd">
-    <publisher name="Iron County School District Data Team">
-        <contact email="data@ironmail.org"/>
-    </publisher>
+  xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+  description="A student profile page for PowerSchool"
+  name="Student Profile"
+  version="0.1.0"
+  xsi:schemaLocation="http://plugin.powerschool.pearson.com plugin.xsd">
+  <publisher name="Iron County School District Data Team">
+    <contact email="data@ironmail.org"/>
+  </publisher>
+
+  <access_request>
+    <field table="test" field="name" access="ViewOnly" />
+    <field table="test" field="description" access="ViewOnly" />
+    <field table="u_student_contacts" field="id" access="ViewOnly" />
+    <field table="u_student_contacts" field="priority" access="ViewOnly" />
+    <field table="u_student_contacts" field="employer" access="ViewOnly" />
+    <field table="u_student_contacts" field="legal_guardian" access="ViewOnly" />
+    <field table="u_student_contacts" field="relationship" access="ViewOnly" />
+    <field table="u_student_contacts" field="residence_street" access="ViewOnly" />
+    <field table="u_student_contacts" field="residence_city" access="ViewOnly" />
+    <field table="u_student_contacts" field="residence_state" access="ViewOnly" />
+    <field table="u_student_contacts" field="residence_zip" access="ViewOnly" />
+    <field table="u_student_contacts" field="mailing_street" access="ViewOnly" />
+    <field table="u_student_contacts" field="mailing_city" access="ViewOnly" />
+    <field table="u_student_contacts" field="mailing_state" access="ViewOnly" />
+    <field table="u_student_contacts" field="mailing_zip" access="ViewOnly" />
+    <field table="u_student_contacts" field="first_name" access="ViewOnly" />
+    <field table="u_student_contacts" field="last_name" access="ViewOnly" />
+    <field table="u_sc_email" field="email_address" access="ViewOnly" />
+    <field table="u_sc_phone" field="phone_number" access="ViewOnly" />
+    <field table="students" field="id" access="ViewOnly" />
+    <field table="students" field="first_name" access="ViewOnly" />
+    <field table="students" field="middle_name" access="ViewOnly" />
+    <field table="students" field="last_name" access="ViewOnly" />
+    <field table="students" field="grade_level" access="ViewOnly" />
+    <field table="students" field="dob" access="ViewOnly" />
+    <field table="students" field="home_room" access="ViewOnly" />
+    <field table="students" field="entrydate" access="ViewOnly" />
+    <field table="students" field="exitdate" access="ViewOnly" />
+    <field table="students" field="mother" access="ViewOnly" />
+    <field table="students" field="father" access="ViewOnly" />
+    <field table="students" field="home_phone" access="ViewOnly" />
+    <field table="students" field="street" access="ViewOnly" />
+    <field table="students" field="city" access="ViewOnly" />
+    <field table="students" field="state" access="ViewOnly" />
+    <field table="students" field="zip" access="ViewOnly" />
+    <field table="students" field="mailing_street" access="ViewOnly" />
+    <field table="students" field="mailing_city" access="ViewOnly" />
+    <field table="students" field="mailing_state" access="ViewOnly" />
+    <field table="students" field="mailing_zip" access="ViewOnly" />
+    <field table="students" field="enroll_status" access="ViewOnly" />
+    <field table="schools" field="name" access="ViewOnly" />
+  </access_request>
 </plugin>

@@ -11,33 +11,39 @@ function getParameterByName(name, url) {
 (function () {
   var studentsDcid = getParameterByName('frn')
     .slice(3);
+  var yearId = getParameterByName('yearid');
 
   Promise.all([
       window.fetch('../html/content.html')
       .then(r => r.text()),
 
-      window.fetch('/admin/students/student-profile/json/overview/general.json?students_dcid=' + studentsDcid, {
-        credentials: 'include'
+      window.fetch('/ws/schema/query/com.icsd.sp.overview.general', {
+        credentials: 'include',
+        method: 'post',
+        body: JSON.stringify({
+          students_dcid: studentsDcid
+        })
       })
       .then(r => r.json()),
 
-      window.fetch('/admin/students/student-profile/json/overview/contacts.json?students_dcid=' + studentsDcid, {
-        credentials: 'include'
+      window.fetch('/ws/schema/query/com.icsd.sp.overview.contacts', {
+        credentials: 'include',
+        method: 'post',
+        body: JSON.stringify({
+          students_dcid: studentsDcid
+        })
       })
-      .then(r => r.json())
-      .then(r => {
-        r.pop();
-        return r;
-      }),
+      .then(r => r.json()),
 
-      window.fetch(`/admin/students/student-profile/json/overview/gpa.json?students_dcid=${studentsDcid}`, {
-        credentials: 'include'
+      window.fetch('/ws/schema/query/com.icsd.sp.overview.gpa', {
+        credentials: 'include',
+        method: 'post',
+        body: JSON.stringify({
+          students_dcid: studentsDcid,
+          yearid: yearId
+        })
       })
       .then(r => r.json())
-      .then(r => {
-        r.pop();
-        return r;
-      })
     ])
     .then(results => ({
       contentHtml: results[0],
