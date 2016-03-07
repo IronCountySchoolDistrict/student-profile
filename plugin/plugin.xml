@@ -51,5 +51,6 @@
     <field table="students" field="mailing_zip" access="ViewOnly" />
     <field table="students" field="enroll_status" access="ViewOnly" />
     <field table="schools" field="name" access="ViewOnly" />
+    <field table="pgfinalgrades" field="grade" access="ViewOnly" />
   </access_request>
 </plugin>

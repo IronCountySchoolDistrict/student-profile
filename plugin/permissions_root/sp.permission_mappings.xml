@@ -3,5 +3,6 @@
    <implies allow="get">/ws/schema/query/com.icsd.sp.overview.gpa</implies>
    <implies allow="get">/ws/schema/query/com.icsd.sp.overview.contacts</implies>
    <implies allow="get">/ws/schema/query/com.icsd.sp.overview.general</implies>
+   <implies allow="get">/ws/schema/query/com.icsd.sp.overview.schedule</implies>
   </permission>
 </permission_mappings>

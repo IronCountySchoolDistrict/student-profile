@@ -220,4 +220,81 @@
     </sql>
   </query>
   
+  <query flattened="true" name="com.icsd.sp.overview.schedule">
+    <args>
+      <arg description="STUDENTS.DCID" name="students_dcid" required="true" type="primitive"/>
+      <arg description="CC.TERMID" name="yearid" required="true" type="primitive"/>
+    </args>
+    <columns>
+      <column column="cc.dcid">dcid</column>
+      <column column="cc.id">id</column>
+      <column column="cc.dateenrolled">dateenrolled</column>
+      <column column="courses.course_name">course_name</column>
+      <column column="sections.expression">expression</column>
+      <column column="terms.abbreviation">abbreviation</column>
+      <column column="cc.termid">termid</column>
+      <column column="cc.sectionid">sectionid</column>
+      <column column="cc.studentid">studentid</column>
+      <column column="pgfinalgrades.grade">grade</column>
+      <column column="teachers.lastfirst">lastfirst</column>
+      <column column="students.grade_level">grade_level</column>
+      <column column="schools.low_grade">low_grade</column>
+      <column column="cc.dateleft">dateleft</column>
+    </columns>
+    <sql>
+      <![CDATA[
+      SELECT
+        cc.dcid,
+        cc.id,
+        TO_CHAR(cc.dateenrolled, 'MM/DD/YYYY') AS dateenrolled,
+        courses.course_name,
+        sections.expression,
+        t.abbreviation,
+        cc.termid,
+        cc.sectionid,
+        cc.studentid,
+        pgfinalgrades.grade,
+        teachers.lastfirst,
+        students.grade_level,
+        s.low_grade,
+        TO_CHAR(cc.dateleft, 'MM/DD/YYYY')     AS dateleft
+      FROM
+        cc cc
+        LEFT JOIN (SELECT
+                     cc.sectionid AS sectionid,
+                     chr(91) ||
+                     listagg(
+                         '{' ||
+                         '"finalgradename"' || chr(58) || ' "' || pgfinalgrades.finalgradename || '",' ||
+                         '"percent"' || chr(58) || ' "' || pgfinalgrades.percent || '",' ||
+                         '"grade"' || chr(58) || ' "' || pgfinalgrades.grade || '"' ||
+                         '}', ',')
+                     WITHIN GROUP (
+                       ORDER BY 1)
+                     || chr(93)   AS grade
+                   FROM
+                     cc cc
+                     JOIN students students ON cc.studentid = students.id
+                     JOIN pgfinalgrades
+                       ON students.id = pgfinalgrades.studentid AND pgfinalgrades.sectionid = cc.sectionid
+                   WHERE
+                     cc.studentid = (SELECT id
+                                     FROM students
+                                     WHERE dcid = :students_dcid) AND
+                     cc.termid LIKE :yearid || '%'
+                   GROUP BY cc.sectionid) pgfinalgrades ON cc.sectionid = pgfinalgrades.sectionid
+        LEFT JOIN sections sections ON cc.sectionid = sections.id
+        LEFT JOIN courses courses ON cc.course_number = courses.course_number
+        LEFT JOIN students students ON cc.studentid = students.id
+        LEFT JOIN teachers teachers ON cc.teacherid = teachers.id
+        LEFT JOIN schools s ON cc.schoolid = s.school_number
+        LEFT JOIN terms t ON t.id = cc.termid AND t.schoolid = cc.schoolid
+      WHERE
+        cc.studentid = (SELECT id
+                        FROM students
+                        WHERE dcid = :students_dcid) AND
+        cc.termid LIKE :yearid || '%'
+    ]]>
+    </sql>
+  </query>
 </queries>
