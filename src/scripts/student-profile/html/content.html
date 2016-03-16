@@ -185,83 +185,9 @@
                 <h3>
                   Student Contacts
                 </h3>
-                <table class="table table-bordered" style="font-size: 14px;">
-                  <thead>
-                    <tr>
-                      <th>
-                        Priority
-                      </th>
-                      <th>
-                        Contact
-                      </th>
-                      <th>
-                        Legal Guardian
-                      </th>
-                      <th>
-                        Relationship
-                      </th>
-                      <th>
-                        Residence Address
-                      </th>
-                      <th>
-                        Mailing Address
-                      </th>
-                      <th>
-                        Employer
-                      </th>
-                      <th>
-                        Email
-                      </th>
-                      <th>
-                        Phones
-                      </th>
-                    </tr>
-                  </thead>
-                  <tbody>
-                    {{#each studentContacts}}
-                    <tr>
-                      <td>
-                        {{contact_priority}}
-                      </td>
-                      <td>
-                        {{#toContactFullName first_name last_name}}{{/toContactFullName}}
-                      </td>
-                      <td>
-                        {{#isLegalGuardian legal_guardian}}{{/isLegalGuardian}}
-                      </td>
-                      <td>
-                        {{relationship}}
-                      </td>
-                      <td>
-                        <span style="display: block;">{{residence_street}}</span>
-                        <span>{{residence_city}}{{#if residence_street}}, {{/if}}{{residence_state}} {{residence_zip}}</span>
-                      </td>
-                      <td>
-                        <span style="display: block;">{{mailing_street}}</span>
-                        <span>{{mailing_city}}{{#if mailing_street}}, {{/if}}{{mailing_state}} {{mailing_zip}}</span>
-                      </td>
-                      <td>
-                        {{employer}}
-                      </td>
-                      <td>
-                        {{email_address}}
-                      </td>
-                      <td>
-                        {{#each phones}}
-                          <div>
-                            {{#if this.phone_type}}
-                              <span style="font-weight: bold;">
-                                {{this.phone_type}}: 
-                              </span>
-                            {{/if}}
-                            {{this.phone_number}}
-                          </div>
-                        {{/each}}
-                      </td>
-                    </tr>
-                    {{/each}}
-                  </tbody>
-                </table>
+                <div id="student-contacts-container">
+
+                </div>
                 <h3>
                   Current Schedule
                 </h3>

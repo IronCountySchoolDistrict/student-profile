@@ -1,13 +1,3 @@
-function getParameterByName(name, url) {
-  if (!url) url = window.location.href;
-  name = name.replace(/[\[\]]/g, "\\$&");
-  var regex = new RegExp("[?&]" + name + "(=([^&#]*)|&|#|$)"),
-    results = regex.exec(url);
-  if (!results) return null;
-  if (!results[2]) return '';
-  return decodeURIComponent(results[2].replace(/\+/g, " "));
-}
-
 (function () {
   var studentsDcid = getParameterByName('frn')
     .slice(3);
@@ -20,6 +10,10 @@ function getParameterByName(name, url) {
       window.fetch('/ws/schema/query/com.icsd.sp.overview.general', {
         credentials: 'include',
         method: 'post',
+        headers: {
+          'Accept': 'application/json',
+          'Content-Type': 'application/json'
+        },
         body: JSON.stringify({
           students_dcid: studentsDcid
         })
@@ -29,6 +23,10 @@ function getParameterByName(name, url) {
       window.fetch('/ws/schema/query/com.icsd.sp.overview.contacts', {
         credentials: 'include',
         method: 'post',
+        headers: {
+          'Accept': 'application/json',
+          'Content-Type': 'application/json'
+        },
         body: JSON.stringify({
           students_dcid: studentsDcid
         })
@@ -38,6 +36,10 @@ function getParameterByName(name, url) {
       window.fetch('/ws/schema/query/com.icsd.sp.overview.gpa', {
         credentials: 'include',
         method: 'post',
+        headers: {
+          'Accept': 'application/json',
+          'Content-Type': 'application/json'
+        },
         body: JSON.stringify({
           students_dcid: studentsDcid,
           yearid: yearId
