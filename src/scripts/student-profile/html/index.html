@@ -1,5 +1,5 @@
 <html>
-  <head>
+<head>
     <meta charset="utf-8"/>
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/twitter-bootstrap/3.3.6/css/bootstrap.css"/>
     <link rel="stylesheet" href="../css/base.css"/>
@@ -11,30 +11,32 @@
     <script src="https://cdnjs.cloudflare.com/ajax/libs/handlebars.js/4.0.5/handlebars.js"></script>
 
     <script>
-      function getParameterByName(name, url) {
-        if (!url) url = window.location.href;
-        name = name.replace(/[\[\]]/g, "\\$&");
-        var regex = new RegExp("[?&]" + name + "(=([^&#]*)|&|#|$)"),
-          results = regex.exec(url);
-        if (!results) return null;
-        if (!results[2]) return '';
-        return decodeURIComponent(results[2].replace(/\+/g, " "));
-      }
+        function getParameterByName(name, url) {
+            if (!url) url = window.location.href;
+            name = name.replace(/[\[\]]/g, "\\$&");
+            var regex = new RegExp("[?&]" + name + "(=([^&#]*)|&|#|$)"),
+                    results = regex.exec(url);
+            if (!results) return null;
+            if (!results[2]) return '';
+            return decodeURIComponent(results[2].replace(/\+/g, " "));
+        }
     </script>
-<!-- 
-    <script src="../js/helpers.js"></script>
-    <script src="../js/index.js"></script> -->
+    <!--<script src="../js/helpers.js"></script>-->
+    <!--<script src="../js/index.js"></script>-->
 
     <script src="/scripts/student-profile/js/bundle.js"></script>
-  </head>
-  <body>
-    <!-- compiled content.html goes here -->
-    <div class="container-fluid">
-      <div class="row">
+</head>
+<body>
+<!-- compiled content.html goes here -->
+<div class="container-fluid">
+    <div class="row">
         <div id="student-contacts-container"></div>
-      </div>
-      <!-- end .row -->
     </div>
-    <!-- end .container -->
-  </body>
+    <div class="row">
+        <div id="general-container"></div>
+    </div>
+    <!-- end .row -->
+</div>
+<!-- end .container -->
+</body>
 </html>
