@@ -143,6 +143,7 @@
             chr(91) ||
             listagg(
                 '{' ||
+                '"id"' || chr(58) || ' "' || u_sc_phone.id || '",' ||
                 '"phone_number"' || chr(58) || ' "' || u_sc_phone.phone_number || '",' ||
                 '"phone_type"' || chr(58) || ' "' || u_sc_phone.phone_type || '"' ||
                 '}', ',')
