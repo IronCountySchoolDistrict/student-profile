@@ -1,11 +1,8 @@
-var path = require('path');
-var webpack = require('webpack');
+import path from 'path';
 
-module.exports = {
+export default {
   devtool: 'source-map',
   entry: [
-    'webpack-dev-server/client?http://localhost:3000',
-    'webpack/hot/only-dev-server',
     './src/scripts/student-profile/js/react-index'
   ],
   output: {
@@ -13,13 +10,10 @@ module.exports = {
     filename: 'bundle.js',
     publicPath: '/static/'
   },
-  plugins: [
-    new webpack.HotModuleReplacementPlugin()
-  ],
   module: {
     loaders: [{
       test: /\.js$/,
-      loaders: ['react-hot', 'babel'],
+      loaders: ['babel'],
       include: path.join(__dirname, 'src')
     }]
   }
