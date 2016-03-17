@@ -1,3 +1,7 @@
 .overview-table {
-	font-size: 13px;
+    font-size: 13px;
+}
+
+.overview-table .borderless td, .overview-table .borderless th {
+    border: none;
 }

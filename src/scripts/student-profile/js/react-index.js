@@ -1,6 +1,6 @@
 import React from 'react';
 import ReactDOM from 'react-dom';
-import ContactTable from './components/student-contacts/ContactTable';
+import ContactList from './components/student-contacts/ContactList';
 import General from './components/general/General';
 
 const contactsFetch = window.fetch('/ws/schema/query/com.icsd.sp.overview.contacts', {
@@ -47,7 +47,7 @@ Promise.all([
   }))
   .then(results => {
     ReactDOM.render(
-      <ContactTable contacts={results.contacts}/>,
+      <ContactList contacts={results.contacts} />,
       document.getElementById('student-contacts-container')
     );
 

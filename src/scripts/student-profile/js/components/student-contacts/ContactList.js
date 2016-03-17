@@ -11,9 +11,7 @@ export default class ContactList extends Component {
     });
 
     return (
-      <tbody>
-      {contacts}
-      </tbody>
+      <div>{contacts}</div>
     );
   }
 }
