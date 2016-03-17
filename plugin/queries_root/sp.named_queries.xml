@@ -187,7 +187,7 @@
       <column column="students.mailing_state">mailing_state</column>
       <column column="students.mailing_zip">mailing_zip</column>
       <column column="students.enroll_status">enroll_status</column>
-      <column column="schools.name">schools_name</column>
+      <column column="schools.name">school_name</column>
     </columns>
     <sql>
       <![CDATA[
