@@ -6,14 +6,14 @@ export default class ContactList extends Component {
 
     const contacts = this.props.contacts.map(contact => {
       return (
-          <Contact key={contact.id} contactData={contact}/>
+        <Contact key={contact.id} contactData={contact}/>
       );
     });
 
     return (
-        <tbody>
-        {contacts}
-        </tbody>
+      <tbody>
+      {contacts}
+      </tbody>
     );
   }
 }
