@@ -51,6 +51,15 @@
     <field table="students" field="mailing_zip" access="ViewOnly" />
     <field table="students" field="enroll_status" access="ViewOnly" />
     <field table="schools" field="name" access="ViewOnly" />
-    <field table="pgfinalgrades" field="grade" access="ViewOnly" />
+    <field table="cc" field="dcid" access="ViewOnly" />
+    <field table="cc" field="id" access="ViewOnly" />
+    <field table="cc" field="dateenrolled" access="ViewOnly" />
+    <field table="courses" field="course_name" access="ViewOnly" />
+    <field table="sections" field="expression" access="ViewOnly" />
+    <field table="terms" field="abbreviation" access="ViewOnly" />
+    <field table="sectionscores" field="id" access="ViewOnly" />
+    <field table="sectionscores" field="exempt" access="ViewOnly" />
+    <field table="sectionscoresassignments" field="dcid" access="ViewOnly" />
+    <field table="sectionscoresassignments" field="grade" access="ViewOnly" />
   </access_request>
 </plugin>
