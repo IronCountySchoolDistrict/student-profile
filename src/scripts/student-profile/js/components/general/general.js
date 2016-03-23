@@ -113,7 +113,7 @@ export default class General extends Component {
           <thead>
           <tr>
             <th colSpan="3">
-              Student Contacts
+              Demographics
             </th>
           </tr>
           </thead>
