@@ -1,0 +1,345 @@
+<queries>
+
+    <query flattened="true" name="com.icsd.sp.overview.gpa">
+        <args>
+            <arg description="TERMS.YEARID" name="yearid" required="true" type="primitive"/>
+            <arg description="STUDENTS.DCID" name="students_dcid" required="true" type="primitive"/>
+        </args>
+        <columns>
+            <column column="test.description">term</column>
+            <column column="test.name">gpa</column>
+        </columns>
+        <sql>
+            <![CDATA[
+      SELECT
+        test.description,
+        test.name
+      FROM (
+       SELECT
+         pgfinalgrades.finalgradename as description,
+         round(sum(pgfinalgrades.gpaScore) / count(pgfinalgrades.gpaScore), 2) as name
+       FROM (SELECT
+               id,
+               grade,
+               studentid,
+               sectionid,
+               finalgradename,
+               CASE grade
+               WHEN 'A+'
+                 THEN 4
+               WHEN 'A'
+                 THEN 4
+               WHEN 'A-'
+                 THEN 3.7
+               WHEN 'B+'
+                 THEN 3.3
+               WHEN 'B'
+                 THEN 3
+               WHEN 'B-'
+                 THEN 2.7
+               WHEN 'C+'
+                 THEN 2.3
+               WHEN 'C'
+                 THEN 2
+               WHEN 'C-'
+                 THEN 1.7
+               WHEN 'D+'
+                 THEN 1.3
+               WHEN 'D'
+                 THEN 1
+               WHEN 'D-'
+                 THEN 0.7
+               WHEN 'F'
+                 THEN 0
+               ELSE NULL END gpaScore
+             FROM pgfinalgrades) pgfinalgrades
+         JOIN sections ON pgfinalgrades.sectionid = sections.id
+         JOIN courses ON courses.course_number = sections.course_number
+         JOIN terms ON terms.id = sections.termid
+       WHERE pgfinalgrades.studentid = (select id from students where dcid=:students_dcid) AND
+             CASE pgfinalgrades.grade
+             WHEN 'A+'
+               THEN 4
+             WHEN 'A'
+               THEN 4
+             WHEN 'A-'
+               THEN 3.7
+             WHEN 'B+'
+               THEN 3.3
+             WHEN 'B'
+               THEN 3
+             WHEN 'B-'
+               THEN 2.7
+             WHEN 'C+'
+               THEN 2.3
+             WHEN 'C'
+               THEN 2
+             WHEN 'C-'
+               THEN 1.7
+             WHEN 'D+'
+               THEN 1.3
+             WHEN 'D'
+               THEN 1
+             WHEN 'D-'
+               THEN 0.7
+             WHEN 'F'
+               THEN 0
+             ELSE NULL END IS NOT NULL
+             AND terms.yearid = :yearid
+       GROUP BY terms.yearid, pgfinalgrades.finalgradename
+       ORDER BY finalgradename) test
+		]]>
+        </sql>
+    </query>
+
+    <query flattened="true" name="com.icsd.sp.overview.contacts">
+        <args>
+            <arg description="STUDENTS.DCID" name="students_dcid" required="true" type="primitive"/>
+        </args>
+        <columns>
+            <column column="u_student_contacts.id">id</column>
+            <column column="u_student_contacts.priority">priority</column>
+            <column column="u_student_contacts.employer">employer</column>
+            <column column="u_student_contacts.legal_guardian">legal_guardian</column>
+            <column column="u_student_contacts.relationship">relationship</column>
+            <column column="u_student_contacts.residence_street">residence_street</column>
+            <column column="u_student_contacts.residence_city">residence_city</column>
+            <column column="u_student_contacts.residence_state">residence_state</column>
+            <column column="u_student_contacts.residence_zip">residence_zip</column>
+            <column column="u_student_contacts.mailing_street">mailing_street</column>
+            <column column="u_student_contacts.mailing_city">mailing_city</column>
+            <column column="u_student_contacts.mailing_state">mailing_state</column>
+            <column column="u_student_contacts.mailing_zip">mailing_zip</column>
+            <column column="u_student_contacts.first_name">first_name</column>
+            <column column="u_student_contacts.last_name">last_name</column>
+            <column column="u_sc_email.email_address">email_address</column>
+            <column column="u_sc_phone.phone_number">phone</column>
+        </columns>
+        <sql>
+            <![CDATA[
+      SELECT
+        u_student_contacts.id,
+        u_student_contacts.priority,
+        u_student_contacts.employer,
+        u_student_contacts.legal_guardian,
+        u_student_contacts.relationship,
+        u_student_contacts.residence_street,
+        u_student_contacts.residence_city,
+        u_student_contacts.residence_state,
+        u_student_contacts.residence_zip,
+        u_student_contacts.mailing_street,
+        u_student_contacts.mailing_city,
+        u_student_contacts.mailing_state,
+        u_student_contacts.mailing_zip,
+        u_student_contacts.first_name,
+        u_student_contacts.last_name,
+        u_sc_email.email_address,
+        u_sc_phone.phone_number
+      FROM u_student_contacts
+        LEFT JOIN
+        (
+          SELECT
+            u_student_contacts.id,
+            chr(91) ||
+            listagg(
+                '{' ||
+                '"id"' || chr(58) || ' "' || u_sc_phone.id || '",' ||
+                '"phone_number"' || chr(58) || ' "' || u_sc_phone.phone_number || '",' ||
+                '"phone_type"' || chr(58) || ' "' || u_sc_phone.phone_type || '"' ||
+                '}', ',')
+            WITHIN GROUP (
+              ORDER BY 1)
+            || chr(93) phone_number
+          FROM
+            u_student_contacts
+            JOIN u_sc_phone ON u_student_contacts.id = u_sc_phone.contactdcid
+          GROUP BY u_student_contacts.id
+        ) u_sc_phone ON u_student_contacts.id = u_sc_phone.id
+        LEFT JOIN u_sc_email ON u_student_contacts.id = u_sc_email.contactdcid
+      WHERE u_student_contacts.studentsdcid = :students_dcid
+    ]]>
+        </sql>
+    </query>
+
+    <query flattened="true" name="com.icsd.sp.overview.general">
+        <args>
+            <arg description="STUDENTS.DCID" name="students_dcid" required="true" type="primitive"/>
+        </args>
+        <columns>
+            <column column="students.id">id</column>
+            <column column="students.first_name">first_name</column>
+            <column column="students.middle_name">middle_name</column>
+            <column column="students.last_name">last_name</column>
+            <column column="students.grade_level">grade_level</column>
+            <column column="students.dob">dob</column>
+            <column column="students.home_room">home_room</column>
+            <column column="students.entrydate">entrydate</column>
+            <column column="students.exitdate">exitdate</column>
+            <column column="students.mother">mother</column>
+            <column column="students.father">father</column>
+            <column column="students.home_phone">home_phone</column>
+            <column column="students.street">street</column>
+            <column column="students.city">city</column>
+            <column column="students.state">state</column>
+            <column column="students.zip">zip</column>
+            <column column="students.mailing_street">mailing_street</column>
+            <column column="students.mailing_city">mailing_city</column>
+            <column column="students.mailing_state">mailing_state</column>
+            <column column="students.mailing_zip">mailing_zip</column>
+            <column column="students.enroll_status">enroll_status</column>
+            <column column="schools.name">school_name</column>
+        </columns>
+        <sql>
+            <![CDATA[
+      SELECT
+        students.id,
+        students.first_name,
+        students.middle_name,
+        students.last_name,
+        students.grade_level,
+        TO_CHAR(students.dob, 'MM/DD/YYYY') AS dob,
+        students.home_room,
+        TO_CHAR(students.entrydate, 'MM/DD/YYYY') as entrydate,
+        TO_CHAR(students.exitdate, 'MM/DD/YYYY') as exitdate,
+        students.mother,
+        students.father,
+        students.home_phone,
+        students.street,
+        students.city,
+        students.state,
+        students.zip,
+        students.mailing_street,
+        students.mailing_city,
+        students.mailing_state,
+        students.mailing_zip,
+        students.enroll_status,
+        schools.name
+      FROM students
+        JOIN schools ON students.schoolid = SCHOOLS.school_number
+      WHERE students.dcid = :students_dcid
+    ]]>
+        </sql>
+    </query>
+
+    <query flattened="true" name="com.icsd.sp.overview.schedule">
+        <args>
+            <arg description="STUDENTS.DCID" name="students_dcid" required="true" type="primitive"/>
+            <arg description="CC.TERMID" name="yearid" required="true" type="primitive"/>
+        </args>
+        <columns>
+            <column column="cc.dcid">cc.dcid</column>
+            <column column="cc.id">cc.id</column>
+            <column column="cc.dateenrolled">cc.dateenrolled</column>
+            <column column="courses.course_name">courses.course_name</column>
+            <column column="sections.expression">expression</column>
+            <column column="terms.abbreviation">abbreviation</column>
+            <column column="cc.termid">termid</column>
+            <column column="cc.sectionid">sectionid</column>
+            <column column="cc.studentid">studentid</column>
+            <column column="sectionscoresassignments.grade">grades</column>
+            <column column="teachers.lastfirst">lastfirst</column>
+            <column column="students.grade_level">grade_level</column>
+            <column column="schools.low_grade">low_grade</column>
+            <column column="cc.dateleft">dateleft</column>
+            <column column="sectionscores.exempt">attendance</column>
+        </columns>
+        <sql>
+            <![CDATA[
+            SELECT
+              cc.dcid,
+              cc.id,
+              TO_CHAR(cc.dateenrolled, 'MM/DD/YYYY') AS dateenrolled,
+              courses.course_name,
+              sections.expression,
+              terms.abbreviation,
+              cc.termid,
+              cc.sectionid,
+              cc.studentid,
+              sectionscoresassignments.grade,
+              teachers.lastfirst,
+              students.grade_level,
+              schools.low_grade,
+              TO_CHAR(cc.dateleft, 'MM/DD/YYYY')     AS dateleft,
+              sectionscores.exempt
+            FROM
+              cc
+              LEFT JOIN
+              (
+                SELECT
+                  sectionid  AS id,
+                  chr(91) ||
+                  listagg(
+                      '{' ||
+                        '"' || section_attendance.att_category || '"' || chr(58) || section_attendance.att_count ||
+                      '}', ',')
+                  WITHIN GROUP (
+                    ORDER BY 1)
+                  || chr(93) AS exempt
+                FROM (SELECT
+                        cc.sectionid                        AS sectionid,
+                        attendance_code.att_category        AS att_category,
+                        count(attendance_code.att_category) AS att_count
+                      FROM
+                        attendance
+                        INNER JOIN students ON attendance.studentid = students.id
+                        INNER JOIN (SELECT
+                                      id,
+                                      CASE attendance_code.att_code
+                                      WHEN 'U'
+                                        THEN 'Unexcused'
+                                      WHEN 'E'
+                                        THEN 'Excused'
+                                      WHEN 'S'
+                                        THEN 'Excused'
+                                      WHEN 'L'
+                                        THEN 'Tardy' END AS att_category
+                                    FROM attendance_code
+                                    WHERE yearid = 25 AND schoolid = 712 AND att_code IS NOT NULL) attendance_code
+                          ON attendance.attendance_codeid = attendance_code.id
+                        INNER JOIN cc ON attendance.ccid = cc.id
+                      WHERE
+                        students.id = 20243 AND attendance.yearid = 25
+                      GROUP BY cc.sectionid, attendance_code.att_category) section_attendance
+                GROUP BY sectionid
+              ) sectionscores ON cc.sectionid = sectionscores.id
+              LEFT JOIN
+              (
+                SELECT
+                  cc.sectionid,
+                  chr(91) ||
+                  listagg(
+                      '{' ||
+                      '"finalgradename"' || chr(58) || ' "' || pgfinalgrades.finalgradename || '",' ||
+                      '"percent"' || chr(58) || ' "' || pgfinalgrades.percent || '",' ||
+                      '"grade"' || chr(58) || ' "' || pgfinalgrades.grade || '"' ||
+                      '}', ',')
+                  WITHIN GROUP (
+                    ORDER BY 1)
+                  || chr(93) AS grade
+                FROM
+                  cc
+                  JOIN students ON cc.studentid = students.id
+                  JOIN pgfinalgrades
+                    ON students.id = pgfinalgrades.studentid AND pgfinalgrades.sectionid = cc.sectionid
+                WHERE
+                  cc.studentid = (SELECT students.id
+                                  FROM students
+                                  WHERE students.dcid = :students_dcid) AND
+                  cc.termid LIKE :yearid || '%'
+                GROUP BY cc.sectionid
+              ) sectionscoresassignments ON cc.sectionid = sectionscoresassignments.sectionid
+              LEFT JOIN sections ON cc.sectionid = sections.id
+              LEFT JOIN courses ON cc.course_number = courses.course_number
+              LEFT JOIN students ON cc.studentid = students.id
+              LEFT JOIN teachers ON cc.teacherid = teachers.id
+              LEFT JOIN schools ON cc.schoolid = schools.school_number
+              LEFT JOIN terms ON terms.id = cc.termid AND terms.schoolid = cc.schoolid
+            WHERE
+              cc.studentid = (SELECT students.id
+                              FROM students
+                              WHERE students.dcid = :students_dcid) AND
+              cc.termid LIKE :yearid || '%'
+    ]]>
+        </sql>
+    </query>
+</queries>
