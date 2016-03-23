@@ -1,6 +1,6 @@
 <!DOCTYPE html>
 <html>
-  <head>
+<head>
     <meta charset="utf-8">
     <title>Student Profile</title>
 
@@ -8,36 +8,38 @@
     <link rel="stylesheet" href="/images/css/print.css" media="print" charset="utf-8">
 
     ~[wc:commonscripts]
-  </head>
-  <body>
-    ~[wc:admin_header_frame_css]
-    <a href="/admin/home.html" target="_top">&nbsp;~[text:psx.html.admin.home.start_page]</a> &gt
-    <a href="home.html?selectstudent=nosearch" target="_top">
-      Student Selection
-    </a> &gt Student Profile
+</head>
+<body>
+~[wc:admin_header_frame_css]
+<a href="/admin/home.html" target="_top">&nbsp;~[text:psx.html.admin.home.start_page]</a> &gt
+<a href="home.html?selectstudent=nosearch" target="_top">
+    Student Selection
+</a> &gt Student Profile
 
-    ~[wc:admin_navigation_frame_css]
+~[wc:admin_navigation_frame_css]
 
-    ~[wc:title_student_begin_css]Student Profile~[wc:title_student_end_css]
-    <div class="row">
-      <div class="col-xs-12">
-        
-        <iframe id="profile-frame" src="/scripts/student-profile/html/index.html?frn=~[x:studentfrn]&user=~[x:users_dcid]&yearid=~(curyearid)" width="99%" style="border: none; min-height: 350px"></iframe>
+~[wc:title_student_begin_css]Student Profile~[wc:title_student_end_css]
+<div class="row">
+    <div class="col-xs-12">
+
+        <iframe id="profile-frame"
+                src="/scripts/student-profile/html/index.html?frn=~[x:studentfrn]&user=~[x:users_dcid]&yearid=~(curyearid)"
+                width="99%" style="border: none; min-height: 350px"></iframe>
         <script>
-          var SPACE_ABOVE_IFRAME = 239.1;
-          function iFrameResize() {
-            var winHeight = $j(window).height();
-            var iframeHeight = winHeight - SPACE_ABOVE_IFRAME;
+            var SPACE_ABOVE_IFRAME = 239.1;
+            function iFrameResize() {
+                var winHeight = $j(window).height();
+                var iframeHeight = winHeight - SPACE_ABOVE_IFRAME;
 
-            $j('#profile-frame').css('height', iframeHeight + 'px');
-          }
+                $j('#profile-frame').css('height', iframeHeight + 'px');
+            }
 
-          $j(document).ready(function() {
-            $j(window).on('resize', iFrameResize);
-            iFrameResize();
-          });
+            $j(document).ready(function () {
+                $j(window).on('resize', iFrameResize);
+                iFrameResize();
+            });
         </script>
-      </div>
     </div>
-  </body>
+</div>
+</body>
 </html>
