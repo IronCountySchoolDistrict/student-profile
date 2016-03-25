@@ -230,10 +230,12 @@
             <column column="cc.dcid">cc.dcid</column>
             <column column="cc.id">cc.id</column>
             <column column="cc.dateenrolled">cc.dateenrolled</column>
-            <column column="courses.course_name">courses.course_name</column>
+            <column column="courses.course_name">course_name</column>
             <column column="sections.expression">expression</column>
             <column column="terms.abbreviation">abbreviation</column>
             <column column="cc.termid">termid</column>
+            <column column="cc.period_obsolete">dropped</column>
+            <column column="cc.unused2">completed</column>
             <column column="cc.sectionid">sectionid</column>
             <column column="cc.studentid">studentid</column>
             <column column="sectionscoresassignments.grade">grades</column>
@@ -248,33 +250,42 @@
             SELECT
               cc.dcid,
               cc.id,
-              TO_CHAR(cc.dateenrolled, 'MM/DD/YYYY') AS dateenrolled,
+              TO_CHAR(cc.dateenrolled, 'MM/DD/YYYY')                    AS dateenrolled,
               courses.course_name,
               sections.expression,
               terms.abbreviation,
               cc.termid,
+              CASE
+              WHEN cc.termid < 0
+                THEN 'true'
+              ELSE 'false'
+              END                                                       AS period_obsolete,
+              CASE
+              WHEN cc.dateleft < sysdate
+                THEN 'true'
+              ELSE 'false'
+              END                                                       AS unused2,
               cc.sectionid,
               cc.studentid,
-              sectionscoresassignments.grade,
+              nvl(sectionscoresassignments.grade, chr(123) || chr(125)) AS grade,
               teachers.lastfirst,
               students.grade_level,
               schools.low_grade,
-              TO_CHAR(cc.dateleft, 'MM/DD/YYYY')     AS dateleft,
-              sectionscores.exempt
+              TO_CHAR(cc.dateleft, 'MM/DD/YYYY')                        AS dateleft,
+              nvl(sectionscores.exempt, chr(123) || chr(125))           AS exempt
             FROM
               cc
               LEFT JOIN
               (
                 SELECT
-                  sectionid  AS id,
-                  chr(91) ||
+                  sectionid   AS id,
+                  chr(123) ||
                   listagg(
-                      '{' ||
-                        '"' || section_attendance.att_category || '"' || chr(58) || section_attendance.att_count ||
-                      '}', ',')
+                      '"' || lower(section_attendance.att_category) || '"' || chr(58) || section_attendance.att_count
+                      , ',')
                   WITHIN GROUP (
                     ORDER BY 1)
-                  || chr(93) AS exempt
+                  || chr(125) AS exempt
                 FROM (SELECT
                         cc.sectionid                        AS sectionid,
                         attendance_code.att_category        AS att_category,
@@ -294,7 +305,7 @@
                                       WHEN 'L'
                                         THEN 'Tardy' END AS att_category
                                     FROM attendance_code
-                                    WHERE yearid = 25 AND schoolid = 712 AND att_code IS NOT NULL) attendance_code
+                                    WHERE yearid = 25 AND schoolid = 712) attendance_code
                           ON attendance.attendance_codeid = attendance_code.id
                         INNER JOIN cc ON attendance.ccid = cc.id
                       WHERE
@@ -306,16 +317,15 @@
               (
                 SELECT
                   cc.sectionid,
-                  chr(91) ||
+                  chr(123) ||
                   listagg(
-                      '{' ||
-                      '"finalgradename"' || chr(58) || ' "' || pgfinalgrades.finalgradename || '",' ||
+                      '"' || pgfinalgrades.finalgradename || '"' || chr(58) || chr(123) ||
                       '"percent"' || chr(58) || ' "' || pgfinalgrades.percent || '",' ||
-                      '"grade"' || chr(58) || ' "' || pgfinalgrades.grade || '"' ||
-                      '}', ',')
+                      '"grade"' || chr(58) || ' "' || pgfinalgrades.grade || '"' || chr(125)
+                      , ',')
                   WITHIN GROUP (
-                    ORDER BY 1)
-                  || chr(93) AS grade
+                    ORDER BY pgfinalgrades.finalgradename ASC)
+                  || chr(125) AS grade
                 FROM
                   cc
                   JOIN students ON cc.studentid = students.id
@@ -338,7 +348,7 @@
               cc.studentid = (SELECT students.id
                               FROM students
                               WHERE students.dcid = :students_dcid) AND
-              cc.termid LIKE :yearid || '%'
+              (cc.termid LIKE :yearid || '%' OR cc.termid LIKE '-' || :yearid || '%')
     ]]>
         </sql>
     </query>
