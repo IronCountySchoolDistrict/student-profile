@@ -5,3 +5,7 @@
 .overview-table .borderless td, .overview-table .borderless th {
     border: none;
 }
+
+.grade-cell {
+    text-align: center;
+}

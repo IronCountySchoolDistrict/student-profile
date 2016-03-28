@@ -6,7 +6,7 @@ export default class CourseList extends Component {
 
     const courses = this.props.courseData.map(course => {
       return (
-        <Course key={course.id} courseData={course}/>
+        <Course key={course.id} {...course} uniqueTerms={this.props.uniqueTerms}/>
       );
     });
 

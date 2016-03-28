@@ -81,9 +81,8 @@ Promise.all([
       <General general={results.general.record[0]}/>,
       document.getElementById('general-container')
     );
-
     ReactDOM.render(
-      <CourseTable courses={results.schedule.record}/>,
+      <CourseTable courses={results.schedule}/>,
       document.getElementById('schedule-container')
     );
   });
