@@ -286,31 +286,48 @@
                   WITHIN GROUP (
                     ORDER BY 1)
                   || chr(125) AS exempt
-                FROM (SELECT
-                        cc.sectionid                        AS sectionid,
-                        attendance_code.att_category        AS att_category,
-                        count(attendance_code.att_category) AS att_count
-                      FROM
-                        attendance
-                        INNER JOIN students ON attendance.studentid = students.id
-                        INNER JOIN (SELECT
-                                      id,
-                                      CASE attendance_code.att_code
-                                      WHEN 'U'
-                                        THEN 'Unexcused'
-                                      WHEN 'E'
-                                        THEN 'Excused'
-                                      WHEN 'S'
-                                        THEN 'Excused'
-                                      WHEN 'L'
-                                        THEN 'Tardy' END AS att_category
-                                    FROM attendance_code
-                                    WHERE yearid = 25 AND schoolid = 712) attendance_code
-                          ON attendance.attendance_codeid = attendance_code.id
-                        INNER JOIN cc ON attendance.ccid = cc.id
-                      WHERE
-                        students.id = 20243 AND attendance.yearid = 25
-                      GROUP BY cc.sectionid, attendance_code.att_category) section_attendance
+                FROM (
+                       SELECT
+                         cc.sectionid                        AS sectionid,
+                         attendance_code.att_category        AS att_category,
+                         count(attendance_code.att_category) AS att_count
+                       FROM
+                         attendance
+                         INNER JOIN students ON attendance.studentid = students.id
+                         INNER JOIN
+                         (
+                           SELECT
+                             id,
+                             --                  attendance_code.att_code AS att_category
+                             CASE attendance_code.att_code
+                             WHEN 'U'
+                               THEN 'Unexcused'
+                             WHEN 'E'
+                               THEN 'Excused'
+                             WHEN 'S'
+                               THEN 'Excused'
+                             WHEN 'L'
+                               THEN 'Tardy'
+                             WHEN 'T'
+                               THEN 'Tardy'
+                             WHEN 'X'
+                               THEN 'Tardy' END AS att_category
+                           FROM attendance_code
+                           WHERE yearid = :yearid AND schoolid = (
+                             SELECT schoolid
+                             FROM students
+                             WHERE dcid = :students_dcid)
+                         ) attendance_code
+                           ON attendance.attendance_codeid = attendance_code.id
+                         INNER JOIN cc ON attendance.ccid = cc.id
+                       WHERE
+                         students.id = (
+                           SELECT id
+                           FROM students
+                           WHERE dcid = :students_dcid) AND
+                         attendance.yearid = :yearid AND
+                         attendance_code.att_category IS NOT NULL
+                       GROUP BY cc.sectionid, attendance_code.att_category) section_attendance
                 GROUP BY sectionid
               ) sectionscores ON cc.sectionid = sectionscores.id
               LEFT JOIN
@@ -332,9 +349,10 @@
                   JOIN pgfinalgrades
                     ON students.id = pgfinalgrades.studentid AND pgfinalgrades.sectionid = cc.sectionid
                 WHERE
-                  cc.studentid = (SELECT students.id
-                                  FROM students
-                                  WHERE students.dcid = :students_dcid) AND
+                  cc.studentid = (
+                    SELECT students.id
+                    FROM students
+                    WHERE students.dcid = :students_dcid) AND
                   cc.termid LIKE :yearid || '%'
                 GROUP BY cc.sectionid
               ) sectionscoresassignments ON cc.sectionid = sectionscoresassignments.sectionid
@@ -345,9 +363,10 @@
               LEFT JOIN schools ON cc.schoolid = schools.school_number
               LEFT JOIN terms ON terms.id = cc.termid AND terms.schoolid = cc.schoolid
             WHERE
-              cc.studentid = (SELECT students.id
-                              FROM students
-                              WHERE students.dcid = :students_dcid) AND
+              cc.studentid = (
+                SELECT students.id
+                FROM students
+                WHERE students.dcid = :students_dcid) AND
               (cc.termid LIKE :yearid || '%' OR cc.termid LIKE '-' || :yearid || '%')
     ]]>
         </sql>
