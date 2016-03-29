@@ -61,5 +61,6 @@
     <field table="sectionscores" field="exempt" access="ViewOnly" />
     <field table="sectionscoresassignments" field="dcid" access="ViewOnly" />
     <field table="sectionscoresassignments" field="grade" access="ViewOnly" />
+    <field table="pgfinalgrades" field="finalgradename" access="ViewOnly" />
   </access_request>
 </plugin>

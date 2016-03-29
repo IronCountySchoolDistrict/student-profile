@@ -247,6 +247,16 @@
         </columns>
         <sql>
             <![CDATA[
+            with dropped_complete as (select id, CASE WHEN termid < 0
+                THEN 'true'
+              ELSE 'false'
+              END                                                       AS dropped,
+              CASE
+              WHEN dateleft < sysdate
+                THEN 'true'
+              ELSE 'false'
+              END                                                       AS completed
+              from cc)
             SELECT
               cc.dcid,
               cc.id,
@@ -255,16 +265,8 @@
               sections.expression,
               terms.abbreviation,
               cc.termid,
-              CASE
-              WHEN cc.termid < 0
-                THEN 'true'
-              ELSE 'false'
-              END                                                       AS period_obsolete,
-              CASE
-              WHEN cc.dateleft < sysdate
-                THEN 'true'
-              ELSE 'false'
-              END                                                       AS unused2,
+              dropped_complete.dropped,
+              dropped_complete.completed,
               cc.sectionid,
               cc.studentid,
               nvl(sectionscoresassignments.grade, chr(123) || chr(125)) AS grade,
@@ -275,6 +277,7 @@
               nvl(sectionscores.exempt, chr(123) || chr(125))           AS exempt
             FROM
               cc
+              left join dropped_complete on cc.id = dropped_complete.id
               LEFT JOIN
               (
                 SELECT
@@ -341,7 +344,7 @@
                       '"grade"' || chr(58) || ' "' || pgfinalgrades.grade || '"' || chr(125)
                       , ',')
                   WITHIN GROUP (
-                    ORDER BY pgfinalgrades.finalgradename ASC)
+                    ORDER BY 1)
                   || chr(125) AS grade
                 FROM
                   cc
@@ -368,6 +371,7 @@
                 FROM students
                 WHERE students.dcid = :students_dcid) AND
               (cc.termid LIKE :yearid || '%' OR cc.termid LIKE '-' || :yearid || '%')
+            ORDER BY terms.abbreviation, sections.expression
     ]]>
         </sql>
     </query>
