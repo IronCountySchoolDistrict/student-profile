@@ -1,4 +1,6 @@
 import Course from './Course';
+import Gpa from './Gpa';
+
 import React, {Component} from 'react';
 
 export default class CourseList extends Component {
@@ -11,7 +13,10 @@ export default class CourseList extends Component {
     });
 
     return (
-      <tbody>{courses}</tbody>
+      <tbody>
+        {courses}
+        <Gpa gpa={this.props.gpa} uniqueTerms={this.props.uniqueTerms}/>
+      </tbody>
     );
   }
 }

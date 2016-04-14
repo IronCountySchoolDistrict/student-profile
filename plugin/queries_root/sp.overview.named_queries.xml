@@ -11,83 +11,83 @@
         </columns>
         <sql>
             <![CDATA[
-      SELECT
-        test.description,
-        test.name
-      FROM (
-       SELECT
-         pgfinalgrades.finalgradename as description,
-         round(sum(pgfinalgrades.gpaScore) / count(pgfinalgrades.gpaScore), 2) as name
-       FROM (SELECT
-               id,
-               grade,
-               studentid,
-               sectionid,
-               finalgradename,
-               CASE grade
-               WHEN 'A+'
-                 THEN 4
-               WHEN 'A'
-                 THEN 4
-               WHEN 'A-'
-                 THEN 3.7
-               WHEN 'B+'
-                 THEN 3.3
-               WHEN 'B'
-                 THEN 3
-               WHEN 'B-'
-                 THEN 2.7
-               WHEN 'C+'
-                 THEN 2.3
-               WHEN 'C'
-                 THEN 2
-               WHEN 'C-'
-                 THEN 1.7
-               WHEN 'D+'
-                 THEN 1.3
-               WHEN 'D'
-                 THEN 1
-               WHEN 'D-'
-                 THEN 0.7
-               WHEN 'F'
-                 THEN 0
-               ELSE NULL END gpaScore
-             FROM pgfinalgrades) pgfinalgrades
-         JOIN sections ON pgfinalgrades.sectionid = sections.id
-         JOIN courses ON courses.course_number = sections.course_number
-         JOIN terms ON terms.id = sections.termid
-       WHERE pgfinalgrades.studentid = (select id from students where dcid=:students_dcid) AND
-             CASE pgfinalgrades.grade
-             WHEN 'A+'
-               THEN 4
-             WHEN 'A'
-               THEN 4
-             WHEN 'A-'
-               THEN 3.7
-             WHEN 'B+'
-               THEN 3.3
-             WHEN 'B'
-               THEN 3
-             WHEN 'B-'
-               THEN 2.7
-             WHEN 'C+'
-               THEN 2.3
-             WHEN 'C'
-               THEN 2
-             WHEN 'C-'
-               THEN 1.7
-             WHEN 'D+'
-               THEN 1.3
-             WHEN 'D'
-               THEN 1
-             WHEN 'D-'
-               THEN 0.7
-             WHEN 'F'
-               THEN 0
-             ELSE NULL END IS NOT NULL
-             AND terms.yearid = :yearid
-       GROUP BY terms.yearid, pgfinalgrades.finalgradename
-       ORDER BY finalgradename) test
+              SELECT
+                test.description,
+                test.name
+              FROM (
+               SELECT
+                 pgfinalgrades.finalgradename as description,
+                 round(sum(pgfinalgrades.gpaScore) / count(pgfinalgrades.gpaScore), 2) as name
+               FROM (SELECT
+                       id,
+                       grade,
+                       studentid,
+                       sectionid,
+                       finalgradename,
+                       CASE grade
+                       WHEN 'A+'
+                         THEN 4
+                       WHEN 'A'
+                         THEN 4
+                       WHEN 'A-'
+                         THEN 3.7
+                       WHEN 'B+'
+                         THEN 3.3
+                       WHEN 'B'
+                         THEN 3
+                       WHEN 'B-'
+                         THEN 2.7
+                       WHEN 'C+'
+                         THEN 2.3
+                       WHEN 'C'
+                         THEN 2
+                       WHEN 'C-'
+                         THEN 1.7
+                       WHEN 'D+'
+                         THEN 1.3
+                       WHEN 'D'
+                         THEN 1
+                       WHEN 'D-'
+                         THEN 0.7
+                       WHEN 'F'
+                         THEN 0
+                       ELSE NULL END gpaScore
+                     FROM pgfinalgrades) pgfinalgrades
+                 JOIN sections ON pgfinalgrades.sectionid = sections.id
+                 JOIN courses ON courses.course_number = sections.course_number
+                 JOIN terms ON terms.id = sections.termid
+               WHERE pgfinalgrades.studentid = (select id from students where dcid=:students_dcid) AND
+                     CASE pgfinalgrades.grade
+                     WHEN 'A+'
+                       THEN 4
+                     WHEN 'A'
+                       THEN 4
+                     WHEN 'A-'
+                       THEN 3.7
+                     WHEN 'B+'
+                       THEN 3.3
+                     WHEN 'B'
+                       THEN 3
+                     WHEN 'B-'
+                       THEN 2.7
+                     WHEN 'C+'
+                       THEN 2.3
+                     WHEN 'C'
+                       THEN 2
+                     WHEN 'C-'
+                       THEN 1.7
+                     WHEN 'D+'
+                       THEN 1.3
+                     WHEN 'D'
+                       THEN 1
+                     WHEN 'D-'
+                       THEN 0.7
+                     WHEN 'F'
+                       THEN 0
+                     ELSE NULL END IS NOT NULL
+                     AND terms.yearid = :yearid
+               GROUP BY terms.yearid, pgfinalgrades.finalgradename
+               ORDER BY finalgradename) test
 		]]>
         </sql>
     </query>
@@ -113,50 +113,53 @@
             <column column="u_student_contacts.first_name">first_name</column>
             <column column="u_student_contacts.last_name">last_name</column>
             <column column="u_sc_email.email_address">email_address</column>
-            <column column="u_sc_phone.phone_number">phone</column>
         </columns>
         <sql>
             <![CDATA[
-      SELECT
-        u_student_contacts.id,
-        u_student_contacts.priority,
-        u_student_contacts.employer,
-        u_student_contacts.legal_guardian,
-        u_student_contacts.relationship,
-        u_student_contacts.residence_street,
-        u_student_contacts.residence_city,
-        u_student_contacts.residence_state,
-        u_student_contacts.residence_zip,
-        u_student_contacts.mailing_street,
-        u_student_contacts.mailing_city,
-        u_student_contacts.mailing_state,
-        u_student_contacts.mailing_zip,
-        u_student_contacts.first_name,
-        u_student_contacts.last_name,
-        u_sc_email.email_address,
-        u_sc_phone.phone_number
-      FROM u_student_contacts
-        LEFT JOIN
-        (
-          SELECT
-            u_student_contacts.id,
-            chr(91) ||
-            listagg(
-                '{' ||
-                '"id"' || chr(58) || ' "' || u_sc_phone.id || '",' ||
-                '"phone_number"' || chr(58) || ' "' || u_sc_phone.phone_number || '",' ||
-                '"phone_type"' || chr(58) || ' "' || u_sc_phone.phone_type || '"' ||
-                '}', ',')
-            WITHIN GROUP (
-              ORDER BY 1)
-            || chr(93) phone_number
-          FROM
-            u_student_contacts
-            JOIN u_sc_phone ON u_student_contacts.id = u_sc_phone.contactdcid
-          GROUP BY u_student_contacts.id
-        ) u_sc_phone ON u_student_contacts.id = u_sc_phone.id
-        LEFT JOIN u_sc_email ON u_student_contacts.id = u_sc_email.contactdcid
-      WHERE u_student_contacts.studentsdcid = :students_dcid
+            SELECT
+              u_student_contacts.id,
+              u_student_contacts.priority,
+              u_student_contacts.employer,
+              u_student_contacts.legal_guardian,
+              u_student_contacts.relationship,
+              u_student_contacts.residence_street,
+              u_student_contacts.residence_city,
+              u_student_contacts.residence_state,
+              u_student_contacts.residence_zip,
+              u_student_contacts.mailing_street,
+              u_student_contacts.mailing_city,
+              u_student_contacts.mailing_state,
+              u_student_contacts.mailing_zip,
+              u_student_contacts.first_name,
+              u_student_contacts.last_name,
+              u_sc_email.email_address
+            FROM u_student_contacts
+            LEFT JOIN u_sc_email ON u_student_contacts.studentsdcid = u_sc_email.studentsdcid AND
+                                    u_student_contacts.id = u_sc_email.contactdcid
+            WHERE u_student_contacts.studentsdcid = :students_dcid
+    ]]>
+        </sql>
+    </query>
+
+    <query flattened="true" name="com.icsd.sp.overview.phones">
+        <args>
+            <arg description="STUDENTS.DCID" name="students_dcid" required="true" type="primitive"/>
+        </args>
+        <columns>
+            <column column="u_sc_phone.id">id</column>
+            <column column="u_sc_phone.contactdcid">contactdcid</column>
+            <column column="u_sc_phone.phone_number">phone_number</column>
+            <column column="u_sc_phone.phone_type">phone_type</column>
+        </columns>
+        <sql>
+            <![CDATA[
+            SELECT
+                id,
+                contactdcid,
+                phone_number,
+                phone_type
+            FROM u_sc_phone
+            WHERE studentsdcid = :students_dcid
     ]]>
         </sql>
     </query>

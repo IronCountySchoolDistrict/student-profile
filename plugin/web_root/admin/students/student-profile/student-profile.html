@@ -18,7 +18,6 @@
 
 ~[wc:admin_navigation_frame_css]
 
-~[wc:title_student_begin_css]Student Profile~[wc:title_student_end_css]
 <div class="row">
     <div class="col-xs-12">
 
@@ -26,7 +25,7 @@
                 src="/scripts/student-profile/html/index.html?frn=~[x:studentfrn]&user=~[x:users_dcid]&yearid=~(curyearid)"
                 width="100%" style="border: none; min-height: 350px"></iframe>
         <script>
-            var SPACE_ABOVE_IFRAME = 239.1;
+            var SPACE_ABOVE_IFRAME = 140;
             function iFrameResize() {
                 var winHeight = $j(window).height();
                 var iframeHeight = winHeight - SPACE_ABOVE_IFRAME;

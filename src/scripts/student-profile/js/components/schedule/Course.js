@@ -27,7 +27,6 @@ export default class Course extends Component {
     const totalAbsences = unexcused + excused;
 
     const grades = this.printGradesForTerms(this.props.grades, this.props.uniqueTerms);
-    console.log(this.refs.Q1);
     return (
       <tr>
         <td>

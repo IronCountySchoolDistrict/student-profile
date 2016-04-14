@@ -35,7 +35,7 @@ export default class General extends Component {
       textAlign: 'center'
     };
     return (
-      <div className="col-md-2" style={textAlignStyle}>
+      <div style={textAlignStyle}>
         <h4>
           {this.toFullName(this.props.general.first_name, this.props.general.middle_name, this.props.general.last_name)}
         </h4>
@@ -160,9 +160,11 @@ export default class General extends Component {
               Status
             </td>
             <td>
+              <div className="label-container">
                 <span className="label label-sm label-info">
                   {this.enrollStatusToLabel(this.props.general.enroll_status)}
                 </span>
+              </div>
             </td>
           </tr>
           </tbody>

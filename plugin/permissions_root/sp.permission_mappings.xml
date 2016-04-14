@@ -2,6 +2,7 @@
   <permission name='/admin/home.html'>
    <implies allow="get">/ws/schema/query/com.icsd.sp.overview.gpa</implies>
    <implies allow="get">/ws/schema/query/com.icsd.sp.overview.contacts</implies>
+   <implies allow="get">/ws/schema/query/com.icsd.sp.overview.phones</implies>
    <implies allow="get">/ws/schema/query/com.icsd.sp.overview.general</implies>
    <implies allow="get">/ws/schema/query/com.icsd.sp.overview.schedule</implies>
   </permission>

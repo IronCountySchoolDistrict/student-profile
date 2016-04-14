@@ -13,6 +13,7 @@
     <field table="test" field="name" access="ViewOnly" />
     <field table="test" field="description" access="ViewOnly" />
     <field table="u_student_contacts" field="id" access="ViewOnly" />
+    <field table="u_student_contacts" field="studentsdcid" access="ViewOnly" />
     <field table="u_student_contacts" field="priority" access="ViewOnly" />
     <field table="u_student_contacts" field="employer" access="ViewOnly" />
     <field table="u_student_contacts" field="legal_guardian" access="ViewOnly" />
@@ -28,7 +29,10 @@
     <field table="u_student_contacts" field="first_name" access="ViewOnly" />
     <field table="u_student_contacts" field="last_name" access="ViewOnly" />
     <field table="u_sc_email" field="email_address" access="ViewOnly" />
+    <field table="u_sc_phone" field="id" access="ViewOnly" />
     <field table="u_sc_phone" field="phone_number" access="ViewOnly" />
+    <field table="u_sc_phone" field="contactdcid" access="ViewOnly" />
+    <field table="u_sc_phone" field="phone_type" access="ViewOnly" />
     <field table="students" field="id" access="ViewOnly" />
     <field table="students" field="first_name" access="ViewOnly" />
     <field table="students" field="middle_name" access="ViewOnly" />

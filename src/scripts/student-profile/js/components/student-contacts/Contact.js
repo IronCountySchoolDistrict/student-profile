@@ -15,25 +15,20 @@ export default class Contact extends Component {
       <div className="col-md-3">
         <div className="panel panel-default">
           <div className="panel-heading">
-            {this.props.contactData.priority} - {this.props.contactData.first_name} {this.props.contactData.last_name} ({this.props.contactData.relationship})
+            {this.props.priority} - {this.props.first_name} {this.props.last_name} ({this.props.relationship})
+            <span className="panel-legal-guardian label label-sm label-info">
+              {this.props.legal_guardian === '1' ? 'Legal' : ''}
+            </span>
           </div>
           <div className="panel-body">
             <table className="table table-condensed table-hover overview-table">
               <tbody>
               <tr>
                 <td>
-                  Legal Guardian
-                </td>
-                <td>
-                  {this.toLegalGuardianYesNo(this.props.contactData.legal_guardian)}
-                </td>
-              </tr>
-              <tr>
-                <td>
                   Residence Address
                 </td>
                 <td>
-                  {this.props.contactData.residence_street} {this.props.contactData.residence_city}, {this.props.contactData.residence_state} {this.props.contactData.residence_zip}
+                  {this.props.residence_street} {this.props.residence_city}{!!this.props.residence_street ? ',' : ''} {this.props.residence_state} {this.props.residence_zip}
                 </td>
               </tr>
               <tr>
@@ -41,7 +36,7 @@ export default class Contact extends Component {
                   Mailing Address
                 </td>
                 <td>
-                  {this.props.contactData.mailing_street} {this.props.contactData.mailing_city}, {this.props.contactData.mailing_state} {this.props.contactData.mailing_zip}
+                  {this.props.mailing_street} {this.props.mailing_city} {!!this.props.mailing_street ? ',' : ''} {this.props.mailing_state} {this.props.mailing_zip}
                 </td>
               </tr>
               <tr>
@@ -49,7 +44,7 @@ export default class Contact extends Component {
                   Email
                 </td>
                 <td>
-                  {this.props.contactData.email_address}
+                  {this.props.email_address}
                 </td>
               </tr>
               <tr>
@@ -57,7 +52,7 @@ export default class Contact extends Component {
                   Phones
                 </td>
                 <td>
-                  <PhoneList phones={this.props.contactData.phone}/>
+                  <PhoneList phones={this.props.phones}/>
                 </td>
               </tr>
               </tbody>

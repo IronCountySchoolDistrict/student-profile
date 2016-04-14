@@ -9,3 +9,19 @@
 .grade-cell {
     text-align: center;
 }
+
+.panel-legal-guardian {
+    float: right;
+}
+
+#student-contacts-container {
+    padding-top: 15px;
+}
+
+.table-schedule {
+    font-size: 12px;
+}
+
+.label-container {
+    padding-top: 7px;
+}
