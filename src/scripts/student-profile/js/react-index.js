@@ -65,11 +65,15 @@ const scheduleFetch = window.fetch('/ws/schema/query/com.icsd.sp.overview.schedu
   })
   .then(r => r.json())
   .then(r => {
-    return r.record.map(course => {
-      course.attendance = JSON.parse(course.attendance);
-      course.grades = JSON.parse(course.grades);
-      return course;
-    });
+    if (r.record) {
+      return r.record.map(course => {
+        course.attendance = JSON.parse(course.attendance);
+        course.grades = JSON.parse(course.grades);
+        return course;
+      });
+    } else {
+      return r;
+    }
   });
 
 const gpaFetch = window.fetch('/ws/schema/query/com.icsd.sp.overview.gpa', {

@@ -1,7 +1,7 @@
-/*global $j*/
-(function() {
-    'use strict';
-    var template = $j($j('#new-prof-template').html());
-    var select = $j('#std_information');
-    select.prepend(template);
-}());
+import $ from 'jquery';
+
+export default function() {
+  var template = $('#new-prof-template').html();
+  var select = $('#std_information');
+  select.prepend(template);
+}
