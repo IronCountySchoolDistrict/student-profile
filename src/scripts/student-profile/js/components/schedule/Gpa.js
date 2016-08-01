@@ -7,20 +7,20 @@ export default class Gpa extends Component {
       return prevVal;
     }, {});
     const gpas = this.props.uniqueTerms.map(uniqueTerm => {
-        if (Object.keys(pivotedGpas).indexOf(uniqueTerm) !== -1) {
-          return (
-            <td>
-              {pivotedGpas[uniqueTerm]}
-            </td>
-          );
-        } else {
-          return (
-            <td>
-              {""}
-            </td>
-          );
-        }
-      });
+      if (Object.keys(pivotedGpas).indexOf(uniqueTerm) !== -1) {
+        return (
+          <td>
+            {pivotedGpas[uniqueTerm]}
+          </td>
+        );
+      } else {
+        return (
+          <td>
+            {""}
+          </td>
+        );
+      }
+    });
 
     return (
       <tr>
@@ -40,3 +40,5 @@ export default class Gpa extends Component {
     );
   }
 }
+
+Gpa.defaultProps = { gpa: [] }

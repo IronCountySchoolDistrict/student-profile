@@ -114,8 +114,10 @@ Promise.all([
       document.getElementById('general-container')
     );
 
-    ReactDOM.render(
-      <CourseTable courses={results.schedule} gpa={results.gpa.record}/>,
-      document.getElementById('schedule-container')
-    );
+    if (results.schedule.length) {
+      ReactDOM.render(
+        <CourseTable courses={results.schedule} gpa={results.gpa.record}/>,
+        document.getElementById('schedule-container')
+      );
+    }
   });

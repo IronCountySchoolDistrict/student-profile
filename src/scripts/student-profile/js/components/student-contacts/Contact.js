@@ -12,7 +12,7 @@ export default class Contact extends Component {
 
   render() {
     return (
-      <div className="col-md-3">
+      <div className="col-lg-4 col-md-12">
         <div className="panel panel-default">
           <div className="panel-heading">
             {this.props.priority} - {this.props.first_name} {this.props.last_name} ({this.props.relationship})
