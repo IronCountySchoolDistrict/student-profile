@@ -25,3 +25,11 @@
 .label-container {
     padding-top: 7px;
 }
+
+#student-contacts-container .col-lg-4:nth-child(3n+1) {
+    clear: both;
+}
+
+.panel-legal-guardian {
+  margin-top: 5px;
+}
