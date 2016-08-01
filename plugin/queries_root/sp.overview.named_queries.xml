@@ -137,6 +137,7 @@
             LEFT JOIN u_sc_email ON u_student_contacts.studentsdcid = u_sc_email.studentsdcid AND
                                     u_student_contacts.id = u_sc_email.contactdcid
             WHERE u_student_contacts.studentsdcid = :students_dcid
+            ORDER BY u_student_contacts.legal_guardian desc, u_student_contacts.priority asc
     ]]>
         </sql>
     </query>
