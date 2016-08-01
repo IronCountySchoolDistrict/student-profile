@@ -1,9 +1,19 @@
 <script type="text/template" id="new-prof-template">
     ~[if.~(studentscreenaccess;generaldemographics.html)=1]
-    <li>
+      <li>
         <a href="/admin/students/student-profile/student-profile.html?frn=~(studentfrn)">Student Profile</a>
-    </li>
+      </li>
     [/if]
 </script>
 
-<script src="/scripts/student-profile/js/insert-link.js"></script>
+<script>
+  require.config({
+    paths: {
+      insertLink: '/scripts/student-profile/js/insert-link'
+    }
+  });
+
+  require(['insertLink'], insertLink => {
+    insertLink.default();
+  });
+</script>
