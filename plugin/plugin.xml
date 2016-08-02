@@ -65,6 +65,16 @@
     <field table="sectionscores" field="exempt" access="ViewOnly" />
     <field table="sectionscoresassignments" field="dcid" access="ViewOnly" />
     <field table="sectionscoresassignments" field="grade" access="ViewOnly" />
-    <field table="pgfinalgrades" field="finalgradename" access="ViewOnly" />
+    <field table="s_ut_stu_x" field="special_ed_indicator" access="ViewOnly" />
+    <field table="u_def_ext_students" field="ell_indicator" access="ViewOnly" />
+    <field table="studentcorefields" field="medical_considerations" access="ViewOnly" />
+    <field table="studentcorefields" field="allergies" access="ViewOnly" />
+    <field table="studentcorefields" field="dentist_name" access="ViewOnly" />
+    <field table="studentcorefields" field="dentist_phone" access="ViewOnly" />
+    <field table="students" field="alert_medical" access="ViewOnly" />
+    <field table="students" field="alert_medicalexpires" access="ViewOnly" />
+    <field table="students" field="doctor_name" access="ViewOnly" />
+    <field table="students" field="doctor_phone" access="ViewOnly" />
+
   </access_request>
 </plugin>

@@ -192,35 +192,58 @@
             <column column="students.mailing_zip">mailing_zip</column>
             <column column="students.enroll_status">enroll_status</column>
             <column column="schools.name">school_name</column>
+            <column column="studentcorefields.medical_considerations">medical_considerations</column>
+            <column column="studentcorefields.allergies">allergies</column>
+            <column column="students.alert_medical">alert_medical</column>
+            <column column="students.alert_medicalexpires">alert_medicalexpires</column>
+            <column column="s_ut_stu_x.special_ed_indicator">special_ed_indicator</column>
+            <column column="u_def_ext_students.ell_indicator">ell_indicator</column>
+            <column column="students.doctor_name">doctor_name</column>
+            <column column="students.doctor_phone">doctor_phone</column>
+            <column column="studentcorefields.dentist_name">dentist_name</column>
+            <column column="studentcorefields.dentist_phone">dentist_phone</column>
         </columns>
         <sql>
             <![CDATA[
-      SELECT
-        students.id,
-        students.first_name,
-        students.middle_name,
-        students.last_name,
-        students.grade_level,
-        TO_CHAR(students.dob, 'MM/DD/YYYY') AS dob,
-        students.home_room,
-        TO_CHAR(students.entrydate, 'MM/DD/YYYY') as entrydate,
-        TO_CHAR(students.exitdate, 'MM/DD/YYYY') as exitdate,
-        students.mother,
-        students.father,
-        students.home_phone,
-        students.street,
-        students.city,
-        students.state,
-        students.zip,
-        students.mailing_street,
-        students.mailing_city,
-        students.mailing_state,
-        students.mailing_zip,
-        students.enroll_status,
-        schools.name
-      FROM students
-        JOIN schools ON students.schoolid = SCHOOLS.school_number
-      WHERE students.dcid = :students_dcid
+            SELECT
+              students.id,
+              students.first_name,
+              students.middle_name,
+              students.last_name,
+              students.grade_level,
+              TO_CHAR(students.dob, 'MM/DD/YYYY')       AS dob,
+              students.home_room,
+              TO_CHAR(students.entrydate, 'MM/DD/YYYY') AS entrydate,
+              TO_CHAR(students.exitdate, 'MM/DD/YYYY')  AS exitdate,
+              students.mother,
+              students.father,
+              students.home_phone,
+              students.street,
+              students.city,
+              students.state,
+              students.zip,
+              students.mailing_street,
+              students.mailing_city,
+              students.mailing_state,
+              students.mailing_zip,
+              students.enroll_status,
+              schools.name,
+              studentcorefields.medical_considerations,
+              studentcorefields.allergies,
+              students.alert_medical,
+              students.alert_medicalexpires,
+              s_ut_stu_x.special_ed_indicator,
+              u_def_ext_students.ell_indicator,
+              students.doctor_name,
+              students.doctor_phone,
+              studentcorefields.dentist_name,
+              studentcorefields.dentist_phone
+            FROM students
+              JOIN schools ON students.schoolid = schools.school_number
+              JOIN s_ut_stu_x ON students.dcid = s_ut_stu_x.studentsdcid
+              JOIN u_def_ext_students ON students.dcid = u_def_ext_students.studentsdcid
+              JOIN studentcorefields ON students.dcid = studentcorefields.studentsdcid
+            WHERE students.dcid = :students_dcid
     ]]>
         </sql>
     </query>

@@ -4,11 +4,23 @@ import ContactList from './components/student-contacts/ContactList';
 import General from './components/general/General';
 import CourseTable from './components/schedule/CourseTable';
 
+/**
+ * merges phones into contact objects
+ * @param  {array[object]} contacts
+ * @param  {array[object]} phones
+ * @return {array[object]|array}  if a non-empty contact array is passed in, return
+ * an array that has phones merged into contacts. if an empty contact array is passed in,
+ * return an empty array
+ */
 function mergePhonesIntoContacts(contacts, phones) {
-  return contacts.map(contact => {
-    contact.phones = phones.filter(phone => phone.contactdcid === contact.id);
-    return contact;
-  });
+  if (contacts.length) {
+    return contacts.map(contact => {
+      contact.phones = phones.filter(phone => phone.contactdcid === contact.id);
+      return contact;
+    });
+  } else {
+    return [];
+  }
 }
 
 const contactsFetch = window.fetch('/ws/schema/query/com.icsd.sp.overview.contacts', {
