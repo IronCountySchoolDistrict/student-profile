@@ -6,16 +6,18 @@ import CourseTable from './components/schedule/CourseTable';
 
 /**
  * merges phones into contact objects
- * @param  {array[object]} contacts
- * @param  {array[object]} phones
+ * @param  {array[object]|undefined} contacts
+ * @param  {array[object]|undefined} phones
  * @return {array[object]|array}  if a non-empty contact array is passed in, return
  * an array that has phones merged into contacts. if an empty contact array is passed in,
  * return an empty array
  */
 function mergePhonesIntoContacts(contacts, phones) {
-  if (contacts.length) {
+  if (contacts) {
     return contacts.map(contact => {
-      contact.phones = phones.filter(phone => phone.contactdcid === contact.id);
+      if (phones) {
+        contact.phones = phones.filter(phone => phone.contactdcid === contact.id);
+      }
       return contact;
     });
   } else {
