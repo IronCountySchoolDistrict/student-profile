@@ -14,12 +14,20 @@ export default class ContactList extends Component {
 
     return (
       <div>
-        {shouldDisplayContacts &&
-          <div className="panel panel-default">
-            <div className="panel-heading">Student Contacts</div>
-            <div className="panel-body">{contacts}</div>
+        <div className="panel panel-default">
+          <div className="panel-heading">Student Contacts</div>
+          <div className="panel-body">
+            {
+              (() => {
+                if (shouldDisplayContacts) {
+                  return contacts;
+                } else {
+                  return 'This student has no contacts'
+                }
+              })()
+            }
           </div>
-        }
+        </div>
       </div>
     );
   }
