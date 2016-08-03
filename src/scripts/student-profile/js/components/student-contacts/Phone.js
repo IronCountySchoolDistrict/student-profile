@@ -3,7 +3,7 @@ import React, {Component} from 'react';
 class Semicolon extends Component {
   render() {
     return (
-      <span>:</span>
+      <span>: </span>
     );
   }
 }

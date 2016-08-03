@@ -41,4 +41,4 @@ export default class Gpa extends Component {
   }
 }
 
-Gpa.defaultProps = { gpa: [] }
+Gpa.defaultProps = { gpa: [] };

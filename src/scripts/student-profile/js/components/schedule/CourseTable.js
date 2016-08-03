@@ -33,49 +33,62 @@ export default class CourseTable extends Component {
   }
 
   render() {
-    const uniqueTerms = this.getUniqueTerms(this.props.courses);
-    const headers = this.createGradesHeaders(uniqueTerms);
+    if (this.props.courses.length) {
+      const uniqueTerms = this.getUniqueTerms(this.props.courses);
+      const headers = CourseTable.createGradesHeaders(uniqueTerms);
+      var courseTable = (
+        <table className="table table-bordered table-condensed table-schedule">
+          <thead>
+          <tr>
+            <th>
+              Period
+            </th>
+            <th>
+              Class
+            </th>
+            <th>
+              Term
+            </th>
+            <th>
+              Date Enrolled
+            </th>
+            <th>
+              Date Left
+            </th>
+            <th>
+              <div>Absenses</div>
+              <div>All (Excused)</div>
+            </th>
+            <th>
+              Tardies
+            </th>
+            <th></th>
+            {headers}
+            <th>
+              Teacher
+            </th>
+          </tr>
+          </thead>
+          <CourseList courseData={this.props.courses} gpa={this.props.gpa} uniqueTerms={uniqueTerms}/>
+        </table>
+      );
+    }
+
     return (
       <div className="panel panel-default">
-        <div className="panel-heading">Current Schedule</div>
+        <div className="panel-heading">Course Schedule</div>
         <div className="panel-body">
-          <table className="table table-bordered table-condensed table-schedule">
-            <thead>
-            <tr>
-              <th>
-                Period
-              </th>
-              <th>
-                Class
-              </th>
-              <th>
-                Term
-              </th>
-              <th>
-                Date Enrolled
-              </th>
-              <th>
-                Date Left
-              </th>
-              <th>
-                <div>Absenses</div>
-                <div>All (Excused)</div>
-              </th>
-              <th>
-                Tardies
-              </th>
-              <th></th>
-              {headers}
-              <th>
-                Teacher
-              </th>
-            </tr>
-            </thead>
-            <CourseList courseData={this.props.courses} gpa={this.props.gpa} uniqueTerms={uniqueTerms}/>
-          </table>
+          {
+            (() => {
+              if (courseTable) {
+                return courseTable;
+              } else {
+                return 'This student does not have a schedule for this year'
+              }
+            })()
+          }
         </div>
       </div>
-
     );
   }
 }

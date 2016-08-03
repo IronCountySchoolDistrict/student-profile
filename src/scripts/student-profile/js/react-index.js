@@ -6,16 +6,18 @@ import CourseTable from './components/schedule/CourseTable';
 
 /**
  * merges phones into contact objects
- * @param  {array[object]} contacts
- * @param  {array[object]} phones
- * @return {array[object]|array}  if a non-empty contact array is passed in, return
+ * @param  {object[]|undefined} contacts
+ * @param  {object[]|undefined} phones
+ * @return {object[]|array}  if a non-empty contact array is passed in, return
  * an array that has phones merged into contacts. if an empty contact array is passed in,
  * return an empty array
  */
 function mergePhonesIntoContacts(contacts, phones) {
-  if (contacts.length) {
+  if (contacts) {
     return contacts.map(contact => {
-      contact.phones = phones.filter(phone => phone.contactdcid === contact.id);
+      if (phones) {
+        contact.phones = phones.filter(phone => phone.contactdcid === contact.id);
+      }
       return contact;
     });
   } else {
@@ -24,57 +26,57 @@ function mergePhonesIntoContacts(contacts, phones) {
 }
 
 const contactsFetch = window.fetch('/ws/schema/query/com.icsd.sp.overview.contacts', {
-    credentials: 'include',
-    method: 'post',
-    headers: {
-      'Accept': 'application/json',
-      'Content-Type': 'application/json'
-    },
-    body: JSON.stringify({
-      students_dcid: getParameterByName('frn').slice(3)
-    })
+  credentials: 'include',
+  method: 'post',
+  headers: {
+    'Accept': 'application/json',
+    'Content-Type': 'application/json'
+  },
+  body: JSON.stringify({
+    students_dcid: getParameterByName('frn').slice(3)
   })
+})
   .then(r => r.json());
 
 const phonesFetch = window.fetch('/ws/schema/query/com.icsd.sp.overview.phones', {
-    credentials: 'include',
-    method: 'post',
-    headers: {
-      'Accept': 'application/json',
-      'Content-Type': 'application/json'
-    },
-    body: JSON.stringify({
-      students_dcid: getParameterByName('frn').slice(3)
-    })
+  credentials: 'include',
+  method: 'post',
+  headers: {
+    'Accept': 'application/json',
+    'Content-Type': 'application/json'
+  },
+  body: JSON.stringify({
+    students_dcid: getParameterByName('frn').slice(3)
   })
+})
   .then(r => r.json());
 
 
 const generalFetch = window.fetch('/ws/schema/query/com.icsd.sp.overview.general', {
-    credentials: 'include',
-    method: 'post',
-    headers: {
-      'Accept': 'application/json',
-      'Content-Type': 'application/json'
-    },
-    body: JSON.stringify({
-      students_dcid: getParameterByName('frn').slice(3)
-    })
+  credentials: 'include',
+  method: 'post',
+  headers: {
+    'Accept': 'application/json',
+    'Content-Type': 'application/json'
+  },
+  body: JSON.stringify({
+    students_dcid: getParameterByName('frn').slice(3)
   })
+})
   .then(r => r.json());
 
 const scheduleFetch = window.fetch('/ws/schema/query/com.icsd.sp.overview.schedule', {
-    credentials: 'include',
-    method: 'post',
-    headers: {
-      'Accept': 'application/json',
-      'Content-Type': 'application/json'
-    },
-    body: JSON.stringify({
-      students_dcid: getParameterByName('frn').slice(3),
-      yearid: getParameterByName('yearid')
-    })
+  credentials: 'include',
+  method: 'post',
+  headers: {
+    'Accept': 'application/json',
+    'Content-Type': 'application/json'
+  },
+  body: JSON.stringify({
+    students_dcid: getParameterByName('frn').slice(3),
+    yearid: getParameterByName('yearid')
   })
+})
   .then(r => r.json())
   .then(r => {
     if (r.record) {
@@ -89,32 +91,32 @@ const scheduleFetch = window.fetch('/ws/schema/query/com.icsd.sp.overview.schedu
   });
 
 const gpaFetch = window.fetch('/ws/schema/query/com.icsd.sp.overview.gpa', {
-    credentials: 'include',
-    method: 'post',
-    headers: {
-      'Accept': 'application/json',
-      'Content-Type': 'application/json'
-    },
-    body: JSON.stringify({
-      students_dcid: getParameterByName('frn').slice(3),
-      yearid: getParameterByName('yearid')
-    })
+  credentials: 'include',
+  method: 'post',
+  headers: {
+    'Accept': 'application/json',
+    'Content-Type': 'application/json'
+  },
+  body: JSON.stringify({
+    students_dcid: getParameterByName('frn').slice(3),
+    yearid: getParameterByName('yearid')
   })
+})
   .then(r => r.json());
 
 Promise.all([
-    contactsFetch,
-    phonesFetch,
-    generalFetch,
-    scheduleFetch,
-    gpaFetch
-  ])
+  contactsFetch,
+  phonesFetch,
+  generalFetch,
+  scheduleFetch,
+  gpaFetch
+])
   .then(results => ({
     contacts: mergePhonesIntoContacts(results[0].record, results[1].record),
     general: results[2],
     schedule: results[3],
     gpa: results[4]
-}))
+  }))
   .then(results => {
     ReactDOM.render(
       <ContactList contacts={results.contacts}/>,
@@ -126,10 +128,8 @@ Promise.all([
       document.getElementById('general-container')
     );
 
-    if (results.schedule.length) {
-      ReactDOM.render(
-        <CourseTable courses={results.schedule} gpa={results.gpa.record}/>,
-        document.getElementById('schedule-container')
-      );
-    }
+    ReactDOM.render(
+      <CourseTable courses={results.schedule} gpa={results.gpa.record}/>,
+      document.getElementById('schedule-container')
+    );
   });
