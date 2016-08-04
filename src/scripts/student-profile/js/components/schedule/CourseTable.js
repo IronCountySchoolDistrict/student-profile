@@ -35,9 +35,9 @@ export default class CourseTable extends Component {
   render() {
     if (this.props.courses.length) {
       const uniqueTerms = this.getUniqueTerms(this.props.courses);
-      const headers = CourseTable.createGradesHeaders(uniqueTerms);
+      const headers = this.createGradesHeaders(uniqueTerms);
       var courseTable = (
-        <table className="table table-bordered table-condensed table-schedule">
+        <table className="table table-bordered table-condensed table-schedule table-hover">
           <thead>
           <tr>
             <th>
