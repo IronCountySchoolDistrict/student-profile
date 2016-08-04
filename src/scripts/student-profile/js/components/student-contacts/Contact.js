@@ -15,7 +15,9 @@ export default class Contact extends Component {
       <div className="col-lg-4 col-md-12">
         <div className="panel panel-default">
           <div className="panel-heading">
-            {this.props.priority} {this.props.priority && <span>-</span>} {this.props.first_name} {this.props.last_name} {this.props.relationship && <span>({this.props.relationship})</span>}
+            {this.props.priority} {this.props.priority &&
+          <span>-</span>} {this.props.first_name} {this.props.last_name} {this.props.relationship &&
+          <span>({this.props.relationship})</span>}
             <span className="panel-legal-guardian label label-sm label-info">
               {this.props.legal_guardian === '1' ? 'Legal' : ''}
             </span>
