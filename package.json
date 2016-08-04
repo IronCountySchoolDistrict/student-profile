@@ -7,14 +7,14 @@
   },
   "repository": {
     "type": "git",
-    "url": "git+https://github.com/IronCountySchoolDistrict/sams.git"
+    "url": "git+https://github.com/IronCountySchoolDistrict/student-profile.git"
   },
   "author": "IronCountySchoolDistrict",
   "license": "Apache-2.0",
   "bugs": {
-    "url": "https://github.com/IronCountySchoolDistrict/sams/issues"
+    "url": "https://github.com/IronCountySchoolDistrict/student-profile/issues"
   },
-  "homepage": "https://github.com/IronCountySchoolDistrict/sams#readme",
+  "homepage": "https://github.com/IronCountySchoolDistrict/student-profile#readme",
   "dependencies": {
     "react": "^15.3.0",
     "react-dom": "^15.3.0"
