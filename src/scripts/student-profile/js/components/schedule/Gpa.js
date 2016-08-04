@@ -22,23 +22,27 @@ export default class Gpa extends Component {
       }
     });
 
-    return (
-      <tr>
-        <td></td>
-        <td></td>
-        <td></td>
-        <td></td>
-        <td></td>
-        <td></td>
-        <td></td>
-        <td>
-          GPA:
-        </td>
-        {gpas}
-        <td></td>
-      </tr>
-    );
+    if (gpas.length) {
+      return (
+        <tr>
+          <td></td>
+          <td></td>
+          <td></td>
+          <td></td>
+          <td></td>
+          <td></td>
+          <td></td>
+          <td>
+            GPA:
+          </td>
+          {gpas}
+          <td></td>
+        </tr>
+      );
+    } else {
+      return (<tr></tr>);
+    }
   }
 }
 
-Gpa.defaultProps = { gpa: [] };
+Gpa.defaultProps = {gpa: []};

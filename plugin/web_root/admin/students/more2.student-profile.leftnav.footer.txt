@@ -13,7 +13,7 @@
     }
   });
 
-  require(['insertLink'], insertLink => {
+  require(['insertLink'], function(insertLink) {
     insertLink.default();
   });
 </script>
