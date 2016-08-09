@@ -58,7 +58,7 @@ export default class General extends Component {
     const textAlignStyle = {
       textAlign: 'center'
     };
-    const displayProgramsTable = this.props.general.special_ed_indicator || this.props.ell_indicator;
+    const displayProgramsTable = this.props.general.special_ed_indicator || this.props.general.ell_indicator;
     const displayMedicalTable = (
       this.props.general.medical_considerations ||
       this.props.general.allergies ||
