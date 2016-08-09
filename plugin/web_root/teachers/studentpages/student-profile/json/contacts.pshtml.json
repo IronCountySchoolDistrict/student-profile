@@ -1,0 +1,54 @@
+[
+  ~[tlist_sql;
+    SELECT
+      u_student_contacts.id,
+      u_student_contacts.priority,
+      u_student_contacts.employer,
+      u_student_contacts.legal_guardian,
+      u_student_contacts.relationship,
+      u_student_contacts.residence_street,
+      u_student_contacts.residence_city,
+      u_student_contacts.residence_state,
+      u_student_contacts.residence_zip,
+      u_student_contacts.mailing_street,
+      u_student_contacts.mailing_city,
+      u_student_contacts.mailing_state,
+      u_student_contacts.mailing_zip,
+      u_student_contacts.first_name,
+      u_student_contacts.last_name,
+      u_sc_email.email_address,
+      CASE WHEN row_number()
+                    OVER (
+                      ORDER BY NULL) = count(*)
+                    OVER ()
+            THEN ''
+          ELSE ',' END AS comma
+    FROM
+      u_student_contacts
+      LEFT JOIN u_sc_email ON u_student_contacts.studentsdcid = u_sc_email.studentsdcid AND
+                              u_student_contacts.id = u_sc_email.contactdcid
+    WHERE
+      u_student_contacts.studentsdcid = ~(gpv.students_dcid)
+    ORDER BY
+      u_student_contacts.legal_guardian DESC,
+      u_student_contacts.priority ASC]
+    {
+      "id": ~(id),
+      "priority": ~[if.~(priority)=]null[else]"~(priority)"[/if],
+      "employer": "~(employer)",
+      "legal_guardian": "~(legal_guardian)",
+      "relationship": "~(relationship)",
+      "residence_street": "~(residence_street)",
+      "residence_city": "~(residence_city)",
+      "residence_state": "~(residence_state)",
+      "residence_zip": "~(residence_zip)",
+      "mailing_street": "~(mailing_street)",
+      "mailing_city": "~(mailing_city)",
+      "mailing_state": "~(mailing_state)",
+      "mailing_zip": "~(mailing_zip)",
+      "first_name": "~(first_name)",
+      "last_name": "~(last_name)",
+      "email_address": "~(email_address)"
+    }~(comma)
+  [/tlist_sql]
+]

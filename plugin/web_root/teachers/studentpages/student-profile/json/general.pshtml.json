@@ -1,0 +1,77 @@
+  ~[tlist_sql;
+    SELECT
+      students.id,
+      students.first_name,
+      students.middle_name,
+      students.last_name,
+      students.grade_level,
+      students.dob,
+      students.home_room,
+      students.entrydate,
+      students.exitdate,
+      students.mother,
+      students.father,
+      students.home_phone,
+      students.street,
+      students.city,
+      students.state,
+      students.zip,
+      students.mailing_street,
+      students.mailing_city,
+      students.mailing_state,
+      students.mailing_zip,
+      students.enroll_status,
+      schools.name,
+      studentcorefields.medical_considerations,
+      studentcorefields.allergies,
+      students.alert_medical,
+      students.alert_medicalexpires,
+      s_ut_stu_x.special_ed_indicator,
+      u_def_ext_students.ell_indicator,
+      students.doctor_name,
+      students.doctor_phone,
+      studentcorefields.dentist_name,
+      studentcorefields.dentist_phone
+    FROM
+      students
+      JOIN schools ON students.schoolid = schools.school_number
+      JOIN s_ut_stu_x ON students.dcid = s_ut_stu_x.studentsdcid
+      JOIN u_def_ext_students ON students.dcid = u_def_ext_students.studentsdcid
+      JOIN studentcorefields ON students.dcid = studentcorefields.studentsdcid
+    WHERE
+      students.dcid = ~(gpv.students_dcid)]
+    {
+      "id": "~(id)",
+      "first_name": "~(first_name)",
+      "middle_name": "~(middle_name)",
+      "last_name": "~(last_name)",
+      "grade_level": "~(grade_level)",
+      "dob": "~(dob;d)",
+      "home_room": "~(home_room)",
+      "entrydate": "~(entrydate;d)",
+      "exitdate": "~(exitdate;d)",
+      "mother": "~(mother)",
+      "father": "~(father)",
+      "home_phone": "~(home_phone)",
+      "street": "~(street)",
+      "city": "~(city)",
+      "state": "~(state)",
+      "zip": "~(zip)",
+      "mailing_street": "~(mailing_street)",
+      "mailing_city": "~(mailing_city)",
+      "mailing_state": "~(mailing_state)",
+      "mailing_zip": "~(mailing_zip)",
+      "enroll_status": "~(enroll_status)",
+      "school_name": "~(school_name)",
+      "medical_considerations": ~[if.~(medical_considerations)=]null[else]"~(medical_considerations)"[/if],
+      "allergies": ~[if.~(allergies)=]null[else]"~(allergies)"[/if],
+      "alert_medical": ~[if.~(alert_medical)=]null[else]"~(alert_medical)"[/if],
+      "alert_medicalexpires": ~[if.~(alert_medicalexpires)=]null[else]"~(alert_medicalexpires;d)"[/if],
+      "special_ed_indicator": ~[if.~(special_ed_indicator)=]null[else]"~(special_ed_indicator)"[/if],
+      "ell_indicator": ~[if.~(ell_indicator)=]null[else]"~(ell_indicator)"[/if],
+      "doctor_name": ~[if.~(doctor_name)=]null[else]"~(doctor_name)"[/if],
+      "doctor_phone": ~[if.~(doctor_phone)=]null[else]"~(doctor_phone)"[/if],
+      "dentist_name": ~[if.~(dentist_name)=]null[else]"~(dentist_name)"[/if],
+      "dentist_phone": ~[if.~(dentist_phone)=]null[else]"~(dentist_phone)"[/if]
+    }
+  [/tlist_sql]

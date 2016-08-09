@@ -1,0 +1,25 @@
+[
+  ~[tlist_sql;
+    SELECT
+      id,
+      contactdcid,
+      phone_number,
+      phone_type,
+      CASE WHEN row_number()
+                        OVER (
+                          ORDER BY NULL) = count(*)
+                        OVER ()
+                THEN ''
+              ELSE ',' END AS comma
+    FROM
+      u_sc_phone
+    WHERE
+      studentsdcid = ~(gpv.students_dcid)]
+    {
+      "phone_id": ~(phone_id),
+      "contactdcid": ~(contactdcid),
+      "phone_number": "~(phone_number)",
+      "phone_type": "~(phone_type)"
+    }~(comma)
+  [/tlist_sql]
+]

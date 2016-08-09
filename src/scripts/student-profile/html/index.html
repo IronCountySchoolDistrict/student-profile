@@ -1,3 +1,4 @@
+<!DOCTYPE html>
 <html>
 <head>
     <meta charset="utf-8"/>
@@ -9,16 +10,21 @@
     <script src="https://cdnjs.cloudflare.com/ajax/libs/handlebars.js/4.0.5/handlebars.js"></script>
 
     <script>
-        function getParameterByName(name, url) {
-            if (!url) url = window.location.href;
-            name = name.replace(/[\[\]]/g, "\\$&");
-            var regex = new RegExp("[?&]" + name + "(=([^&#]*)|&|#|$)"),
-                    results = regex.exec(url);
-            if (!results) return null;
-            if (!results[2]) return '';
-            return decodeURIComponent(results[2].replace(/\+/g, " "));
-        }
+      window.iFrameResizer = {
+        targetOrigin: 'https://pstest3.irondistrict.org'
+      };
+
+      function getParameterByName(name, url) {
+          if (!url) url = window.location.href;
+          name = name.replace(/[\[\]]/g, "\\$&");
+          var regex = new RegExp("[?&]" + name + "(=([^&#]*)|&|#|$)"),
+                  results = regex.exec(url);
+          if (!results) return null;
+          if (!results[2]) return '';
+          return decodeURIComponent(results[2].replace(/\+/g, " "));
+      }
     </script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/iframe-resizer/3.5.5/iframeResizer.contentWindow.js"></script>
 
     <script src="/scripts/student-profile/js/bundle.js"></script>
 </head>
@@ -26,12 +32,7 @@
 <!-- compiled content.html goes here -->
 <div class="container-fluid">
     <div class="row">
-        <div class="col-md-2" id="general-container"></div>
-        <div class="col-md-10">
-            <div id="student-contacts-container"></div>
-            <div id="schedule-container"></div>
-            <div id="test-scores-container"></div>
-        </div>
+        <div id="profile-container"></div>
     </div>
     <!-- end .row -->
 </div>
