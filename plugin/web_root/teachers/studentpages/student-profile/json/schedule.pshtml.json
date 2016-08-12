@@ -19,29 +19,59 @@
     SELECT
       cc.dcid,
       cc.id,
-      TO_CHAR(cc.dateenrolled, 'MM/DD/YYYY')                    AS dateenrolled,
-      courses.course_name,
-      sections.expression,
-      terms.abbreviation,
+      CASE
+      WHEN TO_CHAR(cc.dateenrolled) IS NULL
+        THEN 'null'
+      ELSE '"' || TO_CHAR(cc.dateenrolled, 'MM/DD/YYYY') || '"' END,
+      CASE
+      WHEN TO_CHAR(courses.course_name) IS NULL
+        THEN 'null'
+      ELSE '"' || TO_CHAR(courses.course_name) || '"' END,
+      CASE
+      WHEN TO_CHAR(sections.expression) IS NULL
+        THEN 'null'
+      ELSE '"' || TO_CHAR(sections.expression) || '"' END,
+      CASE
+      WHEN TO_CHAR(terms.abbreviation) IS NULL
+        THEN 'null'
+      ELSE '"' || TO_CHAR(terms.abbreviation) || '"' END,
       cc.termid,
       dropped_complete.dropped,
       dropped_complete.completed,
-      cc.sectionid,
-      cc.studentid,
-      nvl(sectionscoresassignments.grade, chr(123) || chr(125)) AS grade,
-      teachers.lastfirst,
-      students.grade_level,
-      schools.low_grade,
-      TO_CHAR(cc.dateleft, 'MM/DD/YYYY')                        AS dateleft,
-      nvl(sectionscores.exempt, chr(123) || chr(125))           AS exempt,
+      CASE
+      WHEN TO_CHAR(cc.sectionid) IS NULL
+        THEN 'null'
+      ELSE TO_CHAR(cc.sectionid) END,
+      CASE
+      WHEN TO_CHAR(cc.studentid) IS NULL
+        THEN 'null'
+      ELSE TO_CHAR(cc.studentid) END,
+      nvl(sectionscoresassignments.grade, chr(123) || chr(125)),
+      CASE
+      WHEN TO_CHAR(teachers.lastfirst) IS NULL
+        THEN 'null'
+      ELSE '"' || TO_CHAR(teachers.lastfirst) || '"' END,
+      CASE
+      WHEN TO_CHAR(students.grade_level) IS NULL
+        THEN 'null'
+      ELSE TO_CHAR(students.grade_level) END,
+      CASE
+      WHEN TO_CHAR(schools.low_grade) IS NULL
+        THEN 'null'
+      ELSE TO_CHAR(schools.low_grade) END,
+      CASE
+      WHEN TO_CHAR(cc.dateleft) IS NULL
+        THEN 'null'
+      ELSE '"' || TO_CHAR(cc.dateleft, 'MM/DD/YYYY') || '"' END,
+      nvl(sectionscores.exempt, chr(123) || chr(125)),
       CASE
       WHEN row_number()
-          OVER (
-            ORDER BY NULL) = count(*)
-          OVER ()
+           OVER (
+             ORDER BY NULL) = count(*)
+           OVER ()
         THEN ''
       ELSE ','
-      END                                                       AS comma
+      END AS comma
     FROM
       cc
       LEFT JOIN dropped_complete ON cc.id = dropped_complete.id
@@ -57,46 +87,46 @@
             ORDER BY 1)
           || chr(125) AS exempt
         FROM (
-              SELECT
-                cc.sectionid                        AS sectionid,
-                attendance_code.att_category        AS att_category,
-                count(attendance_code.att_category) AS att_count
-              FROM
-                attendance
-                INNER JOIN students ON attendance.studentid = students.id
-                INNER JOIN
-                (
-                  SELECT
-                    id,
-                    CASE attendance_code.att_code
-                    WHEN 'U'
-                      THEN 'Unexcused'
-                    WHEN 'E'
-                      THEN 'Excused'
-                    WHEN 'S'
-                      THEN 'Excused'
-                    WHEN 'L'
-                      THEN 'Tardy'
-                    WHEN 'T'
-                      THEN 'Tardy'
-                    WHEN 'X'
-                      THEN 'Tardy' END AS att_category
-                  FROM attendance_code
-                  WHERE yearid = ~(gpv.yearid) AND schoolid = (
-                    SELECT schoolid
-                    FROM students
-                    WHERE dcid = ~(gpv.students_dcid))
-                ) attendance_code
-                  ON attendance.attendance_codeid = attendance_code.id
-                INNER JOIN cc ON attendance.ccid = cc.id
-              WHERE
-                students.id = (
-                  SELECT id
-                  FROM students
-                  WHERE dcid = ~(gpv.students_dcid)) AND
-                attendance.yearid = ~(gpv.yearid) AND
-                attendance_code.att_category IS NOT NULL
-              GROUP BY cc.sectionid, attendance_code.att_category) section_attendance
+               SELECT
+                 cc.sectionid                        AS sectionid,
+                 attendance_code.att_category        AS att_category,
+                 count(attendance_code.att_category) AS att_count
+               FROM
+                 attendance
+                 INNER JOIN students ON attendance.studentid = students.id
+                 INNER JOIN
+                 (
+                   SELECT
+                     id,
+                     CASE attendance_code.att_code
+                     WHEN 'U'
+                       THEN 'Unexcused'
+                     WHEN 'E'
+                       THEN 'Excused'
+                     WHEN 'S'
+                       THEN 'Excused'
+                     WHEN 'L'
+                       THEN 'Tardy'
+                     WHEN 'T'
+                       THEN 'Tardy'
+                     WHEN 'X'
+                       THEN 'Tardy' END AS att_category
+                   FROM attendance_code
+                   WHERE yearid = ~(gpv.yearid) AND schoolid = (
+                     SELECT schoolid
+                     FROM students
+                     WHERE dcid = ~(gpv.students_dcid))
+                 ) attendance_code
+                   ON attendance.attendance_codeid = attendance_code.id
+                 INNER JOIN cc ON attendance.ccid = cc.id
+               WHERE
+                 students.id = (
+                   SELECT id
+                   FROM students
+                   WHERE dcid = ~(gpv.students_dcid)) AND
+                 attendance.yearid = ~(gpv.yearid) AND
+                 attendance_code.att_category IS NOT NULL
+               GROUP BY cc.sectionid, attendance_code.att_category) section_attendance
         GROUP BY sectionid
       ) sectionscores ON cc.sectionid = sectionscores.id
       LEFT JOIN
@@ -139,22 +169,22 @@
       (cc.termid LIKE ~(gpv.yearid) || '%' OR cc.termid LIKE '-' || ~(gpv.yearid) || '%')
     ORDER BY terms.abbreviation, sections.expression]
       {
-        "dcid": "~(dcid)",
-        "id": "~(id)",
-        "dateenrolled": "~(dateenrolled)",
-        "course_name": "~(course_name)",
-        "expression": "~(expression)",
-        "abbreviation": "~(abbreviation)",
-        "termid": "~(termid)",
-        "dropped": "~(dropped)",
-        "completed": "~(completed)",
-        "sectionid": "~(sectionid)",
-        "studentid": "~(studentid)",
+        "dcid": ~(dcid),
+        "id": ~(id),
+        "dateenrolled": ~(dateenrolled),
+        "course_name": ~(course_name),
+        "expression": ~(expression),
+        "abbreviation": ~(abbreviation),
+        "termid": ~(termid),
+        "dropped": ~(dropped),
+        "completed": ~(completed),
+        "sectionid": ~(sectionid),
+        "studentid": ~(studentid),
         "grades": ~(grades),
-        "lastfirst": "~(lastfirst)",
-        "grade_level": "~(grade_level)",
-        "low_grade": "~(low_grade)",
-        "dateleft": "~(dateleft)",
+        "lastfirst": ~(lastfirst),
+        "grade_level": ~(grade_level),
+        "low_grade": ~(low_grade),
+        "dateleft": ~(dateleft),
         "attendance": ~(attendance)
       }~(comma)
   [/tlist_sql]
