@@ -34,14 +34,24 @@ function _mergePhonesIntoContacts(contacts, phones) {
   }
 }
 
+function _getParameterByName(name, url) {
+  if (!url) url = window.location.href;
+  name = name.replace(/[\[\]]/g, "\\$&");
+  var regex = new RegExp("[?&]" + name + "(=([^&#]*)|&|#|$)"),
+    results = regex.exec(url);
+  if (!results) return null;
+  if (!results[2]) return '';
+  return decodeURIComponent(results[2].replace(/\+/g, " "));
+}
+
 /**
  * @param {string} portal PowerSchool portal that user is currently logged in
  * @param {Promise}
  */
 export default function loadData() {
   const portal = _getPortal();
-  const studentsDcid = getParameterByName('students_frn').slice(3);
-  const yearId = getParameterByName('yearid');
+  const studentsDcid = _getParameterByName('students_frn').slice(3);
+  const yearId = _getParameterByName('yearid');
   if (portal === 'admin') {
     const contactsFetch = window.fetch('/ws/schema/query/com.icsd.sp.overview.contacts', {
         credentials: 'include',
@@ -83,7 +93,13 @@ export default function loadData() {
         })
       })
       .then(r => r.json())
-      .then(r => r.record);
+      .then(r => {
+        if (r.record) {
+          return r.record[0];
+        } else {
+          return {};
+        }
+      });
 
     const scheduleFetch = window.fetch('/ws/schema/query/com.icsd.sp.overview.schedule', {
         credentials: 'include',
@@ -106,7 +122,7 @@ export default function loadData() {
             return course;
           });
         } else {
-          return r.record;
+          return [];
         }
       });
 
@@ -119,11 +135,17 @@ export default function loadData() {
         },
         body: JSON.stringify({
           students_dcid: studentsDcid,
-          yearid: yearid
+          yearid: yearId
         })
       })
       .then(r => r.json())
-      .then(r => r.record);
+      .then(r => {
+        if (r.record) {
+          return r.record;
+        } else {
+          return [];
+        }
+      });
 
     return Promise.all([
         contactsFetch,
@@ -132,21 +154,16 @@ export default function loadData() {
         scheduleFetch,
         gpaFetch
       ])
-      .then(results => ({
-        contacts: _mergePhonesIntoContacts(results[0], results[1]),
-        general: results[2],
-        schedule: results[3],
-        gpa: results[4]
-      }));
+      .then(results => {
+        return {
+          contacts: _mergePhonesIntoContacts(results[0], results[1]),
+          general: results[2],
+          schedule: results[3],
+          gpa: results[4]
+        };
+      });
   } else if (portal === 'teachers') {
     const contactsFetch = window.fetch(`/teachers/studentpages/student-profile/json/contacts.pshtml.json?${_toQueryStr({
-      students_dcid: studentsDcid
-    })}`, {
-        credentials: 'include'
-      })
-      .then(r => r.json());
-
-    const phonesFetch = window.fetch(`/teachers/studentpages/student-profile/json/phones.pshtml.json?${_toQueryStr({
       students_dcid: studentsDcid
     })}`, {
         credentials: 'include'
@@ -178,17 +195,16 @@ export default function loadData() {
 
     return Promise.all([
         contactsFetch,
-        phonesFetch,
         generalFetch,
         scheduleFetch,
         gpaFetch
       ])
       .then(results => {
         return {
-          contacts: _mergePhonesIntoContacts(results[0], results[1]),
-          general: results[2],
-          schedule: results[3],
-          gpa: results[4]
+          contacts: results[0],
+          general: results[1],
+          schedule: results[2],
+          gpa: results[3]
         };
       });
   }

@@ -13,16 +13,6 @@
       window.iFrameResizer = {
         targetOrigin: 'https://pstest3.irondistrict.org'
       };
-
-      function getParameterByName(name, url) {
-          if (!url) url = window.location.href;
-          name = name.replace(/[\[\]]/g, "\\$&");
-          var regex = new RegExp("[?&]" + name + "(=([^&#]*)|&|#|$)"),
-                  results = regex.exec(url);
-          if (!results) return null;
-          if (!results[2]) return '';
-          return decodeURIComponent(results[2].replace(/\+/g, " "));
-      }
     </script>
     <script src="https://cdnjs.cloudflare.com/ajax/libs/iframe-resizer/3.5.5/iframeResizer.contentWindow.js"></script>
 
