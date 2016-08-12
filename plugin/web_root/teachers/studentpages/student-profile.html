@@ -5,8 +5,6 @@
     ~[wc:commonscripts]
     <link href="/images/css/screen.css" rel="stylesheet" media="screen">
     <link href="/images/css/print.css" rel="stylesheet" media="print">
-
-
 </head>
 
 <body>
@@ -27,8 +25,8 @@
             }
         });
 
-        require(['initIFrameResizer'], (initIFrameResizer) => {
-          initIFrameResizer();
+        require(['init-iFrameResizer', 'iFrameResizer'], (initIFrameResizer) => {
+          initIFrameResizer.init();
         });
     </script>
 </html>
