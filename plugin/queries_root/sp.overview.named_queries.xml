@@ -274,16 +274,20 @@
         </columns>
         <sql>
             <![CDATA[
-            with dropped_complete as (select id, CASE WHEN termid < 0
-                THEN 'true'
-              ELSE 'false'
-              END                                                       AS dropped,
-              CASE
-              WHEN dateleft < sysdate
-                THEN 'true'
-              ELSE 'false'
-              END                                                       AS completed
-              from cc)
+            WITH dropped_complete AS (
+                SELECT
+                  id,
+                  CASE WHEN termid < 0
+                    THEN 'true'
+                  ELSE 'false'
+                  END AS dropped,
+                  CASE
+                  WHEN dateleft < sysdate
+                    THEN 'true'
+                  ELSE 'false'
+                  END AS completed
+                FROM cc
+            )
             SELECT
               cc.dcid,
               cc.id,
@@ -304,7 +308,7 @@
               nvl(sectionscores.exempt, chr(123) || chr(125))           AS exempt
             FROM
               cc
-              left join dropped_complete on cc.id = dropped_complete.id
+              LEFT JOIN dropped_complete ON cc.id = dropped_complete.id
               LEFT JOIN
               (
                 SELECT
@@ -366,9 +370,12 @@
                   cc.sectionid,
                   chr(123) ||
                   listagg(
-                      '"' || pgfinalgrades.finalgradename || '"' || chr(58) || chr(123) ||
+                      '"' || pgfinalgrades.finalgradename || '"' || chr(58) ||
+                      chr(123) ||
+                      '"id"' || chr(58) || ' ' || pgfinalgrades.id || ',' ||
                       '"percent"' || chr(58) || ' "' || pgfinalgrades.percent || '",' ||
-                      '"grade"' || chr(58) || ' "' || pgfinalgrades.grade || '"' || chr(125)
+                      '"grade"' || chr(58) || ' "' || pgfinalgrades.grade || '"' ||
+                      chr(125)
                       , ',')
                   WITHIN GROUP (
                     ORDER BY 1)
