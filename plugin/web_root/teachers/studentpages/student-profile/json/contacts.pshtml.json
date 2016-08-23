@@ -30,10 +30,12 @@
               chr(125)
               , ',')
           WITHIN GROUP (
-            ORDER BY 1)
-          || chr(93) AS phonejson
+            ORDER BY contactdcid) || chr(93) AS phonejson
+
         FROM
           u_sc_phone
+        WHERE
+          u_sc_phone.studentsdcid = ~(gpv.students_dcid)
         GROUP BY
           contactdcid
     )
@@ -103,7 +105,7 @@
       WHEN to_char(u_sc_email.email_address) IS NULL
         THEN 'null'
       ELSE '"' || to_char(u_sc_email.email_address) || '"' END,
-      phones.phonejson,
+      coalesce(phones.phonejson, chr(91) || chr(93)),
       CASE WHEN row_number()
                 OVER (
                   ORDER BY NULL) = count(*)

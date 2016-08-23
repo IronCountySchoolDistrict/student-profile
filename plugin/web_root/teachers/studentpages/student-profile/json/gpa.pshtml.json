@@ -8,7 +8,7 @@
       CASE
       WHEN test.name IS NULL
         THEN 'null'
-      ELSE to_char(test.name) END,
+      ELSE to_char(test.name, '0.99') END,
       CASE
       WHEN row_number()
            OVER (

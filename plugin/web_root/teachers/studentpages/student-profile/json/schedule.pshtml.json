@@ -135,9 +135,12 @@
           cc.sectionid,
           chr(123) ||
           listagg(
-              '"' || pgfinalgrades.finalgradename || '"' || chr(58) || chr(123) ||
+              '"' || pgfinalgrades.finalgradename || '"' || chr(58) ||
+              chr(123) ||
+              '"id"' || chr(58) || ' ' || pgfinalgrades.id || ',' ||
               '"percent"' || chr(58) || ' "' || pgfinalgrades.percent || '",' ||
-              '"grade"' || chr(58) || ' "' || pgfinalgrades.grade || '"' || chr(125)
+              '"grade"' || chr(58) || ' "' || pgfinalgrades.grade || '"' ||
+              chr(125)
               , ',')
           WITHIN GROUP (
             ORDER BY 1)
