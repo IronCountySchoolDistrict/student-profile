@@ -1,5 +1,5 @@
+import {getPortal} from '../../util';
 import React, {Component} from 'react';
-
 
 export default class General extends Component {
 
@@ -75,7 +75,7 @@ export default class General extends Component {
           {this.toFullName(this.props.general.first_name, this.props.general.middle_name, this.props.general.last_name)}
         </h4>
         <div className="thumbnail">
-          <img src={`/admin/stp/${this.props.general.id}ph.jpeg`} alt="Student's Photo"/>
+          <img src={`/${getPortal()}/stp/${this.props.general.id}ph.jpeg`} alt="Student's Photo"/>
         </div>
         <table className="table table-condensed table-hover overview-table">
           <thead>

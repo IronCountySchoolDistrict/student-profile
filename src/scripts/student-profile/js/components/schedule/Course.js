@@ -2,12 +2,14 @@ import React, {Component} from 'react';
 import GradesCell from './GradesCells';
 
 export default class Course extends Component {
-  printGradesForTerms(grades, uniqueTerms) {
+
+  _printGradesForTerms(grades, uniqueTerms) {
     return uniqueTerms.map(term => {
       if (Object.keys(grades).indexOf(term) !== -1) {
+        const termGrade = grades[term];
         return (
-          <td>
-            <GradesCell grade={grades[term].grade} percent={grades[term].percent}/>
+          <td key={termGrade.id}>
+            <GradesCell grade={termGrade.grade} percent={termGrade.percent}/>
           </td>
         )
       } else {
@@ -26,7 +28,7 @@ export default class Course extends Component {
     const tardy = !!this.props.attendance.tardy ? this.props.attendance.tardy : 0;
     const totalAbsences = unexcused + excused;
 
-    const grades = this.printGradesForTerms(this.props.grades, this.props.uniqueTerms);
+    const grades = this._printGradesForTerms(this.props.grades, this.props.uniqueTerms);
     return (
       <tr>
         <td>
