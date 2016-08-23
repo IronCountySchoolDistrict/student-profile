@@ -1,16 +1,9 @@
+import { getPortal } from './util';
+
 function _toQueryStr(obj) {
   return Object.keys(obj)
     .map(key => `${key}=${obj[key]}`)
     .join('&');
-}
-
-function _getPortal() {
-  var path = window.top.location.pathname;
-  var pos = path.indexOf('/', 1);
-  if (pos > 0) {
-    path = path.substring(1, pos);
-  }
-  return path;
 }
 
 /**
@@ -49,7 +42,7 @@ function _getParameterByName(name, url) {
  * @param {Promise}
  */
 export default function loadData() {
-  const portal = _getPortal();
+  const portal = getPortal();
   const studentsDcid = _getParameterByName('students_frn').slice(3);
   const yearId = _getParameterByName('yearid');
   if (portal === 'admin') {
