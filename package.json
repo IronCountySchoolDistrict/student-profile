@@ -17,7 +17,8 @@
   "homepage": "https://github.com/IronCountySchoolDistrict/student-profile#readme",
   "dependencies": {
     "react": "^15.3.1",
-    "react-dom": "^15.3.1"
+    "react-dom": "^15.3.1",
+    "urijs": "^1.18.1"
   },
   "devDependencies": {
     "babel-core": "^6.11.4",
