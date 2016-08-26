@@ -69,10 +69,20 @@ export default class General extends Component {
       this.props.general.dentist_name ||
       this.props.general.dentist_phone
     );
+    const profileIframe = window.parent.document.getElementsByTagName('iframe')[0];
+    if (profileIframe) {
+      var profileIframeSrc = profileIframe.getAttribute('src');
+    }
+
     return (
       <div style={textAlignStyle}>
         <h4>
           {this.toFullName(this.props.general.first_name, this.props.general.middle_name, this.props.general.last_name)}
+          {profileIframeSrc &&
+            <a id="external-link" href={profileIframeSrc} target="_blank">
+              <i className="fa fa-external-link fa-1" data-toggle="tooltip" data-placement="bottom" title="Open Profile in new tab" aria-hidden="true"></i>
+            </a>
+          }
         </h4>
         <div className="thumbnail">
           <img src={`/${getPortal()}/stp/${this.props.general.id}ph.jpeg`} alt="Student's Photo"/>

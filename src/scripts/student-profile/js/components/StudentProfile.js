@@ -21,4 +21,12 @@ export default class StudentProfile extends Component {
       </div>
     );
   }
+
+  componentDidMount() {
+    const tooltipSelector = $('[data-toggle="tooltip"]');
+    if (tooltipSelector.length) {
+      tooltipSelector.tooltip();
+    }
+
+  }
 }
