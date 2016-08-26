@@ -8,7 +8,7 @@ export default class CourseTable extends Component {
    * @param courses {Array}
    * @return {Array}
    */
-  getUniqueTerms(courses) {
+  _getUniqueTerms(courses) {
     let uniqueTerms = [];
     courses.forEach(course => {
       if (course.grades) {
@@ -16,16 +16,16 @@ export default class CourseTable extends Component {
           if (uniqueTerms.indexOf(term) === -1) {
             uniqueTerms.push(term);
           }
-        })
+        });
       }
     });
     return uniqueTerms.sort();
   }
 
-  createGradesHeaders(uniqueTerms) {
+  _createGradesHeaders(uniqueTerms) {
     return uniqueTerms.map(term => {
       return (
-        <th>
+        <th key={term}>
           <GradesHeader ref={term} headerText={term}/>
         </th>
       );
@@ -34,8 +34,8 @@ export default class CourseTable extends Component {
 
   render() {
     if (this.props.courses.length) {
-      const uniqueTerms = this.getUniqueTerms(this.props.courses);
-      const headers = this.createGradesHeaders(uniqueTerms);
+      const uniqueTerms = this._getUniqueTerms(this.props.courses);
+      const headers = this._createGradesHeaders(uniqueTerms);
       var courseTable = (
         <table className="table table-bordered table-condensed table-schedule table-hover">
           <thead>
@@ -83,7 +83,7 @@ export default class CourseTable extends Component {
               if (courseTable) {
                 return courseTable;
               } else {
-                return 'This student does not have a schedule for this year'
+                return 'This student does not have a schedule for this year';
               }
             })()
           }

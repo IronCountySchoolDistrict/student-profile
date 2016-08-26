@@ -22,20 +22,18 @@
     <div class="col-xs-12">
 
         <iframe id="profile-frame"
-                src="/scripts/student-profile/html/index.html?frn=~[x:studentfrn]&user=~[x:users_dcid]&yearid=~(curyearid)"
+                src="/scripts/student-profile/html/index.html?frn=~[x:studentfrn]&students_frn=~[x:studentfrn]&user=~[x:users_dcid]&yearid=~(curyearid)"
                 width="100%" style="border: none; min-height: 350px"></iframe>
         <script>
-            var SPACE_ABOVE_IFRAME = 140;
-            function iFrameResize() {
-                var winHeight = $j(window).height();
-                var iframeHeight = winHeight - SPACE_ABOVE_IFRAME;
+            require.config({
+                paths: {
+                    'iFrameResizer': 'https://cdnjs.cloudflare.com/ajax/libs/iframe-resizer/3.5.5/iframeResizer',
+                    'init-iFrameResizer': '/scripts/student-profile/js/init-iFrameResizer'
+                }
+            });
 
-                $j('#profile-frame').css('height', iframeHeight + 'px');
-            }
-
-            $j(document).ready(function () {
-                $j(window).on('resize', iFrameResize);
-                iFrameResize();
+            require(['init-iFrameResizer', 'iFrameResizer'], (initIFrameResizer) => {
+              initIFrameResizer.init();
             });
         </script>
     </div>

@@ -9,7 +9,7 @@ export default class Gpa extends Component {
     const gpas = this.props.uniqueTerms.map(uniqueTerm => {
       if (Object.keys(pivotedGpas).indexOf(uniqueTerm) !== -1) {
         return (
-          <td>
+          <td key={"gpa-" + uniqueTerm}>
             {pivotedGpas[uniqueTerm]}
           </td>
         );

@@ -1,0 +1,17 @@
+<!-- student-profile student pages insertion point start -->
+
+<script>
+  var students_dcid = '~(studentfrn)'.slice(3);
+
+  require.config({
+    paths: {
+      fetch: "https://cdnjs.cloudflare.com/ajax/libs/fetch/1.0.0/fetch",
+      studentPagesInsertLink: '/scripts/student-profile/js/studentpages-insert-link'
+    }
+  });
+
+  require(['studentPagesInsertLink'], (studentPagesInsertLink) => {
+    studentPagesInsertLink.default();
+  });
+</script>
+<!-- student-profile student pages insertion point end -->

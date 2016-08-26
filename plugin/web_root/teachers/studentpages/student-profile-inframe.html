@@ -1,0 +1,52 @@
+<html>
+
+<head>
+  <title>Student Profile</title>
+  ~[wc:commonscripts]
+  <link href="/images/css/screen.css" rel="stylesheet" media="screen">
+  <link href="/images/css/print.css" rel="stylesheet" media="print">
+
+  <script>
+    function formHandler(form) {
+      window.location.href = document.navigation.page.options[document.navigation.page.selectedIndex].value;
+    }
+  </script>
+</head>
+
+<body>
+
+  ~[wc:teachers_header_fr_css]
+
+  <form name="navigation">
+    <span class="account-photo">~[studenttitlephoto]</span>
+    <h1>
+      Student Profile
+      <span class="nav-teacher">
+        <select name="page" size=1 onChange="javascript:formHandler()">
+          <option value="">~[text]psx.html.teachers_studentpages.attendance.select_screens[/text]
+          <option value="">--------------------~[x:teacherpages]
+        </select>
+      </span>
+      ~[studentalert]
+    </h1>
+
+    <div class="row">
+      <iframe id="profile-frame" src="/scripts/student-profile/html/index.html?students_frn=~(studentfrn)&user=~[x:users_dcid]&yearid=~(curyearid)" width="100%" style="border: none;" scrolling="no"></iframe>
+    </div>
+
+    <script>
+      require.config({
+        paths: {
+          'iFrameResizer': 'https://cdnjs.cloudflare.com/ajax/libs/iframe-resizer/3.5.5/iframeResizer',
+          'init-iFrameResizer': '/scripts/student-profile/js/init-iFrameResizer'
+        }
+      });
+
+      require(['init-iFrameResizer', 'iFrameResizer'], (initIFrameResizer) => {
+        initIFrameResizer.init();
+      });
+    </script>
+    ~[wc:teachers_footer_fr_css]
+</body>
+
+</html>

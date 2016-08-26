@@ -1,5 +1,5 @@
+import {getPortal} from '../../util';
 import React, {Component} from 'react';
-
 
 export default class General extends Component {
 
@@ -58,7 +58,7 @@ export default class General extends Component {
     const textAlignStyle = {
       textAlign: 'center'
     };
-    const displayProgramsTable = this.props.general.special_ed_indicator || this.props.ell_indicator;
+    const displayProgramsTable = this.props.general.special_ed_indicator || this.props.general.ell_indicator;
     const displayMedicalTable = (
       this.props.general.medical_considerations ||
       this.props.general.allergies ||
@@ -69,13 +69,23 @@ export default class General extends Component {
       this.props.general.dentist_name ||
       this.props.general.dentist_phone
     );
+    const profileIframe = window.parent.document.getElementsByTagName('iframe')[0];
+    if (profileIframe) {
+      var profileIframeSrc = profileIframe.getAttribute('src');
+    }
+
     return (
       <div style={textAlignStyle}>
         <h4>
           {this.toFullName(this.props.general.first_name, this.props.general.middle_name, this.props.general.last_name)}
+          {profileIframeSrc &&
+            <a id="external-link" href={profileIframeSrc} target="_blank">
+              <i className="fa fa-external-link fa-1" data-toggle="tooltip" data-placement="bottom" title="Open Profile in new tab" aria-hidden="true"></i>
+            </a>
+          }
         </h4>
         <div className="thumbnail">
-          <img src={`/admin/stp/${this.props.general.id}ph.jpeg`} alt="Student's Photo"/>
+          <img src={`/${getPortal()}/stp/${this.props.general.id}ph.jpeg`} alt="Student's Photo"/>
         </div>
         <table className="table table-condensed table-hover overview-table">
           <thead>
