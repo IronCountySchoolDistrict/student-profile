@@ -10,7 +10,7 @@
     }
   });
 
-  require(['studentPagesInsertLink'], (studentPagesInsertLink) => {
+  require(['studentPagesInsertLink'], function(studentPagesInsertLink) {
     studentPagesInsertLink.default();
   });
 </script>
