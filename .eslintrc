@@ -1,0 +1,20 @@
+{
+    "parser": "babel-eslint",
+    "plugins": [
+        "react"
+    ],
+    "extends": [ "eslint:recommended", "plugin:react/recommended" ],
+
+    "env": {
+        "es6": true,
+        "browser": true,
+        "jquery": true
+    },
+
+     "rules": {
+        "no-unused-vars": [ 1, { "args": "none" }],
+        "semi": [2, "always"],
+        "no-console": [ 1 ],
+        "react/prop-types": [1, { ignore: ['children'] }]
+    }
+}
