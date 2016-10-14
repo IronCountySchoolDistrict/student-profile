@@ -4,17 +4,17 @@ import {getPortal} from '../../util';
 export default class Medical extends Component {
 
   render() {
-    const alertWarningClasses = 'alert alert-danger';
+    const alertWarningClasses = 'alert alert-danger medical-alert';
     return (
       <div className={alertWarningClasses} role="alert">
         <p>
-          <strong>Medical Alert</strong> {this.props.alert_medical}
+          <strong className="medical-label">Medical Alert</strong> {this.props.alert_medical}
         </p>
         <p>
-          <strong>Allergies</strong> {this.props.allergies}
+          <strong className="medical-label">Allergies</strong> {this.props.allergies}
         </p>
         <p>
-          <strong>Medical Considerations</strong> {this.props.medical_considerations}
+          <strong className="medical-label">Medical Considerations</strong> {this.props.medical_considerations}
         </p>
       </div>
     );
