@@ -1,12 +1,12 @@
 import React from 'react';
 import ReactDOM from 'react-dom';
 import StudentProfile from './components/StudentProfile';
-import loadData from './data-source';
+import loadOverview from './data-source';
 
-loadData()
+loadOverview()
   .then(results => {
     ReactDOM.render(
-      <StudentProfile results={results}/>,
+      <StudentProfile {...results} />,
       document.getElementById('profile-container')
     );
   });
