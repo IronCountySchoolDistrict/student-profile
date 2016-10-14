@@ -28,9 +28,11 @@ export default class Overview extends Component {
             </div>
           </div>
         }
-        <div className="row">
-          <ContactList contacts={this.props.route.contacts} />
-        </div>
+        {this.props.route.contacts.length &&
+          <div className="row">
+            <ContactList contacts={this.props.route.contacts} />
+          </div>
+        }
       </div>
     );
   }
