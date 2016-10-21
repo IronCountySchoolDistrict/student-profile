@@ -1,8 +1,6 @@
 import React, {Component} from 'react';
-import {getPortal} from '../../util';
 
 export default class Medical extends Component {
-
   render() {
     const alertWarningClasses = 'alert alert-danger medical-alert';
     return (

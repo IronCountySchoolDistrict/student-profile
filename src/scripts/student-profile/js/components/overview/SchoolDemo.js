@@ -1,4 +1,3 @@
-import {getPortal} from '../../util';
 import React, {Component} from 'react';
 
 export default class SchoolDemo extends Component {
@@ -74,8 +73,21 @@ export default class SchoolDemo extends Component {
             <span className="field-value">{flattenedPrograms}</span>
           </div>
         }
-
       </div>
     );
   }
 }
+
+SchoolDemo.propTypes = {
+  special_ed_indicator: React.PropTypes.bool,
+  ell_indicator: React.PropTypes.bool,
+  school_name: React.PropTypes.string,
+  home_room: React.PropTypes.string,
+  grade_level: React.PropTypes.oneOfType([
+    React.PropTypes.string,
+    React.PropTypes.number
+  ]),
+  enroll_status: React.PropTypes.string,
+  entry_date: React.PropTypes.string,
+  exit_date: React.PropTypes.string
+};
