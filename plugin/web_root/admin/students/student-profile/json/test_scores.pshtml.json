@@ -14,7 +14,7 @@
                 studenttestscore.numscore ||
                 CASE
                 WHEN alphascore IS NOT NULL
-                  THEN ', "alpha_score"' || chr(58) || ' '|| studenttestscore.alphascore || '"'
+                  THEN ', "alpha_score"' || chr(58) || ' "'|| studenttestscore.alphascore || '"'
                 END ||
                 CASE
                 WHEN percentscore <> 0
