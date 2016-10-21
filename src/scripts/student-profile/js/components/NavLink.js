@@ -9,10 +9,16 @@ const NavLink = class NavLink extends Component {
 
     return (
       <li className={isActive ? 'active' : ''}>
-        <Link to={to} {...props}>{children}</Link>
+        <Link to={to} {...props.route}>
+          {children}
+        </Link>
       </li>
     );
   }
 };
 
 export default withRouter(NavLink);
+
+NavLink.propTypes = {
+  to: React.PropTypes.string
+};
