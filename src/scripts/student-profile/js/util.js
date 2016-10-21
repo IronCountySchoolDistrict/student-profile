@@ -1,4 +1,5 @@
 import URI from 'urijs';
+import Cookies from 'js-cookies';
 
 export function getPortal() {
   let path = window.top.location.pathname;
