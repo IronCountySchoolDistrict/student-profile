@@ -26,7 +26,7 @@
             WHEN 'X'
               THEN 'Tardy' END AS att_category
           FROM attendance_code
-          WHERE yearid = ~(gpv.yearid) AND schoolid = (
+          WHERE yearid = ~(gpv.year_id) AND schoolid = (
             SELECT schoolid
             FROM students
             WHERE dcid = ~(gpv.students_dcid))
@@ -38,10 +38,10 @@
           SELECT id
           FROM students
           WHERE dcid = ~(gpv.students_dcid)) AND
-        attendance.yearid = ~(gpv.yearid) AND
+        attendance.yearid = ~(gpv.year_id) AND
         attendance_code.att_category IS NOT NULL
       GROUP BY cc.sectionid, attendance_code.att_category
-    ), att_summary_per_section AS (
+  ), att_summary_per_section AS (
       SELECT
         sectionid   AS section_id,
         chr(123) ||
@@ -51,7 +51,7 @@
             , ',')
         WITHIN GROUP (
           ORDER BY 1)
-        || chr(1~(gpv.yearid)) AS exempt
+        || chr(125) AS exempt
       FROM att_type_totals_per_section
       GROUP BY sectionid
   ), section_assignment_summary AS (
@@ -64,11 +64,11 @@
             '"id"' || chr(58) || ' ' || pgfinalgrades.id || ',' ||
             '"percent"' || chr(58) || ' "' || pgfinalgrades.percent || '",' ||
             '"grade"' || chr(58) || ' "' || pgfinalgrades.grade || '"' ||
-            chr(1~(gpv.yearid))
+            chr(125)
             , ',')
         WITHIN GROUP (
           ORDER BY 1)
-        || chr(1~(gpv.yearid))  AS grade
+        || chr(125)  AS grade
       FROM
         cc
         JOIN students ON cc.studentid = students.id
@@ -79,64 +79,92 @@
           SELECT students.id
           FROM students
           WHERE students.dcid = ~(gpv.students_dcid)) AND
-        cc.termid LIKE ~(gpv.yearid) || '%'
+        cc.termid LIKE ~(gpv.year_id) || '%'
       GROUP BY cc.sectionid
+  ), section_cycle_day_letters AS (
+      SELECT
+        sections.id                   AS section_id,
+        LISTAGG(section_meeting.cycle_day_letter, '-')
+        WITHIN GROUP (
+          ORDER BY period.sort_order) AS day_letters
+      FROM
+        sections
+        JOIN cc ON sections.id = cc.sectionid
+        JOIN section_meeting ON section_meeting.sectionid = sections.id
+        JOIN period
+          ON section_meeting.period_number = period.period_number
+             AND sections.schoolid = period.schoolid
+             AND floor(sections.termid / 100) = period.year_id
+      WHERE cc.studentid = (
+        SELECT id
+        FROM students
+        WHERE dcid = ~(gpv.students_dcid))
+      GROUP BY
+        sections.id
+  ), section_period_expr AS (
+      SELECT
+        sections.id                                                                AS section_id,
+        period.abbreviation || '(' || section_cycle_day_letters.day_letters || ')' AS period_expr,
+        period.sort_order                                                          AS sort_order,
+        section_meeting.cycle_day_letter                                           AS cycle_day_letter
+      FROM sections
+        JOIN cc ON sections.id = cc.sectionid
+        JOIN section_cycle_day_letters ON sections.id = section_cycle_day_letters.section_id
+        JOIN section_meeting ON section_meeting.sectionid = section_cycle_day_letters.section_id
+        JOIN period ON section_meeting.period_number = period.period_number AND
+                       sections.schoolid = period.schoolid AND
+                       floor(sections.termid / 100) = period.year_id
+      WHERE cc.studentid = (
+        SELECT id
+        FROM students
+        WHERE dcid = ~(gpv.students_dcid))
+      ORDER BY sort_order, cycle_day_letter
+  ), distinct_section_period_expr AS (
+      SELECT
+        section_id,
+        period_expr,
+        sort_order,
+        min(cycle_day_letter) as cycle_day_letter
+      FROM section_period_expr
+      GROUP BY section_id, period_expr, sort_order
   )
   SELECT
     cc.dcid,
     cc.id,
     CASE
-    WHEN TO_CHAR(cc.dateenrolled) IS NULL
-      THEN 'null'
-    ELSE '"' || TO_CHAR(cc.dateenrolled, 'MM/DD/YYYY') || '"' END AS date_enrolled,
-    CASE
     WHEN TO_CHAR(courses.course_name) IS NULL
       THEN 'null'
-    ELSE '"' || TO_CHAR(courses.course_name) || '"' END           AS course_name,
+    ELSE '"' || TO_CHAR(courses.course_name) || '"' END                      AS course_name,
     CASE
-    WHEN TO_CHAR(sections.expression) IS NULL
+    WHEN TO_CHAR(distinct_section_period_expr.period_expr) IS NULL
       THEN 'null'
-    ELSE '"' || TO_CHAR(sections.expression) || '"' END           AS expression,
+    ELSE '"' || TO_CHAR(distinct_section_period_expr.period_expr) || '"' END AS expression,
     CASE
     WHEN TO_CHAR(terms.abbreviation) IS NULL
       THEN 'null'
-    ELSE '"' || TO_CHAR(terms.abbreviation) || '"' END            AS term_id,
-    cc.termid,
-    CASE WHEN cc.termid < 0
-      THEN 'true'
-    ELSE 'false'
-    END                                                           AS dropped,
-    CASE
-    WHEN cc.dateleft < sysdate
-      THEN 'true'
-    ELSE 'false'
-    END                                                           AS completed,
+    ELSE '"' || TO_CHAR(terms.abbreviation) || '"' END                       AS term_id,
     CASE
     WHEN TO_CHAR(cc.sectionid) IS NULL
       THEN 'null'
-    ELSE TO_CHAR(cc.sectionid) END                                AS section_id,
+    ELSE TO_CHAR(cc.sectionid) END                                           AS section_id,
     CASE
     WHEN TO_CHAR(cc.studentid) IS NULL
       THEN 'null'
-    ELSE TO_CHAR(cc.studentid) END                                AS student_id,
-    nvl(section_assignment_summary.grade, chr(123) || chr(1~(gpv.yearid)))   AS grade_summary,
+    ELSE TO_CHAR(cc.studentid) END                                           AS student_id,
+    nvl(section_assignment_summary.grade, chr(123) || chr(125))              AS grade_summary,
     CASE
     WHEN TO_CHAR(teachers.lastfirst) IS NULL
       THEN 'null'
-    ELSE '"' || TO_CHAR(teachers.lastfirst) || '"' END            AS teacher_lastfirst,
+    ELSE '"' || TO_CHAR(teachers.lastfirst) || '"' END                       AS teacher_lastfirst,
     CASE
     WHEN TO_CHAR(students.grade_level) IS NULL
       THEN 'null'
-    ELSE TO_CHAR(students.grade_level) END                        AS grade_level,
+    ELSE TO_CHAR(students.grade_level) END                                   AS grade_level,
     CASE
     WHEN TO_CHAR(schools.low_grade) IS NULL
       THEN 'null'
-    ELSE TO_CHAR(schools.low_grade) END                           AS school_low_grade,
-    CASE
-    WHEN TO_CHAR(cc.dateleft) IS NULL
-      THEN 'null'
-    ELSE '"' || TO_CHAR(cc.dateleft, 'MM/DD/YYYY') || '"' END     AS date_left,
-    nvl(att_summary_per_section.exempt, chr(123) || chr(1~(gpv.yearid)))     AS attendance_summary,
+    ELSE TO_CHAR(schools.low_grade) END                                      AS school_low_grade,
+    nvl(att_summary_per_section.exempt, chr(123) || chr(125))                AS attendance_summary,
     CASE
     WHEN row_number()
          OVER (
@@ -144,7 +172,7 @@
          OVER ()
       THEN ''
     ELSE ','
-    END                                                           AS comma
+    END                                                                      AS comma
   FROM
     cc
     LEFT JOIN att_summary_per_section ON cc.sectionid = att_summary_per_section.section_id
@@ -154,31 +182,28 @@
     LEFT JOIN students ON cc.studentid = students.id
     LEFT JOIN teachers ON cc.teacherid = teachers.id
     LEFT JOIN schools ON cc.schoolid = schools.school_number
-    LEFT JOIN terms ON terms.id = cc.termid AND terms.schoolid = cc.schoolid
+    LEFT JOIN terms ON terms.id = cc.termid AND
+                       terms.schoolid = cc.schoolid
+    LEFT JOIN distinct_section_period_expr ON sections.id = distinct_section_period_expr.section_id
   WHERE
     cc.studentid = (
       SELECT students.id
       FROM students
       WHERE students.dcid = ~(gpv.students_dcid)) AND
-    (cc.termid LIKE ~(gpv.yearid) || '%' OR cc.termid LIKE '-' || ~(gpv.yearid) || '%')
-  ORDER BY terms.abbreviation, sections.expression]
+    (cc.termid LIKE ~(gpv.year_id) || '%' OR cc.termid LIKE '-' || ~(gpv.year_id) || '%')
+  order by distinct_section_period_expr.sort_order, distinct_section_period_expr.cycle_day_letter]
       {
         "dcid": ~(dcid),
         "id": ~(id),
-        "dateenrolled": ~(dateenrolled),
         "course_name": ~(course_name),
         "expression": ~(expression),
-        "abbreviation": ~(abbreviation),
-        "termid": ~(termid),
-        "dropped": ~(dropped),
-        "completed": ~(completed),
+        "term_id": ~(term_id),
         "sectionid": ~(sectionid),
         "studentid": ~(studentid),
         "grades": ~(grades),
-        "lastfirst": ~(lastfirst),
+        "teacher_name": ~(lastfirst),
         "grade_level": ~(grade_level),
         "low_grade": ~(low_grade),
-        "dateleft": ~(dateleft),
         "attendance": ~(attendance)
       }~(comma)
   [/tlist_sql]
