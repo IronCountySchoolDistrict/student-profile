@@ -9,11 +9,7 @@ function htmlDecodeToJson(resp) {
     .then(resp => JSON.parse(resp));
 }
 
-/**
- * @param {string} portal PowerSchool portal that user is currently logged in
- * @param {Promise}
- */
-export default function loadOverview() {
+function getDataSourcePath() {
   const portal = getPortal();
   let dataSourcePath;
   switch(portal) {
@@ -24,14 +20,35 @@ export default function loadOverview() {
       dataSourcePath = `/${portal}/studentpages/student-profile/json`;
       break;
   }
-  const uri = URI(window.location.href);
-  const queryDataMap = uri.search(true);
-  const studentsDcid = queryDataMap.students_frn.slice(3);
+  return dataSourcePath;
+}
+
+/**
+ * @param {string} portal PowerSchool portal that user is currently logged in
+ * @param {Promise}
+ */
+export function loadOverview(studentsDcid) {
+  const dataSourcePath = getDataSourcePath();
+
   const queryStr = URI.buildQuery({
     students_dcid: studentsDcid
   });
 
   return window.fetch(`${dataSourcePath}/overview.pshtml.json?${queryStr}`, {
+      credentials: 'include'
+    })
+    .then(htmlDecodeToJson);
+}
+
+export function loadSchedule(studentsDcid, yearId) {
+  const dataSourcePath = getDataSourcePath();
+
+  const queryStr = URI.buildQuery({
+    students_dcid: studentsDcid,
+    year_id: 25
+  });
+
+  return window.fetch(`${dataSourcePath}/schedule.pshtml.json?${queryStr}`, {
       credentials: 'include'
     })
     .then(htmlDecodeToJson);
