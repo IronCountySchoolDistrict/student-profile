@@ -61,7 +61,7 @@ export default function() {
       })
       .then(r => r.text())
       .then(r => {
-        const renderedTemplate = _.template(r);
+        const renderedTemplate = template(r);
         const compiledTemplate = renderedTemplate({
           students_dcid: students_dcid
         });
