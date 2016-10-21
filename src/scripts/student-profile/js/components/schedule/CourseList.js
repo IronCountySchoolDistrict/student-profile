@@ -1,22 +1,34 @@
+import React, { Component } from 'react';
 import Course from './Course';
-import Gpa from './Gpa';
-
-import React, {Component} from 'react';
 
 export default class CourseList extends Component {
-  render() {
+  /**
+   * @return {array}
+   */
+  getUniqueTerms() {
+    return this.props.courses
+      .map(course => Object.keys(course.grades))
+      .reduce((prev, curr) => prev.concat(curr), []) //flatten array of arrays into a single array
+      .reduce((prev, curr) => !prev.includes(curr) ? prev.concat([curr]) : prev, []) //get unique terms
+      .sort();
+  }
 
-    const courses = this.props.courseData.map(course => {
+  render() {
+    const uniqueTerms = this.getUniqueTerms();
+    const courses = this.props.courses.map((course, index) => {
       return (
-        <Course key={course.id} {...course} uniqueTerms={this.props.uniqueTerms}/>
+        <Course {...course} uniqueTerms={uniqueTerms} index={index} key={course.id} />
       );
     });
 
     return (
-      <tbody>
+      <div className='course-list'>
         {courses}
-        <Gpa gpa={this.props.gpa} uniqueTerms={this.props.uniqueTerms}/>
-      </tbody>
+      </div>
     );
   }
 }
+
+CourseList.propTypes = {
+  courses: React.PropTypes.arrayOf(React.PropTypes.node)
+};
