@@ -142,7 +142,7 @@
     CASE
     WHEN TO_CHAR(terms.abbreviation) IS NULL
       THEN 'null'
-    ELSE '"' || TO_CHAR(terms.abbreviation) || '"' END                       AS term_id,
+    ELSE '"' || TO_CHAR(terms.abbreviation) || '"' END                       AS term,
     CASE
     WHEN TO_CHAR(cc.sectionid) IS NULL
       THEN 'null'
@@ -197,7 +197,7 @@
         "id": ~(id),
         "course_name": ~(course_name),
         "expression": ~(expression),
-        "term_id": ~(term_id),
+        "term": ~(term),
         "sectionid": ~(sectionid),
         "studentid": ~(studentid),
         "grades": ~(grades),
