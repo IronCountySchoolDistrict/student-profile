@@ -5,17 +5,17 @@ export default class Attendance extends Component {
     return (
       <div className="attendance">
         {this.props.excused &&
-          <span>
+          <span className="attendance-container">
             <strong>Excused:</strong> {this.props.excused}
           </span>
         }
         {this.props.unexcused &&
-          <span>
+          <span className="attendance-container">
             <strong>Unexcused:</strong> {this.props.unexcused}
           </span>
         }
         {this.props.tardy &&
-          <span>
+          <span className="attendance-container">
             <strong>Tardy:</strong> {this.props.tardy}
           </span>
         }

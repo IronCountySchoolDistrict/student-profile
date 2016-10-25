@@ -45,7 +45,7 @@ export function loadSchedule(studentsDcid, yearId) {
 
   const queryStr = URI.buildQuery({
     students_dcid: studentsDcid,
-    year_id: 25
+    year_id: yearId
   });
 
   return window.fetch(`${dataSourcePath}/schedule.pshtml.json?${queryStr}`, {

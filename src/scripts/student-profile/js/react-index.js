@@ -12,7 +12,7 @@ $(() => {
   const uri = URI(window.location.href);
   const queryDataMap = uri.search(true);
   const studentsDcid = queryDataMap.students_frn.slice(3);
-  const yearId = queryDataMap.yearid;
+  const yearId = parseInt(queryDataMap.yearid);
 
   render(
     <Router history={hashHistory}>

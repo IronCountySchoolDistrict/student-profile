@@ -2,8 +2,9 @@ import React, { Component } from 'react';
 
 export default class Grade extends Component {
   render() {
+    const gradeContainerClass = 'grade-container col-md-1';
     return (
-      <div className='grade-container'>
+      <div className={gradeContainerClass}>
         <div>
           {this.props.grade}
         </div>
