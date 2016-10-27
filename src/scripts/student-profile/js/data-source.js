@@ -1,18 +1,15 @@
-import { getPortal } from './util';
-import { decode } from 'he';
+import {getPortal} from './util';
+import {decode} from 'he';
 import URI from 'urijs';
 
-
 function htmlDecodeToJson(resp) {
-  return resp.text()
-    .then(resp => decode(resp))
-    .then(resp => JSON.parse(resp));
+  return resp.text().then(resp => decode(resp)).then(resp => JSON.parse(resp));
 }
 
 function getDataSourcePath() {
   const portal = getPortal();
   let dataSourcePath;
-  switch(portal) {
+  switch (portal) {
     case 'admin':
       dataSourcePath = `/${portal}/students/student-profile/json`;
       break;
@@ -30,26 +27,31 @@ function getDataSourcePath() {
 export function loadOverview(studentsDcid) {
   const dataSourcePath = getDataSourcePath();
 
-  const queryStr = URI.buildQuery({
-    students_dcid: studentsDcid
-  });
+  const queryStr = URI.buildQuery({students_dcid: studentsDcid});
 
-  return window.fetch(`${dataSourcePath}/overview.pshtml.json?${queryStr}`, {
-      credentials: 'include'
-    })
-    .then(htmlDecodeToJson);
+  return window.fetch(`${dataSourcePath}/overview.pshtml.json?${queryStr}`, {credentials: 'include'}).then(htmlDecodeToJson);
 }
 
 export function loadSchedule(studentsDcid, yearId) {
   const dataSourcePath = getDataSourcePath();
 
-  const queryStr = URI.buildQuery({
-    students_dcid: studentsDcid,
-    year_id: yearId
-  });
+  const queryStr = URI.buildQuery({students_dcid: studentsDcid, year_id: yearId});
 
-  return window.fetch(`${dataSourcePath}/schedule.pshtml.json?${queryStr}`, {
-      credentials: 'include'
-    })
-    .then(htmlDecodeToJson);
+  return window.fetch(`${dataSourcePath}/schedule.pshtml.json?${queryStr}`, {credentials: 'include'}).then(htmlDecodeToJson);
+}
+
+export function loadGpa(studentsDcid, yearId) {
+  const dataSourcePath = getDataSourcePath();
+
+  const queryStr = URI.buildQuery({students_dcid: studentsDcid, year_id: yearId});
+
+  return window.fetch(`${dataSourcePath}/gpa.pshtml.json?${queryStr}`, {credentials: 'include'}).then(htmlDecodeToJson);
+}
+
+export function loadTestResults(studentsDcid) {
+  const dataSourcePath = getDataSourcePath();
+
+  const queryStr = URI.buildQuery({students_dcid: studentsDcid});
+
+  return window.fetch(`${dataSourcePath}/test_results.pshtml.json?${queryStr}`, {credentials: 'include'}).then(htmlDecodeToJson);
 }

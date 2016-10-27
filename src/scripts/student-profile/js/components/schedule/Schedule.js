@@ -1,33 +1,45 @@
-import React, { Component } from 'react';
+import React, {Component} from 'react';
 import CourseList from './CourseList';
-import { loadSchedule } from '../../data-source';
+import GpaList from './GpaList';
+import { loadSchedule, loadGpa } from '../../data-source';
 
 export default class Schedule extends Component {
   constructor(props, context) {
     super(props, context);
 
     this.state = {
-      courses: null
+      schedule: null,
+      gpa: null
     };
   }
 
   componentDidMount() {
     const studentsDcid = this.props.route.studentsDcid;
     const yearId = this.props.route.yearId;
-    loadSchedule(studentsDcid, yearId).then(schedule => {
-      this.setState({
-        courses: schedule
+    Promise.all([loadSchedule(studentsDcid, yearId), loadGpa(studentsDcid, yearId)])
+      .then(([schedule, gpa]) => {
+        this.setState({
+          schedule: schedule,
+          gpa: gpa
+        });
       });
-    });
   }
 
   render() {
-    if (this.state.courses) {
+    if (this.state.schedule || this.state.gpa) {
       return (
-        <CourseList courses={this.state.courses} />
+        <div>
+          <h3>Courses</h3>
+          {this.state.schedule &&
+            <CourseList courses={this.state.schedule} />
+          }
+          <h3>GPA</h3>
+          {this.state.gpa &&
+            <GpaList gpa={this.state.gpa} />
+          }
+        </div>
       );
-    }
-    else {
+    } else {
       const refreshClass = 'fa fa-refresh fa-spin fa-3x fa-fw';
       return (
         <i className={refreshClass}></i>
@@ -37,8 +49,5 @@ export default class Schedule extends Component {
 }
 
 Schedule.propTypes = {
-  route: React.PropTypes.shape({
-    studentsDcid: React.PropTypes.string,
-    yearId: React.PropTypes.number
-  })
+  route: React.PropTypes.shape({studentsDcid: React.PropTypes.string, yearId: React.PropTypes.number})
 };
