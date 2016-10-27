@@ -92,7 +92,7 @@
                  WHEN 'F'
                    THEN 0
                  ELSE NULL END IS NOT NULL
-                 AND terms.yearid = ~(gpv.yearid)
+                 AND terms.yearid = ~(gpv.year_id)
            GROUP BY terms.yearid, pgfinalgrades.finalgradename
            ORDER BY finalgradename) test]
     {

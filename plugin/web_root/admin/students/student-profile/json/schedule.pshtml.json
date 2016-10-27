@@ -191,7 +191,7 @@
       FROM students
       WHERE students.dcid = ~(gpv.students_dcid)) AND
     (cc.termid LIKE ~(gpv.year_id) || '%' OR cc.termid LIKE '-' || ~(gpv.year_id) || '%')
-  order by distinct_section_period_expr.sort_order, distinct_section_period_expr.cycle_day_letter]
+  order by distinct_section_period_expr.cycle_day_letter, distinct_section_period_expr.sort_order]
       {
         "dcid": ~(dcid),
         "id": ~(id),
