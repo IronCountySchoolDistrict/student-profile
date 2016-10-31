@@ -16,8 +16,22 @@ export default class SchoolDemo extends Component {
   }
 
   enrollStatusToLabel(enrollStatus) {
-    if (enrollStatus === '0') {
+    if (enrollStatus === '-2') {
+      return 'Inactive';
+    } else if (enrollStatus === '-1') {
+      return 'Pre-Registered';
+    } else if (enrollStatus === '0') {
       return 'Active';
+    } else if (enrollStatus === '1') {
+      return 'Inactive';
+    } else if (enrollStatus === '2') {
+      return 'Transferred out';
+    } else if (enrollStatus === '3') {
+      return 'Graduated';
+    } else if (enrollStatus === '4') {
+      return 'Imported as Historical';
+    } else {
+      return 'Inactive';
     }
   }
 
