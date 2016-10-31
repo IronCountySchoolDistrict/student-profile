@@ -14,8 +14,7 @@ export default class Schedule extends Component {
   }
 
   componentDidMount() {
-    const studentsDcid = this.props.route.studentsDcid;
-    const yearId = this.props.route.yearId;
+    const { studentsDcid, yearId } = this.props.route;
     Promise.all([loadSchedule(studentsDcid, yearId), loadGpa(studentsDcid, yearId)])
       .then(([schedule, gpa]) => {
         this.setState({
