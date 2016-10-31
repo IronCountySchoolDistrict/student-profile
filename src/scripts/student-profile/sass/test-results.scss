@@ -1,0 +1,26 @@
+.result {
+  .composite-score-header, .composite-score {
+    text-align: center;
+  }
+
+  .scores-button {
+    margin-top: 30px;
+  }
+  .panel-title {
+    white-space: nowrap;
+    text-overflow: ellipsis;
+    overflow: hidden;
+  }
+  .hidden-score {
+    display: none;
+  }
+  .score-panel {
+    margin-top: 20px;
+  }
+  .test-score-name {
+    font-weight: bold;
+  }
+  .test-score, .test-score-name {
+    font-size: 13px;
+  }
+}
