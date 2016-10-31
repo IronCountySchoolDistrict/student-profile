@@ -7,6 +7,7 @@ import Overview from './components/overview/Overview';
 import Nav from './components/Nav';
 import Schedule from './components/schedule/Schedule';
 import TestResults from './components/test-results/TestResults';
+import ResultList from './components/test-results/ResultList';
 
 $(() => {
   const uri = URI(window.location.href);
@@ -19,7 +20,7 @@ $(() => {
       <Route path="/" component={Nav}>
         <IndexRoute component={Overview} studentsDcid={studentsDcid} />
         <Route path="/schedule" component={Schedule} studentsDcid={studentsDcid} yearId={yearId} />
-        <Route path="/test-results" component={TestResults} studentsDcid={studentsDcid} yearId={yearId} />
+        <Route path="/test-results" component={TestResults} studentsDcid={studentsDcid} />
       </Route>
     </Router>,
     document.getElementById('profile-container')
