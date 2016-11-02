@@ -1,6 +1,5 @@
 import React, { Component } from 'react';
 import { loadTestResults } from '../../data-source';
-import NameList from './NameList';
 import ResultList from './ResultList';
 
 export default class TestResults extends Component {

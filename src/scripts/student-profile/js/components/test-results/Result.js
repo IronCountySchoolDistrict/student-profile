@@ -1,5 +1,5 @@
 import React, {Component} from 'react';
-import StudentTestScores from './StudentTestScores';
+import StudentTestScoreList from './StudentTestScoreList';
 
 export default class Result extends Component {
   constructor(props, context) {
@@ -50,7 +50,7 @@ export default class Result extends Component {
             <button className="scores-button btn btn-default btn-block" onClick={() => this.onClick()}>
               {this.getScoresButtonText()}
             </button>
-            <StudentTestScores scores={this.props.test_scores} display={this.state.display} />
+            <StudentTestScoreList scores={this.props.test_scores} display={this.state.display} />
           </div>
         </div>
       </div>
