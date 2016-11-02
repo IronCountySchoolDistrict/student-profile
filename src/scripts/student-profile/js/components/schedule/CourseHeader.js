@@ -1,6 +1,6 @@
 import React, { Component } from 'react';
 
-export default class Course extends Component {
+export default class CourseHeader extends Component {
   render() {
     const panelDefault = 'panel panel-default panel-course';
     const termHeaderClass = 'col-md-1 term-header';
@@ -23,7 +23,7 @@ export default class Course extends Component {
               <div>
                 {this.props.uniqueTerms.map((term, index) => {
                   return (
-                    <div className={termHeaderClass}>{term}</div>
+                    <div key={term} className={termHeaderClass}>{term}</div>
                   );
                 })}
               </div>

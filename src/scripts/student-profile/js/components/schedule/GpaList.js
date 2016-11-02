@@ -6,7 +6,7 @@ export default class GpaList extends Component {
     const panelDefault = 'panel panel-default';
     const gpas = this.props.gpa.map(gpa => {
       return (
-        <Gpa term={gpa.term} gpa={gpa.gpa} />
+        <Gpa key={gpa.id} term={gpa.term} gpa={gpa.gpa} />
       );
     });
 

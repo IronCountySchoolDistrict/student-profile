@@ -8,11 +8,11 @@ export default class GradeList extends Component {
       if (Object.keys(this.props.grades).includes(term) && this.props.grades[term].grade !== '--') {
         const gradeMatchingTerm = this.props.grades[term];
         return (
-          <Grade key={gradeMatchingTerm.id} uniqueTerms={this.props.uniqueTerms} grade={gradeMatchingTerm.grade} percent={gradeMatchingTerm.percent} />
+          <Grade key={gradeMatchingTerm.id} grade={gradeMatchingTerm.grade} percent={gradeMatchingTerm.percent} />
         );
       } else {
         return (
-          <div className={emptyClass}>--</div>
+          <div key={term} className={emptyClass}>--</div>
         );
       }
     });
