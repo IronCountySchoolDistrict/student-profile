@@ -5,6 +5,12 @@
           studenttest.id AS studenttest_id,
           chr(91) ||
           listagg(chr(123) ||
+                  '"id"' || chr(58) ||
+                  CASE
+                  WHEN to_char(studenttestscore.id) IS NOT NULL
+                    THEN to_char(studenttestscore.id) || ','
+                  ELSE 'null,'
+                  END ||
                   '"test_score"' || chr(58) ||
                   CASE
                   WHEN instr(testscore.name, '...') > 0
@@ -79,7 +85,7 @@
       JOIN test ON studenttest.testid = test.id
       JOIN terms ON studenttest.termid = terms.id AND
                     studenttest.schoolid = terms.schoolid
-    ORDER BY grade_level DESC, test_name ASC]
+    ORDER BY studenttest.grade_level DESC, test_name ASC]
         {
           "studenttest_id": ~(studenttestid),
           "test_name": ~(test_name),
