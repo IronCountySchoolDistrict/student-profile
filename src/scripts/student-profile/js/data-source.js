@@ -6,10 +6,6 @@ function htmlDecodeToJson(resp) {
   return resp.text().then(resp => decode(resp)).then(resp => JSON.parse(resp));
 }
 
-function sortTestScores(testScores) {
-  return testScores.sort((a, b) => a.sort_order - b.sort_order);
-}
-
 function getDataSourcePath() {
   const portal = getPortal();
   let dataSourcePath;
