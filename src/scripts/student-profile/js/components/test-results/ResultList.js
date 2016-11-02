@@ -27,7 +27,7 @@ export default class ResultList extends Component {
 
       const resultList = distinctGradeLevels.map(gradeLevel => {
         return (
-          <div className="row">
+          <div className="row" key={gradeLevel}>
             <div className="col-md-12">
               <h2>{this.getOrdinal(gradeLevel)} Grade</h2>
               {this.createGradeResultsList(gradeLevel)}
@@ -48,3 +48,9 @@ export default class ResultList extends Component {
     }
   }
 }
+
+ResultList.propTypes = {
+  tests: React.PropTypes.arrayOf(
+    React.PropTypes.object
+  )
+};

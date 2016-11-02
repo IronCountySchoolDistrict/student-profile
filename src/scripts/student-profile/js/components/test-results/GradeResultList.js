@@ -18,3 +18,7 @@ export default class GradeResultList extends Component {
     );
   }
 }
+
+GradeResultList.propTypes = {
+  results: React.PropTypes.arrayOf(React.PropTypes.object)
+};

@@ -4,7 +4,7 @@ import Gpa from './Gpa';
 export default class GpaList extends Component {
   render() {
     const panelDefault = 'panel panel-default';
-    const gpas = this.props.gpa.map(gpa => {
+    const gpas = this.props.gpas.map(gpa => {
       return (
         <Gpa key={gpa.id} term={gpa.term} gpa={gpa.gpa} />
       );
@@ -21,3 +21,13 @@ export default class GpaList extends Component {
     );
   }
 }
+
+GpaList.propTypes = {
+  gpas: React.PropTypes.arrayOf(
+    React.PropTypes.shape({
+      id: React.PropTypes.number,
+      term: React.PropTypes.string,
+      gpa: React.PropTypes.number
+    })
+  )
+};

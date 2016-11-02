@@ -26,6 +26,7 @@ export default class Result extends Component {
 
   render() {
     const panelClass = 'panel panel-default';
+
     let compositeScore = this.props.test_scores.filter(testScore => testScore.test_score.toLowerCase().includes('composite'));
     // If a test score was found that contains the text 'composite',
     // consider that the composite score.
@@ -57,3 +58,11 @@ export default class Result extends Component {
     );
   }
 }
+
+Result.propTypes = {
+  test_scores: React.PropTypes.arrayOf(
+    React.PropTypes.object
+  ),
+  test_name: React.PropTypes.string,
+  test_score: React.PropTypes.number
+};

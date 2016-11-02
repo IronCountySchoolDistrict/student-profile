@@ -24,3 +24,10 @@ export default class StudentTestScoreList extends Component {
     }
   }
 }
+
+StudentTestScoreList.propTypes = {
+  display: React.PropTypes.bool,
+  scores: React.PropTypes.arrayOf(
+    React.PropTypes.object
+  )
+};

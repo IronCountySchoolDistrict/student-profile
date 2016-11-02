@@ -34,3 +34,9 @@ export default class CourseHeader extends Component {
     );
   }
 }
+
+CourseHeader.propTypes = {
+  uniqueTerms: React.PropTypes.arrayOf(
+    React.PropTypes.string
+  )
+};

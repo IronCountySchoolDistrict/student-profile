@@ -48,7 +48,7 @@ export default class Schedule extends Component {
               <h3>GPA</h3>
             }
             {!!this.state.gpa.length &&
-              <GpaList gpa={this.state.gpa} />
+              <GpaList gpas={this.state.gpa} />
             }
           </div>
         );
