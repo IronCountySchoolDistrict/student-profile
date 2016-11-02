@@ -27,5 +27,5 @@ export default class GradeList extends Component {
 
 GradeList.propTypes = {
   uniqueTerms: React.PropTypes.arrayOf(React.PropTypes.string),
-  grades: React.PropTypes.arrayOf(React.PropTypes.node)
+  grades: React.PropTypes.object
 };

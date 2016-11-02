@@ -32,5 +32,7 @@ export default class CourseList extends Component {
 }
 
 CourseList.propTypes = {
-  courses: React.PropTypes.arrayOf(React.PropTypes.node)
+  courses: React.PropTypes.arrayOf(
+    React.PropTypes.object
+  )
 };

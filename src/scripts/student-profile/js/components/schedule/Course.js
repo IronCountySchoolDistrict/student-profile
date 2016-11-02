@@ -35,10 +35,11 @@ export default class Course extends Component {
 }
 
 Course.propTypes = {
+  id: React.PropTypes.number,
   teacher_name: React.PropTypes.string,
   expression: React.PropTypes.string,
   course_name: React.PropTypes.string,
-  attendance: React.PropTypes.node,
+  attendance: React.PropTypes.object,
   term: React.PropTypes.string,
   uniqueTerms: React.PropTypes.arrayOf(React.PropTypes.string),
   grades: React.PropTypes.object
