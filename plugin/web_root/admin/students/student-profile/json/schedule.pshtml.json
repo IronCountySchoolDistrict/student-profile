@@ -62,7 +62,7 @@
             '"' || pgfinalgrades.finalgradename || '"' || chr(58) ||
             chr(123) ||
             '"id"' || chr(58) || ' ' || pgfinalgrades.id || ',' ||
-            '"percent"' || chr(58) || ' "' || pgfinalgrades.percent || '",' ||
+            '"percent"' || chr(58) || pgfinalgrades.percent || ',' ||
             '"grade"' || chr(58) || ' "' || pgfinalgrades.grade || '"' ||
             chr(125)
             , ',')
