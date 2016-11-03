@@ -3,7 +3,7 @@ import Gpa from './Gpa';
 
 export default class GpaList extends Component {
   render() {
-    const panelDefault = 'panel panel-default';
+    const panelDefault = 'panel panel-default gpa-list';
     const gpas = this.props.gpas.map(gpa => {
       return (
         <Gpa key={gpa.id} term={gpa.term} gpa={gpa.gpa} />

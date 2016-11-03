@@ -3,9 +3,9 @@ import React, {Component} from 'react';
 export default class Gpa extends Component {
   render() {
     return (
-      <div className="col-md-2">
-        <h3>{this.props.term}</h3>
-        <div>{this.props.gpa}</div>
+      <div className="col-md-2 gpa-container">
+        <h4>{this.props.term}</h4>
+        <h3>{this.props.gpa}</h3>
       </div>
     );
   }
