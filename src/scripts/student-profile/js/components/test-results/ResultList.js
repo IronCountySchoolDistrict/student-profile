@@ -13,7 +13,7 @@ export default class ResultList extends Component {
   createGradeResultsList(gradeLevel) {
     const gradeResults = this.props.tests.filter(test => test.grade_level === gradeLevel);
     return (
-      <div className="row">
+      <div className="row grade-result-list">
         <GradeResultList results={gradeResults} />
       </div>
     );
