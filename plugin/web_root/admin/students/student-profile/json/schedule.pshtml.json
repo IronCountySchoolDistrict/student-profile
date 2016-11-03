@@ -86,7 +86,8 @@
           sections.id                      AS section_id,
           section_meeting.cycle_day_letter AS day,
           period.abbreviation              AS period,
-          period.sort_order                AS period_sort_order
+          period.sort_order                AS period_sort_order,
+          terms.yearid                     AS year_id
         FROM
           sections
           JOIN cc ON sections.id = cc.sectionid
@@ -95,17 +96,18 @@
             ON section_meeting.period_number = period.period_number AND
                sections.schoolid = period.schoolid AND
                floor(sections.termid / 100) = period.year_id
+          JOIN terms ON sections.termid = terms.id AND sections.schoolid = terms.schoolid
         WHERE cc.studentid = (
           SELECT students.id
           FROM students
           WHERE students.dcid = ~(gpv.students_dcid))
     ), section_expressions AS (
         SELECT
-          a.section_id                           AS section_id,
-          a.list_per || '(' || b.list_day || ')' AS expression,
-          section_period_day.period_sort_order   AS period_sort_order,
-          section_period_day.period              AS period,
-          section_period_day.day                 AS day
+          a.section_id                                AS section_id,
+          min(a.list_per || '(' || b.list_day || ')') AS expression,
+          min(section_period_day.period_sort_order)   AS period_sort_order,
+          min(section_period_day.period)              AS period,
+          min(section_period_day.day)                 AS day
         FROM (
                SELECT
                  section_id,
@@ -130,9 +132,11 @@
                     day
                   FROM section_period_day)
             GROUP BY section_id
-          ) b
-            ON a.section_id = b.section_id
+          ) b ON a.section_id = b.section_id
           JOIN section_period_day ON a.section_id = section_period_day.section_id
+        WHERE section_period_day.year_id = ~(gpv.year_id)
+        -- Use this group by to remove duplicate sections that may span multiple periods/cycle days
+        GROUP BY a.section_id
     )
     SELECT
       cc.dcid,
