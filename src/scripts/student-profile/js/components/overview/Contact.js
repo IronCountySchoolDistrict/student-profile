@@ -14,7 +14,7 @@ export default class Contact extends Component {
     var panelContainerClass;
     // if index is 0, this is the first contact in the list, so
     // we should give it the expanded class. If it's not the first in the list,
-    // give it the visually "collapsed" class
+    // give it the "collapsed" class
     if (!this.props.index) {
       panelContainerClass = 'panel-collapse collapse in';
     } else {
@@ -41,17 +41,20 @@ export default class Contact extends Component {
     }).join(' ');
 
     const hasAddress = !!fullMailingAddress || !!fullResidenceAddress;
-    const hasUniqueResidenceAddress = fullMailingAddress !== fullResidenceAddress;
+    const hasTwoUniqueAddresses = !!fullMailingAddress && !!fullResidenceAddress && fullMailingAddress !== fullResidenceAddress;
 
     let address1;
     let address2;
 
     if (hasAddress) {
-      if (hasUniqueResidenceAddress) {
+      if (hasTwoUniqueAddresses) {
           address1 = <ContactAddress title='Mailing Address' address={fullMailingAddress} />;
           address2 = <ContactAddress title='Residence Address' address={fullResidenceAddress} />;
       } else {
-        address1 = <ContactAddress title='Address' address={fullMailingAddress} />;
+        if (fullMailingAddress) {
+          address1 = <ContactAddress title='Address' address={fullMailingAddress} />;
+        }
+        address1 = <ContactAddress title='Address' address={fullResidenceAddress} />;
       }
     }
 
