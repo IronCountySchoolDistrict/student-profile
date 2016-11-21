@@ -6,22 +6,33 @@ export default class Result extends Component {
     super(props, context);
 
     this.state = {
-      display: false
+      display: 'composite'
     };
   }
 
-  getScoresButtonText() {
-    if (this.state.display) {
-      return 'Hide Scores';
-    } else {
-      return 'Show Scores';
+  // toggle state var `display` between 'composite' and 'scores'
+  toggleDisplay(thisButton) {
+    if (this.state.display !== thisButton) {
+      this.setState({
+        display: this.state.display === 'composite' &&
+          this.state.display !== thisButton ? 'scores' : 'composite'
+      });
     }
   }
 
-  onClick() {
-    this.setState({
-      display: this.state.display ? false : true
-    });
+  getViewButtonClass(thisButton) {
+    let btnClass = 'btn-xs btn btn-default';
+    if (this.state.display === thisButton) {
+      btnClass += ' active';
+    }
+    return btnClass;
+  }
+
+  componentDidMount() {
+    const tooltipSelector = $('[data-toggle="tooltip"]');
+    if (tooltipSelector.length) {
+      tooltipSelector.tooltip();
+    }
   }
 
   render() {
@@ -41,17 +52,30 @@ export default class Result extends Component {
       <div className="result">
         <div className={panelClass}>
           <div className="panel-heading">
-            <h3 className="panel-title">
+            <div className="panel-title pull-left heading">
               {this.props.test_name}
-            </h3>
+            </div>
+            <div className="panel-title pull-right">
+              <div className="btn-group" data-toggle="buttons">
+                <button className={this.getViewButtonClass('composite')} data-container="body" data-toggle="tooltip" data-placement="top" title="Score Overview" onClick={() => this.toggleDisplay('composite')}>
+                  <i className="fa fa-window-maximize" aria-hidden="true"></i>
+                </button>
+                <button className={this.getViewButtonClass('scores')} data-container="body" data-toggle="tooltip" data-placement="top" title="Score List" onClick={() => this.toggleDisplay('scores')}>
+                  <i className="fa fa-list" aria-hidden="true"></i>
+                </button>
+              </div>
+            </div>
+            <div className="clearfix"></div>
           </div>
           <div className="panel-body">
-            <h4 className="composite-score-header">{compositeScore.test_score}</h4>
-            <h2 className="composite-score">{compositeScore.num_score}</h2>
-            <button className="scores-button btn btn-default btn-block" onClick={() => this.onClick()}>
-              {this.getScoresButtonText()}
-            </button>
-            <StudentTestScoreList scores={this.props.test_scores} display={this.state.display} />
+            {this.state.display === 'composite' &&
+              <div>
+                <h4 className="composite-score-header">{compositeScore.test_score}</h4>
+                <h2 className="composite-score">{compositeScore.num_score}</h2>
+              </div>
+            }
+            {this.state.display === 'scores' && <StudentTestScoreList scores={this.props.test_scores} display={this.state.display}/>
+            }
           </div>
         </div>
       </div>

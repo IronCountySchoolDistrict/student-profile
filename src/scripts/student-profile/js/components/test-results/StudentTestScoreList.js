@@ -3,30 +3,21 @@ import StudentTestScore from './StudentTestScore';
 
 export default class StudentTestScoreList extends Component {
   render() {
-    if (this.props.display && this.props.scores) {
-      const panelClass = 'panel panel-default score-panel';
-      const testScores = this.props.scores.map(score => {
-        return (
-          <StudentTestScore {...score} key={score.id}/>
-        );
-      });
+    const testScores = this.props.scores.map(score => {
       return (
-        <div className={panelClass}>
-          <div className="panel-body">
-            {testScores}
-          </div>
-        </div>
+        <StudentTestScore {...score} key={score.id} />
       );
-    } else {
-      return (
-        <div className="hidden-score"></div>
-      );
-    }
+    });
+    return (
+      <div>
+        {testScores}
+      </div>
+    );
   }
 }
 
 StudentTestScoreList.propTypes = {
-  display: React.PropTypes.bool,
+  display: React.PropTypes.string,
   scores: React.PropTypes.arrayOf(
     React.PropTypes.object
   )

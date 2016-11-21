@@ -6,6 +6,9 @@
   .scores-button {
     margin-top: 30px;
   }
+  .scores-header-button {
+    float: right;
+  }
   .panel-title {
     white-space: nowrap;
     text-overflow: ellipsis;
@@ -21,9 +24,12 @@
     font-weight: bold;
   }
   .test-score, .test-score-name {
-    font-size: 14px;
+    font-size: 16px;
   }
-
+  .heading {
+    width: 75%;
+    font-size: 18px;
+  }
 }
 
 .grade-result-list .col-md-3:nth-child(4n+1) {
