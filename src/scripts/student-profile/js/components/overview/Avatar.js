@@ -11,7 +11,7 @@ export default class Avatar extends Component {
   }
 
   toFullName(firstName, middleName, lastName) {
-    var fullName = '';
+    let fullName = '';
     fullName += firstName;
     if (middleName) {
       fullName += ' ' + middleName;

@@ -6,7 +6,7 @@ export default class TestResults extends Component {
   constructor(props, context) {
     super(props, context);
 
-    this.state ={
+    this.state = {
       testResults: null,
       displayTests: null
     };
