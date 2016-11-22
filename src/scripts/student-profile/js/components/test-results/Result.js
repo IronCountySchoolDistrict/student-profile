@@ -11,7 +11,11 @@ export default class Result extends Component {
   }
 
   getScoreWithValue(compositeScore) {
-    if (!compositeScore.num_score && !compositeScore.alpha_score){
+    if (this.props.test_name.indexOf('UBSCT') !== -1) {
+      return compositeScore.num_score;
+    } else if (this.props.test_name.indexOf('PSAT') !== -1) {
+      return compositeScore.num_score;
+    } else if (!compositeScore.num_score && !compositeScore.alpha_score){
       return compositeScore.percent_score;
     } else if (!compositeScore.alpha_score && !compositeScore.percent_score) {
       return compositeScore.num_score;
@@ -84,7 +88,7 @@ export default class Result extends Component {
                 <h2 className="composite-score">{this.getScoreWithValue(compositeScore)}</h2>
               </div>
             }
-            {this.state.display === 'scores' && <StudentTestScoreList scores={this.props.test_scores} display={this.state.display}/>
+            {this.state.display === 'scores' && <StudentTestScoreList test_name={this.props.test_name} scores={this.props.test_scores} display={this.state.display}/>
             }
           </div>
         </div>
