@@ -38,11 +38,17 @@ export default class TestResults extends Component {
 
   render() {
     if (this.state.testResults) {
-      return (
-        <div>
-          <ResultList tests={this.state.displayTests} />
-        </div>
-      );
+      if (!this.state.testResults.length) {
+        return (
+          <div>This student does not have any test results to display</div>
+        );
+      } else {
+        return (
+          <div>
+            <ResultList tests={this.state.displayTests} />
+          </div>
+        );
+      }
     } else {
       const refreshClass = 'fa fa-refresh fa-spin fa-3x fa-fw';
       return (
