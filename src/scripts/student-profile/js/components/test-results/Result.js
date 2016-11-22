@@ -10,6 +10,16 @@ export default class Result extends Component {
     };
   }
 
+  getScoreWithValue(compositeScore) {
+    if (!compositeScore.num_score && !compositeScore.alpha_score){
+      return compositeScore.percent_score;
+    } else if (!compositeScore.alpha_score && !compositeScore.percent_score) {
+      return compositeScore.num_score;
+    } else if (!compositeScore.percent_score && !compositeScore.num_score) {
+      return compositeScore.alpha_score;
+    }
+  }
+
   // toggle state var `display` between 'composite' and 'scores'
   toggleDisplay(thisButton) {
     if (this.state.display !== thisButton) {
@@ -71,7 +81,7 @@ export default class Result extends Component {
             {this.state.display === 'composite' &&
               <div>
                 <h4 className="composite-score-header">{compositeScore.test_score}</h4>
-                <h2 className="composite-score">{compositeScore.num_score}</h2>
+                <h2 className="composite-score">{this.getScoreWithValue(compositeScore)}</h2>
               </div>
             }
             {this.state.display === 'scores' && <StudentTestScoreList scores={this.props.test_scores} display={this.state.display}/>
