@@ -1,3 +1,4 @@
+<!--NoLink-->
 <html>
 
 <head>
@@ -21,17 +22,11 @@
     <span class="account-photo">~[studenttitlephoto]</span>
     <h1>
       Student Profile
-      <span class="nav-teacher">
-        <select name="page" size=1 onChange="javascript:formHandler()">
-          <option value="">~[text]psx.html.teachers_studentpages.attendance.select_screens[/text]
-          <option value="">--------------------~[x:teacherpages]
-        </select>
-      </span>
       ~[studentalert]
     </h1>
 
     <div class="row">
-      <iframe id="profile-frame" src="/scripts/student-profile/html/index.html?students_frn=~(studentfrn)&user=~[x:users_dcid]&yearid=~(curyearid)" width="100%" style="border: none;" scrolling="no"></iframe>
+      <iframe id="profile-frame" src="/scripts/student-profile/html/index.html?students_frn=~(gpv.students_frn)&user=~[x:users_dcid]&yearid=~(curyearid)" width="100%" style="border: none;" scrolling="no"></iframe>
     </div>
 
     <script>
