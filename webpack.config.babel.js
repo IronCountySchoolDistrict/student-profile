@@ -2,7 +2,9 @@ import path from 'path';
 
 export default {
   devtool : 'source-map',
-  entry : ['./src/scripts/student-profile/js/react-index'],
+  entry : {
+    bundle: './src/scripts/student-profile/js/react-index'
+  },
   output : {
     path: path.join(__dirname, 'dist/src/scripts/student-profile/js'),
     filename: 'bundle.js',
