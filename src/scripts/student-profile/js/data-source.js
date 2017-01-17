@@ -1,6 +1,7 @@
 import {getPortal} from './util';
 import {decode} from 'he';
 import URI from 'urijs';
+import fetch from 'isomorphic-fetch';
 
 function htmlDecodeToJson(resp) {
   return resp.text().then(resp => decode(resp)).then(resp => JSON.parse(resp));
@@ -21,8 +22,8 @@ function getDataSourcePath() {
 }
 
 /**
- * @param {string} portal PowerSchool portal that user is currently logged in
- * @param {Promise}
+ * @param {string} studentsDcid PowerSchool portal that user is currently logged in
+ * @return {Promise}
  */
 export function loadOverview(studentsDcid) {
   const dataSourcePath = getDataSourcePath();
@@ -55,3 +56,4 @@ export function loadTestResults(studentsDcid) {
 
   return window.fetch(`${dataSourcePath}/test_results.pshtml.json?${queryStr}`, {credentials: 'include'}).then(htmlDecodeToJson);
 }
+

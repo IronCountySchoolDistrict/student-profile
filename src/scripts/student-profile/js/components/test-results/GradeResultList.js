@@ -6,7 +6,7 @@ export default class GradeResultList extends Component {
     const gradeResultList = this.props.results.map(test => {
       return (
         <div className="col-md-3" key={test.studenttest_id}>
-          <Result {...test} />
+          <Result {...test} shouldPrint={this.props.shouldPrint} />
         </div>
       );
     });

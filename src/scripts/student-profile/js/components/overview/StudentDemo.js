@@ -1,13 +1,13 @@
-import React, {Component} from 'react';
+import React, { Component } from 'react';
 import addressFormat from 'address-format';
 import DemoAddress from './DemoAddress';
 
 export default class StudentDemo extends Component {
   getAge(dateString) {
-    var today = new Date();
-    var birthDate = new Date(dateString);
-    var age = today.getFullYear() - birthDate.getFullYear();
-    var m = today.getMonth() - birthDate.getMonth();
+    const today = new Date();
+    const birthDate = new Date(dateString);
+    let age = today.getFullYear() - birthDate.getFullYear();
+    const m = today.getMonth() - birthDate.getMonth();
     if (m < 0 || (m === 0 && today.getDate() < birthDate.getDate())) {
       age--;
     }
@@ -40,10 +40,10 @@ export default class StudentDemo extends Component {
 
     if (hasAddress) {
       if (hasUniqueResidenceAddress) {
-          address1 = <DemoAddress title='Mailing Address' address={fullMailingAddress} />;
-          address2 = <DemoAddress title='Residence Address' address={fullResidenceAddress} />;
+        address1 = <DemoAddress title='Mailing Address' address={fullMailingAddress}/>;
+        address2 = <DemoAddress title='Residence Address' address={fullResidenceAddress}/>;
       } else {
-        address1 = <DemoAddress title='Address' address={fullMailingAddress} />;
+        address1 = <DemoAddress title='Address' address={fullMailingAddress}/>;
       }
     }
 
@@ -68,15 +68,17 @@ export default class StudentDemo extends Component {
         {address1}
         {address2}
         {(this.props.doctor.name || this.props.doctor.phone) &&
-          <div className="field-row">
-            <span className="field-label">Doctor: </span>
-            <span className="field-value">
+        <div className="field-row">
+          <span className="field-label">Doctor: </span>
+          <span className="field-value">
               {this.props.doctor.name}
-              <div>
-                {this.props.doctor.phone && <i className={fontAwesomePhone} aria-hidden="true"></i>} {this.props.doctor.phone}
-              </div>
+            <div className="doctor-phone-container">
+              {this.props.doctor.phone &&
+              <i className={fontAwesomePhone} aria-hidden="true"/>}
+              {this.props.doctor.phone}
+            </div>
             </span>
-          </div>
+        </div>
         }
       </div>
     );

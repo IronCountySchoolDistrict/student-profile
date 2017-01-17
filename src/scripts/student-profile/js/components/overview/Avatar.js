@@ -32,7 +32,7 @@ export default class Avatar extends Component {
     };
     return (
       <div style={textAlignStyle}>
-        <h4>
+        <h4 id="student-name">
           {this.toFullName(this.props.first_name, this.props.middle_name, this.props.last_name)}
         </h4>
         <div className="thumbnail">

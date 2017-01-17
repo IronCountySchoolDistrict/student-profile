@@ -13,4 +13,19 @@
   .fa-medkit {
     font-size: 24px;
   }
+
+  @media print {
+    font-size: 10px !important;
+    .fa-medkit {
+      font-size: 15px;
+      padding-right: 5px;
+    }
+    .field-row {
+      margin-bottom: 0 !important;
+    }
+    .doctor-phone-container {
+      display: inline;
+      padding-left: 5px;
+    }
+  }
 }

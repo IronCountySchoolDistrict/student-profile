@@ -4,7 +4,7 @@ export default class Phone extends Component {
 
   getIconClass(phoneType) {
     if (phoneType === 'Cell') {
-      return 'fa fa-mobile';
+      return 'fa fa-mobile fa-lg';
     }
     if (phoneType === 'Home') {
       return 'fa fa-home';
@@ -17,7 +17,7 @@ export default class Phone extends Component {
   render() {
     return (
       <div>
-        <i className={this.getIconClass(this.props.type)} aria-hidden="true"></i> {this.props.number}
+        <i className={this.getIconClass(this.props.type)} aria-hidden="true" /> {this.props.number}
       </div>
     );
   }

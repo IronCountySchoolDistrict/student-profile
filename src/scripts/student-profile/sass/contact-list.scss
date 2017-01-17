@@ -1,12 +1,27 @@
 .contact-list {
-      .fa {
-          width: 15px;
-          text-align: center;
-      }
-      .fa-mobile {
-        font-size: 21px;
-      }
-      .contact-header-name {
-        margin-left: 10px;
-      }
+  .fa {
+    width: 15px;
+    text-align: center;
+  }
+
+  .fa-mobile {
+    font-size: 21px;
+  }
+
+  .contact-header-name {
+    margin-left: 10px;
+  }
+
+  @media print {
+    padding-top: 5px;
+    padding-bottom: 5px;
+    * {
+      font-size: 10px;
+      margin-bottom: 0 !important;
+    }
+    .relationship {
+      font-size: 9px;
+      padding-left: 15px;
+    }
+  }
 }

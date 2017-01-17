@@ -58,8 +58,8 @@ export default function() {
   const pageSelect = $(contentDocument).find('[name="page"]');
   if (pageSelect.length) {
     fetch('/scripts/student-profile/html/studentpages-student-profile.html', {
-        credentials: 'include'
-      })
+      credentials: 'include'
+    })
       .then(r => r.text())
       .then(r => {
         const renderedTemplate = template(r);

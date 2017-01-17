@@ -3,7 +3,7 @@ import Grade from './Grade';
 
 export default class GradeList extends Component {
   render() {
-    const emptyClass = 'col-md-1 grade-container';
+    const emptyClass = 'col-md-1 col-xs-1 grade-container';
     const grades = this.props.uniqueTerms.map(term => {
       if (Object.keys(this.props.grades).includes(term) && this.props.grades[term].grade !== '--') {
         const gradeMatchingTerm = this.props.grades[term];

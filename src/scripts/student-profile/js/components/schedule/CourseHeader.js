@@ -3,22 +3,22 @@ import React, { Component } from 'react';
 export default class CourseHeader extends Component {
   render() {
     const panelDefault = 'panel panel-default panel-course';
-    const termHeaderClass = 'col-md-1 term-header';
+    const termHeaderClass = 'col-md-1 col-xs-1 term-header';
 
     return (
       <div className={panelDefault}>
         <div className="panel-body">
           <div className="row">
-            <div className="col-md-2">
+            <div className="col-md-2 col-xs-2">
               <h4 className="course-header">Teacher</h4>
             </div>
-            <div className="col-md-3">
+            <div className="col-md-3 col-xs-3">
               <h4 className="course-header">Class</h4>
             </div>
-            <div className="col-md-1">
+            <div className="col-md-1 col-xs-2">
               <h4 className="course-header">Term</h4>
             </div>
-            <div className="col-md-6">
+            <div className="col-md-6 col-xs-5">
               <h4 className="course-header">Grades</h4>
               <div>
                 {this.props.uniqueTerms.map((term, index) => {

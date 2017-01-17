@@ -4,7 +4,7 @@ import GradeResultList from './GradeResultList';
 export default class ResultList extends Component {
   //...don't ask me how this works, because *shrug*
   // https://ecommerce.shopify.com/c/ecommerce-design/t/ordinal-number-in-javascript-1st-2nd-3rd-4th-29259
-  getOrdinalGrade(n) {
+  static getOrdinalGrade(n) {
     if (n === 'K') {
       return 'Kindergarten';
     } else if (n === -2) {
@@ -13,7 +13,7 @@ export default class ResultList extends Component {
       return 'PK4';
     }
 
-    var s=["th","st","nd","rd"],
+    const s=["th","st","nd","rd"],
       v=n%100;
     return n+(s[(v-20)%10]||s[v]||s[0]) + ' Grade';
   }
@@ -22,7 +22,7 @@ export default class ResultList extends Component {
     const gradeResults = this.props.tests.filter(test => test.grade_level === gradeLevel);
     return (
       <div className="row grade-result-list">
-        <GradeResultList results={gradeResults} />
+        <GradeResultList results={gradeResults} shouldPrint={this.props.shouldPrint} />
       </div>
     );
   }
@@ -37,7 +37,7 @@ export default class ResultList extends Component {
         return (
           <div className="row" key={gradeLevel}>
             <div className="col-md-12">
-              <h2>{this.getOrdinalGrade(gradeLevel)}</h2>
+              <h2 className="grade-header">{ResultList.getOrdinalGrade(gradeLevel)}</h2>
               {this.createGradeResultsList(gradeLevel)}
             </div>
           </div>

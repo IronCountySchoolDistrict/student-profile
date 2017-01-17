@@ -12,16 +12,6 @@ export default class TestResults extends Component {
     };
   }
 
-  // set the `displayTest` state variable based on all test results records
-  // that match the `test_name` of the selected test
-  setDisplayTests(testName) {
-    if (this.state.testResults) {
-      this.setState({
-        displayTests: this.state.testResults.filter(result => result.test_name === testName)
-      });
-    }
-  }
-
   componentDidMount() {
     const studentsDcid = this.props.route.studentsDcid;
     loadTestResults(studentsDcid).then(testResults => {
@@ -45,14 +35,18 @@ export default class TestResults extends Component {
       } else {
         return (
           <div>
-            <ResultList tests={this.state.displayTests} />
+            <ResultList tests={this.state.displayTests} shouldPrint={this.props.route.shouldPrint} />
           </div>
         );
       }
-    } else {
+    } else if (!this.props.route.shouldPrint) {
       const refreshClass = 'fa fa-refresh fa-spin fa-3x fa-fw';
       return (
-        <i className={refreshClass}></i>
+        <i className={refreshClass} />
+      );
+    } else {
+      return (
+        <div></div>
       );
     }
   }
