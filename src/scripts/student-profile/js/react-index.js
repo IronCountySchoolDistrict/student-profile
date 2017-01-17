@@ -32,8 +32,11 @@ $(() => {
     );
   } else {
     render(
-      <Print studentsDcid={studentsDcid} yearId={yearId} shouldPrint={shouldPrint} />,
+      <Print studentsDcid={studentsDcid} yearId={yearId} shouldPrint={shouldPrint}/>,
       document.getElementById('profile-container')
     );
+    setTimeout(() => {
+      window.print();
+    }, 2000);
   }
 });

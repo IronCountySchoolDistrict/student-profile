@@ -37,7 +37,10 @@
   .gpa-list .gpa-container {
     text-align: center;
   }
-  @media print {
+}
+
+@media print {
+  .course-list {
     .panel-course {
       page-break-inside: avoid;
     }
@@ -45,16 +48,19 @@
     * {
       font-size: 10px !important;
     }
+
     .attendance-container {
       display: block;
     }
+
     .panel-course {
       margin-bottom: 0px;
     }
-    .gpa-container h4, h3 {
-      margin-top: 0 !important;
-      margin-bottom: 0 !important;
-    }
+  }
+
+  .gpa-container h4, h3 {
+    margin-top: 0 !important;
+    margin-bottom: 0 !important;
   }
 }
 

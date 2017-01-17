@@ -36,7 +36,7 @@ export default class ResultList extends Component {
       const resultList = distinctGradeLevels.map(gradeLevel => {
         return (
           <div className="row" key={gradeLevel}>
-            <div className="col-md-12">
+            <div className="col-md-12 grade-result-list-container">
               <h2 className="grade-header">{ResultList.getOrdinalGrade(gradeLevel)}</h2>
               {this.createGradeResultsList(gradeLevel)}
             </div>
