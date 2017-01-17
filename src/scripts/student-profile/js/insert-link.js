@@ -1,7 +1,7 @@
 import $ from 'jquery';
 
 export default function() {
-  var template = $('#new-prof-template').html();
-  var select = $('#std_information');
+  const template = $('#new-prof-template').html();
+  const select = $('#std_information');
   select.prepend(template);
 }

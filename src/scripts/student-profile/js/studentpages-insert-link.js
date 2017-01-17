@@ -1,3 +1,4 @@
+/* global students_dcid */
 import $ from 'jquery';
 import { template } from 'underscore';
 
@@ -57,15 +58,15 @@ export default function() {
   const pageSelect = $(contentDocument).find('[name="page"]');
   if (pageSelect.length) {
     fetch('/scripts/student-profile/html/studentpages-student-profile.html', {
-        credentials: 'include'
-      })
+      credentials: 'include'
+    })
       .then(r => r.text())
       .then(r => {
-        const renderedTemplate = _.template(r);
+        const renderedTemplate = template(r);
         const compiledTemplate = renderedTemplate({
           students_dcid: students_dcid
         });
-        _alphabeticOptionInsert(pageSelect, r);
+        _alphabeticOptionInsert(pageSelect, compiledTemplate);
       });
   }
 }

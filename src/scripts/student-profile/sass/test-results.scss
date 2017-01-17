@@ -1,0 +1,59 @@
+.result {
+  .composite-score,
+  .composite-score-header {
+    text-align: center;
+  }
+
+  .scores-button {
+    margin-top: 30px;
+  }
+
+  .scores-header-button {
+    float: right;
+  }
+
+  .panel-title {
+    white-space: nowrap;
+    text-overflow: ellipsis;
+    overflow: hidden;
+  }
+
+  .hidden-score {
+    display: none;
+  }
+
+  .score-panel {
+    margin-top: 20px;
+  }
+
+  .test-score-name {
+    font-weight: bold;
+  }
+
+  .test-score,
+  .test-score-name {
+    font-size: 16px;
+  }
+
+  .heading {
+    width: 75%;
+    font-size: 18px;
+  }
+}
+
+.grade-result-list .col-md-3:nth-child(4n+1) {
+  clear: both;
+}
+
+@media print {
+  * {
+    font-size: 10px !important;
+  }
+  .result .panel {
+    margin-bottom: 0 !important;
+    page-break-inside: avoid;
+  }
+  .grade-result-list-container {
+    page-break-inside: avoid;
+  }
+}

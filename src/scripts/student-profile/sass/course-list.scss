@@ -1,0 +1,66 @@
+.course-list {
+  .panel-course {
+    margin-bottom: 5px;
+  }
+
+  .expression-label {
+    font-size: 16px;
+  }
+
+  .teacher-name {
+    font-size: 14px;
+    padding-left: 5px;
+  }
+
+  .panel-body {
+    padding: 5px;
+  }
+
+  .attendance {
+    font-size: 14px;
+  }
+
+  .attendance-container {
+    padding-left: 5px;
+    padding-right: 5px;
+  }
+
+  .grade-container,
+  .term-header {
+    text-align: center;
+
+    &:nth-child(1) {
+      margin-left: -20px;
+    }
+  }
+
+  .gpa-list .gpa-container {
+    text-align: center;
+  }
+}
+
+@media print {
+  .course-list {
+    .panel-course {
+      page-break-inside: avoid;
+    }
+
+    * {
+      font-size: 10px !important;
+    }
+
+    .attendance-container {
+      display: block;
+    }
+
+    .panel-course {
+      margin-bottom: 0px;
+    }
+  }
+
+  .gpa-container h4, h3 {
+    margin-top: 0 !important;
+    margin-bottom: 0 !important;
+  }
+}
+

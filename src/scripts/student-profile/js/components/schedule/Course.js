@@ -1,65 +1,46 @@
-import React, {Component} from 'react';
-import GradesCell from './GradesCells';
+import React, { Component } from 'react';
+import Attendance from './Attendance';
+import GradeList from './GradeList';
 
 export default class Course extends Component {
-
-  _printGradesForTerms(grades, uniqueTerms) {
-    return uniqueTerms.map(term => {
-      if (Object.keys(grades).indexOf(term) !== -1) {
-        const termGrade = grades[term];
-        return (
-          <td key={termGrade.id}>
-            <GradesCell grade={termGrade.grade} percent={termGrade.percent}/>
-          </td>
-        )
-      } else {
-        return (
-          <td>
-            <GradesCell grade={""} percent={""}/>
-          </td>
-        )
-      }
-    });
-  }
-
   render() {
-    const unexcused = !!this.props.attendance.unexcused ? this.props.attendance.unexcused : 0;
-    const excused = !!this.props.attendance.excused ? this.props.attendance.excused : 0;
-    const tardy = !!this.props.attendance.tardy ? this.props.attendance.tardy : 0;
-    const totalAbsences = unexcused + excused;
+    const panelDefault = 'panel panel-default panel-course';
+    const teacherContainerClass = 'col-md-2 col-xs-2 teacher-container';
+    const classContainerClass = 'col-md-3 col-xs-4 class-container';
+    const termContainerClass = 'col-md-1 col-xs-2 term-container';
+    const gradesContainerClass = 'col-md-6 col-xs-4 grades-container';
 
-    const grades = this._printGradesForTerms(this.props.grades, this.props.uniqueTerms);
     return (
-      <tr>
-        <td>
-          {this.props.expression}
-        </td>
-        <td>
-          {this.props.course_name}
-        </td>
-        <td>
-          {this.props.abbreviation}
-        </td>
-        <td>
-          {this.props.dateenrolled}
-        </td>
-        <td>
-          {this.props.dateleft}
-        </td>
-        <td>
-          {totalAbsences}
-          ({excused})
-        </td>
-        <td>
-          {tardy}
-        </td>
-        <td>
-        </td>
-        {grades}
-        <td>
-          {this.props.lastfirst}
-        </td>
-      </tr>
+      <div className={panelDefault}>
+        <div className="panel-body">
+          <div className="row">
+            <div className={teacherContainerClass}>
+              {this.props.teacher_name}
+            </div>
+            <div className={classContainerClass}>
+              <strong className="expression-label">{this.props.expression}</strong> {this.props.course_name}
+              <Attendance {...this.props.attendance} />
+            </div>
+            <div className={termContainerClass}>
+              {this.props.term}
+            </div>
+            <div className={gradesContainerClass}>
+              <GradeList uniqueTerms={this.props.uniqueTerms} grades={this.props.grades} />
+            </div>
+          </div>
+        </div>
+      </div>
     );
   }
 }
+
+Course.propTypes = {
+  id: React.PropTypes.number,
+  teacher_name: React.PropTypes.string,
+  expression: React.PropTypes.string,
+  course_name: React.PropTypes.string,
+  attendance: React.PropTypes.object,
+  term: React.PropTypes.string,
+  uniqueTerms: React.PropTypes.arrayOf(React.PropTypes.string),
+  grades: React.PropTypes.object
+};
