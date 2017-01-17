@@ -2,43 +2,47 @@
 <html>
 
 <head>
-  <title>Student Profile</title>
-  ~[wc:commonscripts]
-  <link href="/images/css/screen.css" rel="stylesheet" media="screen">
-  <link href="/images/css/print.css" rel="stylesheet" media="print">
+    <title>Student Profile</title>
+    ~[wc:commonscripts]
+    <link href="/images/css/screen.css" rel="stylesheet" media="screen">
+    <link href="/images/css/print.css" rel="stylesheet" media="print">
 
-  <script>
-    function formHandler(form) {
-      window.location.href = document.navigation.page.options[document.navigation.page.selectedIndex].value;
-    }
-  </script>
+    <script>
+      function formHandler(form) {
+        window.location.href = document.navigation.page.options[document.navigation.page.selectedIndex].value;
+      }
+    </script>
 </head>
 
 <body>
 
-  ~[wc:teachers_header_fr_css]
+~[wc:teachers_header_fr_css]
 
-  <form name="navigation">
+<form name="navigation">
     <span class="account-photo">~[studenttitlephoto]</span>
     <h1>
-      Student Profile
-      ~[studentalert]
+        Student Profile
+        ~[studentalert]
     </h1>
 
     <div class="row">
-      <iframe id="profile-frame" src="/scripts/student-profile/html/index.html?students_frn=~(gpv.students_frn)&user=~[x:users_dcid]&yearid=~(curyearid)" width="100%" style="border: none;" scrolling="no"></iframe>
+        <iframe id="profile-frame"
+                src="/scripts/student-profile/html/index.html?students_frn=~(gpv.students_frn)&user=~[x:users_dcid]&yearid=~(curyearid)&should_print=false"
+                width="100%" style="border: none;" scrolling="no"></iframe>
     </div>
 
     <script>
       require.config({
         paths: {
-          'iFrameResizer': 'https://cdnjs.cloudflare.com/ajax/libs/iframe-resizer/3.5.5/iframeResizer',
-          'init-iFrameResizer': '/scripts/student-profile/js/init-iFrameResizer'
+          iFrameResizer: 'https://cdnjs.cloudflare.com/ajax/libs/iframe-resizer/3.5.5/iframeResizer',
+          'init-iFrameResizer': '/scripts/student-profile/js/init-iFrameResizer',
+          printButton: '/scripts/student-profile/js/print-button'
         }
       });
 
-      require(['init-iFrameResizer', 'iFrameResizer'], function(initIFrameResizer) {
+      require(['init-iFrameResizer', 'printButton', 'iFrameResizer'], function(initIFrameResizer, printButton) {
         initIFrameResizer.init();
+        printButton.default('/scripts/student-profile/html/index.html?frn=~[x:studentfrn]&students_frn=~[x:studentfrn]&user=~[x:users_dcid]&yearid=~(curyearid)&should_print=true');
       });
     </script>
     ~[wc:teachers_footer_fr_css]
