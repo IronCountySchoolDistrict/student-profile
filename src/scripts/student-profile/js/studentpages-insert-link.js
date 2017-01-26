@@ -27,12 +27,21 @@ function _alphabeticOptionInsert(pageSelect, insertOption) {
   const selectScreensOptions = pageSelect.find('option:contains("Select screens")');
   const selectScreensSeparator = selectScreensOptions.next();
   const formsOptionsGroup = pageSelect.find('optgroup');
-  const formsOptions = formsOptionsGroup.length ? formsOptionsGroup.nextAll() : null;
+  const formsOptions = formsOptionsGroup.length ? formsOptionsGroup.nextAll() : $();
 
-  selectScreensOptions.remove();
-  selectScreensSeparator.remove();
-  formsOptionsGroup.remove();
-  formsOptions.remove();
+  if (selectScreensOptions.length) {
+    selectScreensOptions.remove();
+  }
+  if (selectScreensSeparator.length) {
+    selectScreensSeparator.remove();
+  }
+  if (formsOptionsGroup.length) {
+    formsOptionsGroup.remove();
+  }
+  if (formsOptions.length) {
+    formsOptions.remove();
+  }
+  
 
   // insert new option into DOM
   pageSelect.append(insertOption);
@@ -45,16 +54,31 @@ function _alphabeticOptionInsert(pageSelect, insertOption) {
   pageSelect.append(sortedOptions);
 
   // restore extra options
-  pageSelect.prepend(selectScreensSeparator);
-  pageSelect.prepend(selectScreensOptions);
+  if (selectScreensOptions.length) {
+    pageSelect.prepend(selectScreensSeparator);
+  }
+
+  if (selectScreensSeparator.length) {
+    pageSelect.prepend(selectScreensOptions);
+  }
   if (formsOptionsGroup.length) {
     pageSelect.append(formsOptionsGroup);
-    pageSelect.append(formsOptions);
+    if (formsOptions.length) {
+      pageSelect.append(formsOptions);
+    }
   }
 }
 
 export default function() {
-  const contentDocument = top.frames['content'].document;
+  let contentDocument;
+  
+  // Detect if this script is running on a page with frames
+  if ($(top.document).find('frame').length) {
+    contentDocument = top.frames['content'].document;
+  } else {
+    contentDocument = document;
+  }
+  
   const pageSelect = $(contentDocument).find('[name="page"]');
   if (pageSelect.length) {
     fetch('/scripts/student-profile/html/studentpages-student-profile.html', {
