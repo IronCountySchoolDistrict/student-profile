@@ -1,4 +1,4 @@
-import React, { Component } from 'react';
+import React, { Component, PropTypes } from 'react';
 import { loadTestResults } from '../../data-source';
 import ResultList from './ResultList';
 
@@ -13,7 +13,7 @@ export default class TestResults extends Component {
   }
 
   componentDidMount() {
-    const studentsDcid = this.props.route.studentsDcid;
+    const studentsDcid = this.props.studentsDcid;
     loadTestResults(studentsDcid).then(testResults => {
       this.setState({
         testResults: testResults
@@ -35,11 +35,11 @@ export default class TestResults extends Component {
       } else {
         return (
           <div>
-            <ResultList tests={this.state.displayTests} shouldPrint={this.props.route.shouldPrint} />
+            <ResultList tests={this.state.displayTests} shouldPrint={this.props.shouldPrint} />
           </div>
         );
       }
-    } else if (!this.props.route.shouldPrint) {
+    } else if (!this.props.shouldPrint) {
       const refreshClass = 'fa fa-refresh fa-spin fa-3x fa-fw';
       return (
         <i className={refreshClass} />
@@ -51,3 +51,8 @@ export default class TestResults extends Component {
     }
   }
 }
+
+TestResults.propTypes = {
+  shouldPrint: PropTypes.bool,
+  studentsDcid: PropTypes.string
+};

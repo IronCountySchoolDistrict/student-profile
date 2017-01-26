@@ -23,9 +23,9 @@ $(() => {
     render(
       <Router history={hashHistory}>
         <Route path="/" component={Nav}>
-          <IndexRoute component={Overview} studentsDcid={studentsDcid}/>
-          <Route path="/schedule" component={Schedule} studentsDcid={studentsDcid} yearId={yearId}/>
-          <Route path="/test-results" component={TestResults} studentsDcid={studentsDcid}/>
+          <IndexRoute component={() => <Overview studentsDcid={studentsDcid}/>}/>
+          <Route path="/schedule" component={() => <Schedule studentsDcid={studentsDcid} yearId={yearId}/>}/>
+          <Route path="/test-results" component={() => <TestResults studentsDcid={studentsDcid}/>}/>
         </Route>
       </Router>,
       document.getElementById('profile-container')

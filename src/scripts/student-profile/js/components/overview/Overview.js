@@ -1,4 +1,4 @@
-import React, { Component } from 'react';
+import React, { PropTypes, Component } from 'react';
 import SchoolDemo from './SchoolDemo';
 import StudentDemo from './StudentDemo';
 import Avatar from './Avatar';
@@ -16,7 +16,7 @@ export default class Overview extends Component {
   }
 
   componentDidMount() {
-    loadOverview(this.props.route.studentsDcid).then(overview => {
+    loadOverview(this.props.studentsDcid).then(overview => {
       this.setState({
         avatar: overview.avatar,
         contacts: overview.contacts,
@@ -59,7 +59,7 @@ export default class Overview extends Component {
           }
           {this.state.contacts.length !== 0 &&
           <div className="row">
-            <ContactList contacts={this.state.contacts} shouldPrint={this.props.route.shouldPrint} />
+            <ContactList contacts={this.state.contacts} shouldPrint={this.props.shouldPrint} />
           </div>
           }
         </div>
@@ -74,13 +74,6 @@ export default class Overview extends Component {
 }
 
 Overview.propTypes = {
-  route: React.PropTypes.shape({
-    studentsDcid: React.PropTypes.string,
-    avatar: React.PropTypes.object,
-    contacts: React.PropTypes.arrayOf(React.PropTypes.object),
-    medical: React.PropTypes.object,
-    school_demo: React.PropTypes.object,
-    student_demo: React.PropTypes.object,
-    shouldPrint: React.PropTypes.boolean
-  })
+  studentsDcid: PropTypes.string,
+  shouldPrint: PropTypes.bool
 };

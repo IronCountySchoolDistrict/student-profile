@@ -65,7 +65,8 @@ export default class Contact extends Component {
                    aria-hidden="true"/>
                 }
                 <span className="contact-header-name">
-                  {this.props.first_name} {this.props.last_name} ({this.props.relationship})
+                  {this.props.first_name} {this.props.last_name}
+                  {!!this.props.relationship && '(' + this.props.relationship + ')'}
               </span>
               </a>
             </h4>
@@ -111,7 +112,7 @@ export default class Contact extends Component {
                 {this.props.first_name} {this.props.last_name}
               </div>
               <div className="relationship">
-                {this.props.relationship}
+                {!!this.props.relationship && this.props.relationship}
               </div>
             </div>
             <div className="col-xs-4">

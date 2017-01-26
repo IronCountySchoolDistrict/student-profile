@@ -1,4 +1,4 @@
-import React, {Component} from 'react';
+import React, { Component, PropTypes } from 'react';
 
 export default class StudentTestScore extends Component {
   getScoreWithValue() {
@@ -24,3 +24,11 @@ export default class StudentTestScore extends Component {
     );
   }
 }
+
+StudentTestScore.propTypes = {
+  test_name: PropTypes.string,
+  test_score: PropTypes.string,
+  num_score: PropTypes.number,
+  percent_score: PropTypes.string,
+  alpha_score: PropTypes.number
+};

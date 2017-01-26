@@ -30,7 +30,7 @@ export function loadOverview(studentsDcid) {
 
   const queryStr = URI.buildQuery({students_dcid: studentsDcid});
 
-  return window.fetch(`${dataSourcePath}/overview.pshtml.json?${queryStr}`, {credentials: 'include'}).then(htmlDecodeToJson);
+  return fetch(`${dataSourcePath}/overview.pshtml.json?${queryStr}`, {credentials: 'include'}).then(htmlDecodeToJson);
 }
 
 export function loadSchedule(studentsDcid, yearId) {
@@ -38,7 +38,7 @@ export function loadSchedule(studentsDcid, yearId) {
 
   const queryStr = URI.buildQuery({students_dcid: studentsDcid, year_id: yearId});
 
-  return window.fetch(`${dataSourcePath}/schedule.pshtml.json?${queryStr}`, {credentials: 'include'}).then(htmlDecodeToJson);
+  return fetch(`${dataSourcePath}/schedule.pshtml.json?${queryStr}`, {credentials: 'include'}).then(htmlDecodeToJson);
 }
 
 export function loadGpa(studentsDcid, yearId) {
@@ -46,7 +46,7 @@ export function loadGpa(studentsDcid, yearId) {
 
   const queryStr = URI.buildQuery({students_dcid: studentsDcid, year_id: yearId});
 
-  return window.fetch(`${dataSourcePath}/gpa.pshtml.json?${queryStr}`, {credentials: 'include'}).then(htmlDecodeToJson);
+  return fetch(`${dataSourcePath}/gpa.pshtml.json?${queryStr}`, {credentials: 'include'}).then(htmlDecodeToJson);
 }
 
 export function loadTestResults(studentsDcid) {
@@ -54,6 +54,6 @@ export function loadTestResults(studentsDcid) {
 
   const queryStr = URI.buildQuery({students_dcid: studentsDcid});
 
-  return window.fetch(`${dataSourcePath}/test_results.pshtml.json?${queryStr}`, {credentials: 'include'}).then(htmlDecodeToJson);
+  return fetch(`${dataSourcePath}/test_results.pshtml.json?${queryStr}`, {credentials: 'include'}).then(htmlDecodeToJson);
 }
 

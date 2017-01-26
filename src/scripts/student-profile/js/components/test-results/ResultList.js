@@ -60,5 +60,6 @@ export default class ResultList extends Component {
 ResultList.propTypes = {
   tests: React.PropTypes.arrayOf(
     React.PropTypes.object
-  )
+  ),
+  shouldPrint: React.PropTypes.bool
 };

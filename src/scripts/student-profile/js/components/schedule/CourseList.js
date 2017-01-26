@@ -1,4 +1,4 @@
-import React, { Component } from 'react';
+import React, { Component, PropTypes } from 'react';
 import Course from './Course';
 import CourseHeader from './CourseHeader';
 
@@ -32,7 +32,7 @@ export default class CourseList extends Component {
 }
 
 CourseList.propTypes = {
-  courses: React.PropTypes.arrayOf(
-    React.PropTypes.object
+  courses: PropTypes.arrayOf(
+    PropTypes.object
   )
 };

@@ -7,12 +7,20 @@
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/4.7.0/css/font-awesome.min.css" />
     <script>
         window.iFrameResizer = {
-            targetOrigin: '<!-- @echo PS_URL -->'
+            targetOrigin: '<%= htmlWebpackPlugin.options.psHost %>'
         };
     </script>
     <script src="https://cdnjs.cloudflare.com/ajax/libs/iframe-resizer/3.5.5/iframeResizer.contentWindow.js"></script>
 
-    <link rel="stylesheet" href="/scripts/student-profile/bundle.css" />
+    <% if (htmlWebpackPlugin.options.target === 'dev') { %>
+        <script src="https://unpkg.com/react@15/dist/react.js"></script>
+        <script src="https://unpkg.com/react-dom@15/dist/react-dom.js"></script>
+    <% } %>
+
+    <% if (htmlWebpackPlugin.options.target === 'prod') { %>
+        <script src="https://unpkg.com/react@15/dist/react.min.js"></script>
+        <script src="https://unpkg.com/react-dom@15/dist/react-dom.min.js"></script>
+    <% } %>
 </head>
 
 <body>
@@ -21,8 +29,6 @@
         <div id="profile-container"></div>
     </div>
     <!-- end .container-fluid -->
-    <script src="/scripts/student-profile/vendor.js"></script>
-    <script src="/scripts/student-profile/bundle.js"></script>
 </body>
 
 </html>

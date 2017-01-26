@@ -1,4 +1,4 @@
-import React, { Component } from 'react';
+import React, { PropTypes, Component } from 'react';
 import { Link, withRouter } from 'react-router';
 
 const NavLink = class NavLink extends Component {
@@ -20,5 +20,7 @@ const NavLink = class NavLink extends Component {
 export default withRouter(NavLink);
 
 NavLink.propTypes = {
-  to: React.PropTypes.string
+  to: PropTypes.string,
+  router: PropTypes.object,
+  route: PropTypes.object
 };

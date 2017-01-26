@@ -1,4 +1,4 @@
-import React, {Component} from 'react';
+import React, {Component, PropTypes} from 'react';
 import Result from './Result';
 
 export default class GradeResultList extends Component {
@@ -20,5 +20,6 @@ export default class GradeResultList extends Component {
 }
 
 GradeResultList.propTypes = {
-  results: React.PropTypes.arrayOf(React.PropTypes.object)
+  results: PropTypes.arrayOf(PropTypes.object),
+  shouldPrint: PropTypes.bool
 };

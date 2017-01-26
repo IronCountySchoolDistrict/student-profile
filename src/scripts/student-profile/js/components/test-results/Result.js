@@ -133,5 +133,6 @@ Result.propTypes = {
     React.PropTypes.object
   ),
   test_name: React.PropTypes.string,
-  test_score: React.PropTypes.number
+  test_score: React.PropTypes.number,
+  shouldPrint: React.PropTypes.bool
 };
