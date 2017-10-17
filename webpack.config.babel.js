@@ -10,44 +10,58 @@ import { argv } from 'yargs';
 const TARGET = process.env.npm_lifecycle_event;
 
 const common = {
-
   entry: {
     bundle: [
       './src/scripts/student-profile/js/react-index'
     ],
-    vendor: ['bootstrap', 'isomorphic-fetch', 'urijs', 'jquery', 'he', 'address-format']
+    vendor: [
+      'bootstrap', 'isomorphic-fetch', 'urijs', 'jquery', 'he', 'address-format', 'react', 'react-dom', 'react-router'
+    ]
   },
   output: {
     path: path.join(__dirname, 'dist/src/scripts/student-profile'),
     filename: 'bundle.js'
   },
-  externals: {
-    'react': 'React',
-    'react-dom': 'ReactDOM'
-  },
   module: {
-    loaders: [{
+    rules: [
+      {
         test: /\.js$/,
-        loaders: ['react-hot', 'babel?presets[]=es2015'],
+        use: ['react-hot-loader/webpack'],
         include: path.join(__dirname, 'src')
       },
       {
+        test: /\.js$/,
+        use: {
+          loader: 'babel-loader',
+          options: {
+            presets: ['es2015']
+          }
+        }
+      },
+      {
         test: /\.scss$/,
-        loader: ExtractTextPlugin.extract('style', 'css?sourceMap!sass?sourceMap')
+        use: ExtractTextPlugin.extract({
+          fallback: "style-loader",
+          use: ['css-loader', 'sass-loader']
+        })
       }
     ]
   },
   plugins: [
     new ExtractTextPlugin('bundle.css'),
-    new webpack.optimize.CommonsChunkPlugin('vendor', 'vendor.js', Infinity),
+    new webpack.optimize.CommonsChunkPlugin({
+      name: 'vendor', 
+      filename: 'vendor.js',
+      minChunks: Infinity
+    }),
     new webpack.ProvidePlugin({
       $: 'jquery',
       jQuery: 'jquery'
     })
   ],
   resolve: {
-    modulesDirectories: ['node_modules'],
-    extensions: ['', '.js', '.jsx']
+    modules: ['node_modules'],
+    extensions: ['.js', '.jsx']
   }
 };
 
@@ -64,7 +78,7 @@ if (TARGET === 'build:dev') {
       new webpack.HotModuleReplacementPlugin(),
       // new HtmlWebpackPlugin({
       //   host: 'https://localhost:8080',
-      //   psHost: 'https://pstest2.irondistrict.org',
+      //   psHost: 'https://pstest.irondistrict.org',
       //   target: 'dev',
       //   template: 'src/scripts/student-profile/html/index.ejs'
       // })
@@ -80,17 +94,17 @@ if (TARGET === 'build:dev') {
   config = WebpackMerge(common, {
     devtool: 'source-map',
     output: {
-      publicPath: 'https://pstest2.irondistrict.org/scripts/student-profile'
+      publicPath: 'https://pstest.irondistrict.org/scripts/student-profile'
     },
-    plugins: [
-      new webpack.optimize.UglifyJsPlugin(),
+    // plugins: [
+      // new webpack.optimize.UglifyJsPlugin()
       // new HtmlWebpackPlugin({
       //   host: '/scripts/student-profile',
       //   psHost: 'https://pstest2.irondistrict.org',
       //   target: 'prod',
       //   template: 'src/scripts/student-profile/html/index.ejs'
       // })
-    ]
+    // ]
   });
 }
 
