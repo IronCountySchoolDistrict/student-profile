@@ -1,4 +1,5 @@
-import React, { PropTypes, Component } from 'react';
+import React, { Component } from 'react';
+import PropTypes from 'prop-types';
 import CourseList from './CourseList';
 import GpaList from './GpaList';
 import { loadSchedule, loadGpa } from '../../data-source';

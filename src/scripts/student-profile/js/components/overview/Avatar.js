@@ -1,4 +1,6 @@
 import React, {Component} from 'react';
+import PropTypes from 'prop-types';
+
 import {getPortal} from '../../util';
 
 export default class Avatar extends Component {
@@ -44,8 +46,8 @@ export default class Avatar extends Component {
 }
 
 Avatar.propTypes = {
-  student_id: React.PropTypes.number,
-  first_name: React.PropTypes.string,
-  middle_name: React.PropTypes.string,
-  last_name: React.PropTypes.string
+  student_id: PropTypes.number,
+  first_name: PropTypes.string,
+  middle_name: PropTypes.string,
+  last_name: PropTypes.string
 };

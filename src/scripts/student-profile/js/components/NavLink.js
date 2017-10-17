@@ -1,26 +1,23 @@
-import React, { PropTypes, Component } from 'react';
-import { Link, withRouter } from 'react-router';
+import React from 'react';
+import { Route } from 'react-router';
+import { Link } from 'react-router-dom';
+import PropTypes from 'prop-types';
 
-const NavLink = class NavLink extends Component {
-  render() {
-    const { to, children } = this.props;
+const NavLink = ({ label, to, activeOnlyWhenExact, activeClassName }) => (
+  <Route path={to} exact={activeOnlyWhenExact} children={({match}) => (
+    <li className={match ? activeClassName : ''}>
+      <Link to={to}>
+        {label}
+      </Link>
+    </li>
+  )}/>
+);
 
-    const isActive = this.props.router.isActive(to);
+export default NavLink;
 
-    return (
-      <li className={isActive ? 'active' : ''}>
-        <Link to={to} {...this.props.route}>
-          {children}
-        </Link>
-      </li>
-    );
-  }
-};
-
-export default withRouter(NavLink);
-
-NavLink.propTypes = {
+NavLink.PropTypes = {
+  label: PropTypes.string,
   to: PropTypes.string,
-  router: PropTypes.object,
-  route: PropTypes.object
+  activeOnlyWhenExact: PropTypes.bool,
+  activeClassName: PropTypes.string
 };

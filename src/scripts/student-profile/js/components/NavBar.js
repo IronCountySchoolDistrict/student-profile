@@ -1,8 +1,8 @@
 import React, {Component} from 'react';
 import NavLink from './NavLink';
-import {Link} from 'react-router';
+import { Link } from 'react-router-dom';
 
-export default class Nav extends Component {
+export default class NavBar extends Component {
   render() {
     const navbarToggle = 'navbar-toggle collapsed';
     const navbarCollapse = 'collapse navbar-collapse';
@@ -19,18 +19,17 @@ export default class Nav extends Component {
                 <span className="icon-bar"></span>
                 <span className="icon-bar"></span>
               </button>
-              <Link to="/" className="navbar-brand" onlyActiveOnIndex>Student Profile</Link>
+              <Link to="/" className="navbar-brand">Student Profile</Link>
             </div>
 
             <div className={navbarCollapse} id="student-profile-navbar-collapse">
               <ul className={navUl}>
-                <NavLink to="/schedule">Schedule</NavLink>
-                <NavLink to="/test-results">Test Results</NavLink>
+                <NavLink to="/schedule" activeClassName="active" label="Schedule" />
+                <NavLink to="/test-results" activeClassName="active" label="Test Results" />
               </ul>
             </div>
           </div>
         </nav>
-        {this.props.children}
       </div>
     );
   }

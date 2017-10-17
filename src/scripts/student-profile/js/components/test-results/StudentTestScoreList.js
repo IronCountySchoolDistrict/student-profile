@@ -1,4 +1,5 @@
 import React, {Component} from 'react';
+import PropTypes from 'prop-types';
 import StudentTestScore from './StudentTestScore';
 
 export default class StudentTestScoreList extends Component {
@@ -17,9 +18,9 @@ export default class StudentTestScoreList extends Component {
 }
 
 StudentTestScoreList.propTypes = {
-  display: React.PropTypes.string,
-  scores: React.PropTypes.arrayOf(
-    React.PropTypes.object
+  display: PropTypes.string,
+  scores: PropTypes.arrayOf(
+    PropTypes.object
   ),
-  test_name: React.PropTypes.string
+  test_name: PropTypes.string
 };

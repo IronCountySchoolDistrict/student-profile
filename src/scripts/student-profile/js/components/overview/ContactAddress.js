@@ -1,4 +1,6 @@
 import React, {Component} from 'react';
+import PropTypes from 'prop-types';
+
 
 export default class ContactAddress extends Component {
   render() {
@@ -11,6 +13,6 @@ export default class ContactAddress extends Component {
 }
 
 ContactAddress.propTypes = {
-  title: React.PropTypes.string,
-  address: React.PropTypes.string
+  title: PropTypes.string,
+  address: PropTypes.string
 };

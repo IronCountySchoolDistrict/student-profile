@@ -1,4 +1,5 @@
 import React, {Component} from 'react';
+import PropTypes from 'prop-types';
 import Gpa from './Gpa';
 
 export default class GpaList extends Component {
@@ -23,11 +24,11 @@ export default class GpaList extends Component {
 }
 
 GpaList.propTypes = {
-  gpas: React.PropTypes.arrayOf(
-    React.PropTypes.shape({
-      id: React.PropTypes.number,
-      term: React.PropTypes.string,
-      gpa: React.PropTypes.number
+  gpas: PropTypes.arrayOf(
+    PropTypes.shape({
+      id: PropTypes.number,
+      term: PropTypes.string,
+      gpa: PropTypes.number
     })
   )
 };

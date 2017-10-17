@@ -1,4 +1,6 @@
 import React, {Component} from 'react';
+import PropTypes from 'prop-types';
+
 import Phone from './Phone';
 
 export default class PhoneList extends Component {
@@ -21,5 +23,5 @@ export default class PhoneList extends Component {
 }
 
 PhoneList.propTypes = {
-  phones: React.PropTypes.arrayOf(React.PropTypes.object)
+  phones: PropTypes.arrayOf(PropTypes.object)
 };

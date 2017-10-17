@@ -1,4 +1,6 @@
 import React, {Component} from 'react';
+import PropTypes from 'prop-types';
+
 
 export default class Medical extends Component {
   render() {
@@ -26,7 +28,7 @@ export default class Medical extends Component {
 }
 
 Medical.propTypes = {
-  alert_medical: React.PropTypes.string,
-  allergies: React.PropTypes.string,
-  medical_considerations: React.PropTypes.string
+  alert_medical: PropTypes.string,
+  allergies: PropTypes.string,
+  medical_considerations: PropTypes.string
 };

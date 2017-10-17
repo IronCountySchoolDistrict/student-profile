@@ -1,4 +1,5 @@
 import React, {Component} from 'react';
+import PropTypes from 'prop-types';
 
 export default class Gpa extends Component {
   render() {
@@ -12,6 +13,6 @@ export default class Gpa extends Component {
 }
 
 Gpa.propTypes = {
-  term: React.PropTypes.string,
-  gpa: React.PropTypes.number
+  term: PropTypes.string,
+  gpa: PropTypes.number
 };

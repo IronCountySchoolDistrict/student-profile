@@ -1,4 +1,5 @@
 import React, {Component} from 'react';
+import PropTypes from 'prop-types';
 
 export default class Phone extends Component {
 
@@ -24,7 +25,9 @@ export default class Phone extends Component {
 }
 
 Phone.propTypes = {
-  type: React.PropTypes.string,
-  number: React.PropTypes.string.isRequired,
-  priority: React.PropTypes.number
+  type: PropTypes.string,
+  number: PropTypes.string.isRequired,
+  priority: PropTypes.number
 };
+
+//test

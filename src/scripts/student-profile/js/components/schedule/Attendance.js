@@ -1,4 +1,5 @@
 import React, { Component } from 'react';
+import PropTypes from 'prop-types';
 
 export default class Attendance extends Component {
   render() {
@@ -25,7 +26,7 @@ export default class Attendance extends Component {
 }
 
 Attendance.propTypes = {
-  excused: React.PropTypes.number,
-  unexcused: React.PropTypes.number,
-  tardy: React.PropTypes.number,
+  excused: PropTypes.number,
+  unexcused: PropTypes.number,
+  tardy: PropTypes.number,
 };

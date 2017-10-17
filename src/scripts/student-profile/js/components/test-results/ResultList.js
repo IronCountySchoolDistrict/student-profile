@@ -1,4 +1,5 @@
 import React, {Component} from 'react';
+import PropTypes from 'prop-types';
 import GradeResultList from './GradeResultList';
 
 export default class ResultList extends Component {
@@ -58,8 +59,8 @@ export default class ResultList extends Component {
 }
 
 ResultList.propTypes = {
-  tests: React.PropTypes.arrayOf(
-    React.PropTypes.object
+  tests: PropTypes.arrayOf(
+    PropTypes.object
   ),
-  shouldPrint: React.PropTypes.bool
+  shouldPrint: PropTypes.bool
 };

@@ -1,4 +1,6 @@
 import React, {Component} from 'react';
+import PropTypes from 'prop-types';
+
 
 export default class DemoAddress extends Component {
   render() {
@@ -12,6 +14,6 @@ export default class DemoAddress extends Component {
 }
 
 DemoAddress.propTypes = {
-  title: React.PropTypes.string,
-  address: React.PropTypes.string
+  title: PropTypes.string,
+  address: PropTypes.string
 };
