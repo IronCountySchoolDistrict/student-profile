@@ -1,15 +1,11 @@
 import React from 'react';
 import { render } from 'react-dom';
-import { Router, IndexRoute, Route, hashHistory } from 'react-router';
+import { HashRouter } from 'react-router-dom';
 import URI from 'urijs';
 import $ from 'jquery';
 
-import Overview from './components/overview/Overview';
-import Nav from './components/Nav';
-import Schedule from './components/schedule/Schedule';
-import TestResults from './components/test-results/TestResults';
+import App from './components/App';
 import Print from './components/Print';
-
 import * as sass from '../sass/base.scss';
 
 $(() => {
@@ -21,13 +17,9 @@ $(() => {
 
   if (!shouldPrint) {
     render(
-      <Router history={hashHistory}>
-        <Route path="/" component={Nav}>
-          <IndexRoute component={() => <Overview studentsDcid={studentsDcid}/>}/>
-          <Route path="/schedule" component={() => <Schedule studentsDcid={studentsDcid} yearId={yearId}/>}/>
-          <Route path="/test-results" component={() => <TestResults studentsDcid={studentsDcid}/>}/>
-        </Route>
-      </Router>,
+      <HashRouter>
+        <App studentsDcid={studentsDcid} yearId={yearId} />
+      </HashRouter>,
       document.getElementById('profile-container')
     );
   } else {
