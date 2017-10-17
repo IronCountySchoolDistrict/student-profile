@@ -1,4 +1,6 @@
 import React, { Component } from 'react';
+import PropTypes from 'prop-types';
+
 import addressFormat from 'address-format';
 import PhoneList from './PhoneList';
 import ContactAddress from './ContactAddress';
@@ -140,29 +142,29 @@ export default class Contact extends Component {
 }
 
 Contact.propTypes = {
-  index: React.PropTypes.number,
-  mailing_address: React.PropTypes.shape({
-    street: React.PropTypes.string,
-    city: React.PropTypes.string,
-    state: React.PropTypes.string,
-    zip: React.PropTypes.string,
+  index: PropTypes.number,
+  mailing_address: PropTypes.shape({
+    street: PropTypes.string,
+    city: PropTypes.string,
+    state: PropTypes.string,
+    zip: PropTypes.string,
   }),
-  residence_address: React.PropTypes.shape({
-    street: React.PropTypes.string,
-    city: React.PropTypes.string,
-    state: React.PropTypes.string,
-    zip: React.PropTypes.string,
+  residence_address: PropTypes.shape({
+    street: PropTypes.string,
+    city: PropTypes.string,
+    state: PropTypes.string,
+    zip: PropTypes.string,
   }),
-  legal_guardian: React.PropTypes.bool,
-  first_name: React.PropTypes.string,
-  last_name: React.PropTypes.string,
-  relationship: React.PropTypes.string,
-  employer: React.PropTypes.string,
-  email_address: React.PropTypes.string,
-  phones: React.PropTypes.arrayOf(React.PropTypes.shape({
-    number: React.PropTypes.string,
-    type: React.PropTypes.string,
-    priority: React.PropTypes.number
+  legal_guardian: PropTypes.bool,
+  first_name: PropTypes.string,
+  last_name: PropTypes.string,
+  relationship: PropTypes.string,
+  employer: PropTypes.string,
+  email_address: PropTypes.string,
+  phones: PropTypes.arrayOf(PropTypes.shape({
+    number: PropTypes.string,
+    type: PropTypes.string,
+    priority: PropTypes.number
   })),
-  shouldPrint: React.PropTypes.bool
+  shouldPrint: PropTypes.bool
 };

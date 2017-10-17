@@ -1,4 +1,5 @@
 import React, { Component } from 'react';
+import PropTypes from 'prop-types';
 import Grade from './Grade';
 
 export default class GradeList extends Component {
@@ -26,6 +27,6 @@ export default class GradeList extends Component {
 }
 
 GradeList.propTypes = {
-  uniqueTerms: React.PropTypes.arrayOf(React.PropTypes.string),
-  grades: React.PropTypes.object
+  uniqueTerms: PropTypes.arrayOf(PropTypes.string),
+  grades: PropTypes.object
 };

@@ -1,4 +1,5 @@
 import React, { Component } from 'react';
+import PropTypes from 'prop-types';
 
 export default class Grade extends Component {
   render() {
@@ -17,6 +18,6 @@ export default class Grade extends Component {
 }
 
 Grade.propTypes = {
-  grade: React.PropTypes.string,
-  percent: React.PropTypes.number
+  grade: PropTypes.string,
+  percent: PropTypes.number
 };

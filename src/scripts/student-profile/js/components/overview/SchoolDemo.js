@@ -1,4 +1,5 @@
 import React, {Component} from 'react';
+import PropTypes from 'prop-types';
 
 export default class SchoolDemo extends Component {
 
@@ -93,15 +94,15 @@ export default class SchoolDemo extends Component {
 }
 
 SchoolDemo.propTypes = {
-  special_ed_indicator: React.PropTypes.bool,
-  ell_indicator: React.PropTypes.bool,
-  school_name: React.PropTypes.string,
-  home_room: React.PropTypes.string,
-  grade_level: React.PropTypes.oneOfType([
-    React.PropTypes.string,
-    React.PropTypes.number
+  special_ed_indicator: PropTypes.bool,
+  ell_indicator: PropTypes.bool,
+  school_name: PropTypes.string,
+  home_room: PropTypes.string,
+  grade_level: PropTypes.oneOfType([
+    PropTypes.string,
+    PropTypes.number
   ]),
-  enroll_status: React.PropTypes.string,
-  entry_date: React.PropTypes.string,
-  exit_date: React.PropTypes.string
+  enroll_status: PropTypes.string,
+  entry_date: PropTypes.string,
+  exit_date: PropTypes.string
 };

@@ -1,4 +1,5 @@
 import React, { Component } from 'react';
+import PropTypes from 'prop-types';
 
 export default class CourseHeader extends Component {
   render() {
@@ -36,7 +37,7 @@ export default class CourseHeader extends Component {
 }
 
 CourseHeader.propTypes = {
-  uniqueTerms: React.PropTypes.arrayOf(
-    React.PropTypes.string
+  uniqueTerms: PropTypes.arrayOf(
+    PropTypes.string
   )
 };

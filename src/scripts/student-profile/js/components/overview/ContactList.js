@@ -1,4 +1,6 @@
-import React, { PropTypes, Component } from 'react';
+import React, { Component } from 'react';
+import PropTypes from 'prop-types';
+
 import Contact from './Contact';
 
 export default class ContactList extends Component {
@@ -29,6 +31,6 @@ export default class ContactList extends Component {
 }
 
 ContactList.propTypes = {
-  contacts: React.PropTypes.arrayOf(React.PropTypes.object),
+  contacts: PropTypes.arrayOf(PropTypes.object),
   shouldPrint: PropTypes.bool
 };

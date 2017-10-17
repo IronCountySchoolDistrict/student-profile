@@ -1,4 +1,6 @@
 import React, { Component } from 'react';
+import PropTypes from 'prop-types';
+
 import addressFormat from 'address-format';
 import DemoAddress from './DemoAddress';
 
@@ -86,27 +88,27 @@ export default class StudentDemo extends Component {
 }
 
 StudentDemo.propTypes = {
-  doctor: React.PropTypes.shape({
-    name: React.PropTypes.string,
-    phone: React.PropTypes.string
+  doctor: PropTypes.shape({
+    name: PropTypes.string,
+    phone: PropTypes.string
   }),
-  dentist: React.PropTypes.shape({
-    name: React.PropTypes.string,
-    phone: React.PropTypes.string
+  dentist: PropTypes.shape({
+    name: PropTypes.string,
+    phone: PropTypes.string
   }),
-  dob: React.PropTypes.string,
-  mother: React.PropTypes.string,
-  father: React.PropTypes.string,
-  mailing_address: React.PropTypes.shape({
-    street: React.PropTypes.string,
-    city: React.PropTypes.string,
-    state: React.PropTypes.string,
-    zip: React.PropTypes.string,
+  dob: PropTypes.string,
+  mother: PropTypes.string,
+  father: PropTypes.string,
+  mailing_address: PropTypes.shape({
+    street: PropTypes.string,
+    city: PropTypes.string,
+    state: PropTypes.string,
+    zip: PropTypes.string,
   }),
-  residence_address: React.PropTypes.shape({
-    street: React.PropTypes.string,
-    city: React.PropTypes.string,
-    state: React.PropTypes.string,
-    zip: React.PropTypes.string,
+  residence_address: PropTypes.shape({
+    street: PropTypes.string,
+    city: PropTypes.string,
+    state: PropTypes.string,
+    zip: PropTypes.string,
   })
 };

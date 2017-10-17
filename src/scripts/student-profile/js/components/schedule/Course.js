@@ -1,4 +1,5 @@
 import React, { Component } from 'react';
+import PropTypes from 'prop-types';
 import Attendance from './Attendance';
 import GradeList from './GradeList';
 
@@ -35,12 +36,12 @@ export default class Course extends Component {
 }
 
 Course.propTypes = {
-  id: React.PropTypes.number,
-  teacher_name: React.PropTypes.string,
-  expression: React.PropTypes.string,
-  course_name: React.PropTypes.string,
-  attendance: React.PropTypes.object,
-  term: React.PropTypes.string,
-  uniqueTerms: React.PropTypes.arrayOf(React.PropTypes.string),
-  grades: React.PropTypes.object
+  id: PropTypes.number,
+  teacher_name: PropTypes.string,
+  expression: PropTypes.string,
+  course_name: PropTypes.string,
+  attendance: PropTypes.object,
+  term: PropTypes.string,
+  uniqueTerms: PropTypes.arrayOf(PropTypes.string),
+  grades: PropTypes.object
 };
