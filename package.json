@@ -1,6 +1,6 @@
 {
   "name": "ps-student-profile",
-  "version": "0.1.0",
+  "version": "0.2.0",
   "description": "A student profile page for PowerSchool.",
   "scripts": {
     "test": "",
@@ -55,6 +55,6 @@
     "webpack-config": "^7.5.0",
     "webpack-dev-server": "^2.9.2",
     "webpack-merge": "^4.1.0",
-    "yargs": "^9.0.1"
+    "yargs": "^10.0.3"
   }
 }
