@@ -82,6 +82,12 @@ export default class StudentDemo extends Component {
             </span>
         </div>
         }
+        {this.props.act_id &&
+        <div className="field-row">
+          <span className="field-label">ACT ID: </span>
+          <span className="field-value">{this.props.act_id}</span>
+        </div>
+        }
       </div>
     );
   }
@@ -97,6 +103,7 @@ StudentDemo.propTypes = {
     phone: PropTypes.string
   }),
   dob: PropTypes.string,
+  act_id: PropTypes.string,
   mother: PropTypes.string,
   father: PropTypes.string,
   mailing_address: PropTypes.shape({

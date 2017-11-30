@@ -19,6 +19,6 @@ export default class Main extends Component {
 
 Main.propTypes = {
   studentsDcid: PropTypes.string,
-  yearId: PropTypes.string,
+  yearId: PropTypes.number,
   shouldPrint: PropTypes.bool
 };

@@ -16,6 +16,6 @@ export default class App extends Component {
 
 App.propTypes = {
   studentsDcid: PropTypes.string,
-  yearId: PropTypes.string,
+  yearId: PropTypes.number,
   shouldPrint: PropTypes.bool
 };
