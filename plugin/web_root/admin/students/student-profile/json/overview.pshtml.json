@@ -214,6 +214,10 @@
       THEN 'null'
     ELSE '"' || to_char(students.exitdate, 'DD Mon YYYY') || '"' END,
     CASE
+    WHEN to_char(u_def_ext_students.act_id) IS NULL
+      THEN 'null'
+    ELSE '"' || to_char(u_def_ext_students.act_id) || '"' END,
+    CASE
     WHEN students.mother IS NULL
       THEN 'null'
     ELSE '"' || students.mother || '"' END,
@@ -349,6 +353,7 @@
         "exit_date": ~(exitdate)
       },
       "student_demo": {
+        "act_id": ~(act_id),
         "mother": ~(mother),
         "father": ~(father),
         "dob": ~(dob),
