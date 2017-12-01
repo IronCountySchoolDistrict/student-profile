@@ -17,6 +17,8 @@ function getDataSourcePath() {
     case 'teachers':
       dataSourcePath = `/${portal}/studentpages/student-profile/json`;
       break;
+    case 'guardian':
+      dataSourcePath = `/${portal}/student-profile/json`;
   }
   return dataSourcePath;
 }
