@@ -1,0 +1,34 @@
+<!--NoLink-->
+<html>
+    <head>
+        <title>Student Profile</title>
+        <link href="/images/css/screen.css" rel="stylesheet" media="screen">
+        <link href="/images/css/print.css" rel="stylesheet" media="print">
+    
+        ~[wc:guardian_header]
+        
+        <div class="row">
+            <iframe id="profile-frame"
+                    src="/scripts/student-profile/html/index.html?students_frn=~[x:studentfrn]&user=~[x:users_dcid]&yearid=~(curyearid)&should_print=false"
+                    style="border: none; min-width: 100% !important; padding-left: 0 !important" scrolling="no"></iframe>
+        </div>
+    
+        <script>
+            require.config({
+            paths: {
+                iFrameResizer: 'https://cdnjs.cloudflare.com/ajax/libs/iframe-resizer/3.5.15/iframeResizer',
+                'init-iFrameResizer': '/scripts/student-profile/js/init-iFrameResizer',
+                printButton: '/scripts/student-profile/js/print-button'
+            }
+            });
+    
+            require(['init-iFrameResizer', 'printButton', 'iFrameResizer'], function(initIFrameResizer, printButton) {
+                initIFrameResizer.init();
+                printButton.default('/scripts/student-profile/html/index.html?frn=~[x:studentfrn]&students_frn=~[x:studentfrn]&user=~[x:users_dcid]&yearid=~(curyearid)&should_print=true');
+            });
+        </script>
+        ~[wc:guardian_footer]
+    </body>
+    
+</html>
+        

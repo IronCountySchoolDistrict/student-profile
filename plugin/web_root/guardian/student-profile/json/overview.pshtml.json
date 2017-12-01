@@ -1,0 +1,389 @@
+  ~[tlist_sql;
+    WITH phones AS (
+      SELECT
+        contactdcid,
+        chr(91) ||
+        listagg(
+            chr(123) ||
+            '"id"' ||
+            chr(58) ||
+            CASE
+            WHEN to_char(u_sc_phone.id) IS NULL
+              THEN 'null'
+            ELSE to_char(u_sc_phone.id)
+            END || ',' ||
+            '"number"' ||
+            chr(58) ||
+            CASE
+            WHEN to_char(u_sc_phone.phone_number) IS NULL
+              THEN 'null'
+            ELSE '"' || to_char(u_sc_phone.phone_number) || '"'
+            END || ',' ||
+            '"priority"' ||
+            chr(58) ||
+            CASE
+            WHEN to_char(u_sc_phone.phone_priority) IS NULL
+              THEN 'null'
+            ELSE to_char(u_sc_phone.phone_priority)
+            END || ',' ||
+            '"type"' ||
+            chr(58) ||
+            CASE
+            WHEN to_char(u_sc_phone.phone_type) IS NULL
+              THEN 'null'
+            ELSE '"' || to_char(u_sc_phone.phone_type) || '"'
+            END ||
+            chr(125)
+            , ',')
+        WITHIN GROUP (
+          ORDER BY contactdcid) || chr(93) AS phonejson
+
+      FROM
+        u_sc_phone
+      WHERE
+        u_sc_phone.studentsdcid = ~(gpv.students_dcid)
+      GROUP BY
+        contactdcid
+  ),
+      contact AS (
+        SELECT
+          u_student_contacts.studentsdcid                                     AS students_dcid,
+          u_student_contacts.id                                               AS id,
+          CASE
+          WHEN to_char(u_student_contacts.priority) IS NULL
+            THEN 'null'
+          ELSE to_char(u_student_contacts.priority) END                       AS priority,
+          CASE
+          WHEN to_char(u_student_contacts.employer) IS NULL
+            THEN 'null'
+          ELSE '"' || to_char(u_student_contacts.employer) || '"' END         AS employer,
+          CASE
+          WHEN to_char(u_student_contacts.legal_guardian) IS NULL
+            THEN 'null'
+          WHEN to_char(u_student_contacts.legal_guardian) = 1
+            THEN 'true'
+          WHEN to_char(u_student_contacts.legal_guardian) = 0
+            THEN 'false'
+          ELSE to_char(u_student_contacts.legal_guardian) END                 AS legal_guardian,
+          CASE
+          WHEN to_char(u_student_contacts.relationship) IS NULL
+            THEN 'null'
+          ELSE '"' || to_char(u_student_contacts.relationship) || '"' END     AS relationship,
+          CASE
+          WHEN to_char(u_student_contacts.residence_street) IS NULL
+            THEN 'null'
+          ELSE '"' || to_char(u_student_contacts.residence_street) || '"' END AS residence_street,
+          CASE
+          WHEN to_char(u_student_contacts.residence_city) IS NULL
+            THEN 'null'
+          ELSE '"' || to_char(u_student_contacts.residence_city) || '"' END   AS residence_city,
+          CASE
+          WHEN to_char(u_student_contacts.residence_state) IS NULL
+            THEN 'null'
+          ELSE '"' || to_char(u_student_contacts.residence_state) || '"' END  AS residence_state,
+          CASE
+          WHEN to_char(u_student_contacts.residence_zip) IS NULL
+            THEN 'null'
+          ELSE '"' || to_char(u_student_contacts.residence_zip) || '"' END    AS residence_zip,
+          CASE
+          WHEN to_char(u_student_contacts.mailing_street) IS NULL
+            THEN 'null'
+          ELSE '"' || to_char(u_student_contacts.mailing_street) || '"' END   AS mailing_street,
+          CASE
+          WHEN to_char(u_student_contacts.mailing_city) IS NULL
+            THEN 'null'
+          ELSE '"' || to_char(u_student_contacts.mailing_city) || '"' END     AS mailing_city,
+          CASE
+          WHEN to_char(u_student_contacts.mailing_state) IS NULL
+            THEN 'null'
+          ELSE '"' || to_char(u_student_contacts.mailing_state) || '"' END    AS mailing_state,
+          CASE
+          WHEN to_char(u_student_contacts.mailing_zip) IS NULL
+            THEN 'null'
+          ELSE '"' || to_char(u_student_contacts.mailing_zip) || '"' END      AS mailing_zip,
+          CASE
+          WHEN to_char(u_student_contacts.first_name) IS NULL
+            THEN 'null'
+          ELSE '"' || to_char(u_student_contacts.first_name) || '"' END       AS first_name,
+          CASE
+          WHEN to_char(u_student_contacts.last_name) IS NULL
+            THEN 'null'
+          ELSE '"' || to_char(u_student_contacts.last_name) || '"' END        AS last_name,
+          CASE
+          WHEN to_char(u_sc_email.email_address) IS NULL
+            THEN 'null'
+          ELSE '"' || to_char(u_sc_email.email_address) || '"' END            AS email_address,
+          coalesce(phones.phonejson, chr(91) || chr(93))                      AS phones
+        FROM
+          u_student_contacts
+          LEFT JOIN u_sc_email ON u_student_contacts.studentsdcid = u_sc_email.studentsdcid AND
+                                  u_student_contacts.id = u_sc_email.contactdcid
+          LEFT JOIN phones ON u_student_contacts.id = phones.contactdcid
+        WHERE
+          u_student_contacts.studentsdcid = ~(gpv.students_dcid)
+        ORDER BY
+          u_student_contacts.legal_guardian DESC,
+          u_student_contacts.priority ASC),
+      contact_json AS (
+        SELECT
+          students_dcid,
+          chr(91) ||
+          listagg(
+              chr(123) ||
+              '"id"' || chr(58) || contact.id || ',' ||
+              '"priority"' || chr(58) || contact.priority || ',' ||
+              '"employer"' || chr(58) || contact.employer || ',' ||
+              '"legal_guardian"' || chr(58) || contact.legal_guardian || ',' ||
+              '"relationship"' || chr(58) || contact.relationship || ',' ||
+              '"residence_address"' || chr(58) ||
+              chr(123) ||
+                '"street"' || chr(58) || contact.residence_street || ',' ||
+                '"city"' || chr(58) || contact.residence_city || ',' ||
+                '"state"' || chr(58) || contact.residence_state || ',' ||
+                '"zip"' || chr(58) || contact.residence_zip ||
+              chr(125) || ',' ||
+              '"mailing_address"' || chr(58) ||
+              chr(123) ||
+                '"street"' || chr(58) || contact.mailing_street || ',' ||
+                '"city"' || chr(58) || contact.mailing_city || ',' ||
+                '"state"' || chr(58) || contact.mailing_state || ',' ||
+                '"zip"' || chr(58) || contact.mailing_zip ||
+              chr(125) || ',' ||
+              '"first_name"' || chr(58) || contact.first_name || ',' ||
+              '"last_name"' || chr(58) || contact.last_name || ',' ||
+              '"email_address"' || chr(58) || contact.email_address || ',' ||
+              '"phones"' || chr(58) || contact.phones ||
+              chr(125), ',')
+          WITHIN GROUP (
+            ORDER BY priority) ||
+          chr(93) AS contact
+        FROM contact
+        GROUP BY students_dcid)
+
+
+  SELECT
+    students.id,
+    CASE
+    WHEN to_char(students.first_name) IS NULL
+      THEN 'null'
+    ELSE '"' || to_char(students.first_name) || '"' END,
+    CASE
+    WHEN to_char(students.middle_name) IS NULL
+      THEN 'null'
+    ELSE '"' || to_char(students.middle_name) || '"' END,
+    CASE
+    WHEN to_char(students.last_name) IS NULL
+      THEN 'null'
+    ELSE '"' || to_char(students.last_name) || '"' END,
+    CASE
+    WHEN grade_level IS NULL
+      THEN 'null'
+    WHEN grade_level = 0
+      THEN '"K"'
+    WHEN grade_level = -1
+      THEN '"PK4"'
+    WHEN grade_level = -2
+      THEN '"PK3"'
+    ELSE to_char(grade_level) END,
+    CASE
+    WHEN schools.name IS NULL
+      THEN 'null'
+    ELSE '"' || schools.name || '"' END,
+    CASE
+    WHEN to_char(students.home_room) IS NULL
+      THEN 'null'
+    ELSE '"' || to_char(students.home_room) || '"' END,
+    CASE
+    WHEN students.enroll_status IS NULL
+      THEN 'null'
+    ELSE '"' || students.enroll_status || '"' END,
+    CASE
+    WHEN (s_ut_stu_x.special_ed_indicator IS NULL OR s_ut_stu_x.special_ed_indicator = 0)
+      THEN 'false'
+    ELSE 'true' END,
+    CASE
+    WHEN (u_def_ext_students.ell_indicator IS NULL OR u_def_ext_students.ell_indicator = 0)
+      THEN 'false'
+    ELSE 'true' END,
+    CASE
+    WHEN students.entrydate IS NULL
+      THEN 'null'
+    ELSE '"' || to_char(students.entrydate, 'DD Mon YYYY') || '"' END,
+    CASE
+    WHEN students.exitdate IS NULL
+      THEN 'null'
+    ELSE '"' || to_char(students.exitdate, 'DD Mon YYYY') || '"' END,
+    CASE
+    WHEN to_char(u_def_ext_students.act_id) IS NULL
+      THEN 'null'
+    ELSE '"' || to_char(u_def_ext_students.act_id) || '"' END,
+    CASE
+    WHEN students.mother IS NULL
+      THEN 'null'
+    ELSE '"' || students.mother || '"' END,
+    CASE
+    WHEN students.father IS NULL
+      THEN 'null'
+    ELSE '"' || students.father || '"' END,
+    CASE
+    WHEN students.dob IS NULL
+      THEN 'null'
+    ELSE '"' || to_char(students.dob, 'DD Mon YYYY') || '"' END,
+    CASE
+    WHEN students.street IS NULL
+      THEN 'null'
+    ELSE '"' || students.street || '"' END,
+    CASE
+    WHEN students.city IS NULL
+      THEN 'null'
+    ELSE '"' || students.city || '"' END,
+    CASE
+    WHEN students.state IS NULL
+      THEN 'null'
+    ELSE '"' || students.state || '"' END,
+    CASE
+    WHEN students.zip IS NULL
+      THEN 'null'
+    ELSE '"' || students.zip || '"' END,
+    CASE
+    WHEN students.mailing_street IS NULL
+      THEN 'null'
+    ELSE '"' || students.mailing_street || '"' END,
+    CASE
+    WHEN students.mailing_city IS NULL
+      THEN 'null'
+    ELSE '"' || trim(students.mailing_city) || '"' END,
+    CASE
+    WHEN students.mailing_state IS NULL
+      THEN 'null'
+    ELSE '"' || students.mailing_state || '"' END,
+    CASE
+    WHEN students.mailing_zip IS NULL
+      THEN 'null'
+    ELSE '"' || students.mailing_zip || '"' END,
+    CASE
+    WHEN to_char(students.doctor_name) IS NULL
+      THEN 'null'
+    ELSE '"' || to_char(students.doctor_name) || '"' END,
+    CASE
+    WHEN to_char(students.doctor_phone) IS NULL
+      THEN 'null'
+    ELSE '"' || to_char(students.doctor_phone) || '"' END,
+    CASE
+    WHEN to_char(studentcorefields.dentist_name) IS NULL
+      THEN 'null'
+    ELSE '"' || to_char(studentcorefields.dentist_name) || '"' END,
+    CASE
+    WHEN to_char(studentcorefields.dentist_phone) IS NULL
+      THEN 'null'
+    ELSE '"' || to_char(studentcorefields.dentist_phone) || '"' END,
+    CASE
+    WHEN to_char(studentcorefields.medical_considerations) IS NULL
+      THEN 'null'
+    ELSE '"' ||
+         replace(
+             replace(
+                 replace(
+                     replace(
+                         replace(
+                             replace(
+                                 replace(to_char(trim(studentcorefields.medical_considerations)), '\', '\\'),
+                                 '"', '\"'),
+                             CHR(9), '\t'),
+                         CHR(8), '\b'),
+                     CHR(13), '\r'),
+                 CHR(12), '\f'),
+             CHR(10), '\n') || '"'
+    END,
+    CASE
+    WHEN studentcorefields.allergies IS NULL
+      THEN 'null'
+    ELSE '"' || studentcorefields.allergies || '"' END,
+    CASE
+    WHEN to_char(students.alert_medical) IS NULL
+      THEN 'null'
+    ELSE '"' ||
+         replace(
+             replace(
+                 replace(
+                     replace(
+                         replace(
+                             replace(
+                                 replace(to_char(trim(students.alert_medical)), '\', '\\'),
+                                 '"', '\"'),
+                             CHR(9), '\t'),
+                         CHR(8), '\b'),
+                     CHR(13), '\r'),
+                 CHR(12), '\f'),
+             CHR(10), '\n') || '"'
+    END,
+    CASE
+    WHEN (to_date(students.alert_medicalexpires) IS NULL OR
+          students.alert_medicalexpires = to_date('1900-01-01', 'YYYY-MM-DD'))
+      THEN 'null'
+    ELSE '"' || to_date(students.alert_medicalexpires) || '"' END,
+    CASE
+    WHEN contact_json.contact IS NULL
+      THEN chr(91) || chr(93)
+    ELSE contact_json.contact END AS contacts
+  FROM
+    students
+    LEFT OUTER JOIN schools ON students.schoolid = schools.school_number
+  LEFT OUTER JOIN s_ut_stu_x ON students.dcid = s_ut_stu_x.studentsdcid
+  LEFT OUTER JOIN u_def_ext_students ON students.dcid = u_def_ext_students.studentsdcid
+  LEFT OUTER JOIN studentcorefields ON students.dcid = studentcorefields.studentsdcid
+  LEFT OUTER JOIN contact_json ON students.dcid = contact_json.students_dcid
+  WHERE
+    students.dcid = ~(gpv.students_dcid)]
+    {
+      "avatar": {
+        "student_id": ~(id),
+        "first_name": ~(first_name),
+        "middle_name": ~(middle_name),
+        "last_name": ~(last_name)
+      },
+      "school_demo": {
+        "grade_level": ~(grade_level),
+        "school_name": ~(school_name),
+        "home_room": ~(home_room),
+        "enroll_status": ~(enroll_status),
+        "special_ed_indicator": ~(special_ed_indicator),
+        "ell_indicator": ~(ell_indicator),
+        "entry_date": ~(entrydate),
+        "exit_date": ~(exitdate)
+      },
+      "student_demo": {
+        "act_id": ~(act_id),
+        "mother": ~(mother),
+        "father": ~(father),
+        "dob": ~(dob),
+        "residence_address": {
+          "street": ~(street),
+          "city": ~(city),
+          "state": ~(state),
+          "zip": ~(zip)
+        },
+        "mailing_address": {
+          "street": ~(mailing_street),
+          "city": ~(mailing_city),
+          "state": ~(mailing_state),
+          "zip": ~(mailing_zip)
+        },
+        "doctor": {
+          "name": ~(doctor_name),
+          "phone": ~(doctor_phone)
+        },
+        "dentist": {
+          "name": ~(dentist_name),
+          "phone": ~(dentist_phone)
+        }
+      },
+      "medical": {
+        "medical_considerations": ~(medical_considerations),
+        "allergies": ~(allergies),
+        "alert_medical": ~(alert_medical),
+        "alert_medicalexpires": ~(alert_medicalexpires)
+      },
+      "contacts": ~(contacts)
+    }
+  [/tlist_sql]

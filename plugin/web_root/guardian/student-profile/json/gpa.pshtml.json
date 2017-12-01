@@ -1,0 +1,130 @@
+[
+  ~[tlist_sql;
+    WITH letter_grade_to_gpa AS (
+      SELECT
+        'A+' AS letter_grade,
+        4    AS gpa_points
+      FROM dual
+      UNION ALL
+      SELECT
+        'A' AS letter_grade,
+        4   AS gpa_points
+      FROM dual
+      UNION ALL
+      SELECT
+        'A-' AS letter_grade,
+        3.7  AS gpa_points
+      FROM dual
+      UNION ALL
+      SELECT
+        'B+' AS letter_grade,
+        3.3  AS gpa_points
+      FROM dual
+      UNION ALL
+      SELECT
+        'B' AS letter_grade,
+        3.0 AS gpa_points
+      FROM dual
+      UNION ALL
+      SELECT
+        'B-' AS letter_grade,
+        2.7  AS gpa_points
+      FROM dual
+      UNION ALL
+      SELECT
+        'C+' AS letter_grade,
+        2.3  AS gpa_points
+      FROM dual
+      UNION ALL
+      SELECT
+        'C' AS letter_grade,
+        2.0 AS gpa_points
+      FROM dual
+      UNION ALL
+      SELECT
+        'C-' AS letter_grade,
+        1.7  AS gpa_points
+      FROM dual
+      UNION ALL
+      SELECT
+        'D+' AS letter_grade,
+        1.3  AS gpa_points
+      FROM dual
+      UNION ALL
+      SELECT
+        'D' AS letter_grade,
+        1   AS gpa_points
+      FROM dual
+      UNION ALL
+      SELECT
+        'D-' AS letter_grade,
+        0.7  AS gpa_points
+      FROM dual
+      UNION ALL
+      SELECT
+        'F' AS letter_grade,
+        0   AS gpa_points
+      FROM dual), gpas AS (
+        SELECT
+          pgfinalgrades.finalgradename                                                          AS finalgradename,
+          round(sum(letter_grade_to_gpa.gpa_points) / count(letter_grade_to_gpa.gpa_points), 2) AS gpa,
+          CASE
+          WHEN row_number()
+               OVER (
+                 ORDER BY NULL) = count(*)
+               OVER ()
+            THEN ''
+          ELSE ','
+          END                                                                                   AS comma
+        FROM
+          pgfinalgrades
+          JOIN sections ON pgfinalgrades.sectionid = sections.id
+          JOIN courses ON courses.course_number = sections.course_number
+          JOIN terms ON terms.id = sections.termid AND sections.schoolid = terms.schoolid
+          JOIN letter_grade_to_gpa ON pgfinalgrades.grade = letter_grade_to_gpa.letter_grade
+        WHERE
+          pgfinalgrades.studentid = (
+            SELECT id
+            FROM students
+            WHERE dcid = ~(gpv.students_dcid)) AND
+          terms.yearid = ~(gpv.year_id)
+        GROUP BY
+          finalgradename
+        ORDER BY
+          finalgradename
+    )
+    SELECT
+    CASE
+      WHEN TO_CHAR(terms.dcid) IS NULL
+        THEN 'null'
+      ELSE TO_CHAR(terms.dcid) END                       AS id,
+    CASE
+      WHEN TO_CHAR(terms.abbreviation) IS NULL
+        THEN 'null'
+      ELSE '"' || TO_CHAR(terms.abbreviation) || '"' END AS term,
+    CASE
+      WHEN TO_CHAR(gpas.gpa) IS NULL
+        THEN 'null'
+      ELSE TO_CHAR(gpas.gpa) END                         AS gpa,
+    CASE
+      WHEN row_number()
+           OVER (
+             ORDER BY NULL) = count(*)
+           OVER ()
+        THEN ''
+      ELSE ','
+      END                                                AS comma
+    FROM terms
+      JOIN gpas ON terms.abbreviation = gpas.finalgradename
+    WHERE yearid = ~(gpv.year_id) AND
+          schoolid = (
+            SELECT schoolid
+            FROM students
+            WHERE dcid = ~(gpv.students_dcid))]
+    {
+      "id": ~(id),
+      "term": ~(term),
+      "gpa": ~(gpa)
+    }~(comma)
+  [/tlist_sql]
+]
