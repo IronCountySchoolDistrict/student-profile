@@ -67,7 +67,8 @@
       FROM dual), gpas AS (
         SELECT
           pgfinalgrades.finalgradename                                                          AS finalgradename,
-          round(sum(letter_grade_to_gpa.gpa_points) / count(letter_grade_to_gpa.gpa_points), 2) AS gpa,
+          to_char(round(sum(letter_grade_to_gpa.gpa_points) / count(letter_grade_to_gpa.gpa_points), 3),
+                  'FM999999999999990.00') AS gpa,
           CASE
           WHEN row_number()
                OVER (
