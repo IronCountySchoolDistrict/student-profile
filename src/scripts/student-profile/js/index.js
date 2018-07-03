@@ -4,6 +4,8 @@ import { HashRouter } from 'react-router-dom';
 import URI from 'urijs';
 import $ from 'jquery';
 
+import bootstrap from 'bootstrap';
+
 import App from './components/App';
 import Print from './components/Print';
 import * as sass from '../sass/base.scss';

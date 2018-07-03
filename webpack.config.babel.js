@@ -76,12 +76,6 @@ if (TARGET === 'build:dev') {
     },
     plugins: [
       new webpack.HotModuleReplacementPlugin(),
-      // new HtmlWebpackPlugin({
-      //   host: 'https://localhost:8080',
-      //   psHost: 'https://pstest.irondistrict.org',
-      //   target: 'dev',
-      //   template: 'src/scripts/student-profile/html/index.ejs'
-      // })
     ],
     entry: {
       bundle: [

@@ -1,0 +1,58 @@
+require('@babel/register');
+import path from 'path';
+import webpack from 'webpack';
+import merge from 'webpack-merge';
+import MiniCssExtractPlugin from 'mini-css-extract-plugin';
+import pkgInfo from 'pkginfo';
+
+import common from './webpack.common.babel';
+
+pkgInfo(module);
+
+export default merge(common, {
+    devtool: 'inline-source-map',
+    mode: 'development',
+    output: {
+        filename: `scripts/${module.exports.name}/js/[name].js`,
+    //     path: path.resolve(__dirname, 'powerschool_apps/static/bundles'),
+        // publicPath: '/scripts/',
+    //     library: ['PowerschoolApps', '[name]'],
+    //     libraryTarget: 'umd'
+    },
+    module: {
+        rules: [
+            {
+                test: /\.scss$/,
+                use: [
+                    'css-hot-loader',
+                    MiniCssExtractPlugin.loader,
+                    'css-loader',
+                    'sass-loader'
+                ]
+            },
+        ]
+    },
+    plugins: [
+        new MiniCssExtractPlugin({
+            filename: 'scripts/student-profile/css/[name].[hash].css'
+        }),
+        new webpack.NamedModulesPlugin()
+    ],
+    serve: {
+        dev: {
+            headers: {
+                'Access-Control-Allow-Origin': '*'
+            }
+        },
+        host: '0.0.0.0',
+        port: '8081',
+        clipboard: false,
+        hot: {
+            port: '8500',
+            host: {
+                client: 'localhost',
+                server: '0.0.0.0'
+            }
+        }
+    }
+});
