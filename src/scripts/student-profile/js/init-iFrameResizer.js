@@ -1,8 +1,6 @@
 import $ from 'jquery';
-import iFrameResizer from 'iFrameResizer';
+import { iframeResizer } from 'iframe-resizer';
 
-export function init() {
-  $('#profile-frame').iFrameResize({
-    log: false
-  });
-}
+$(() => {
+  iframeResizer({ log: false }, '#profile-frame');
+})

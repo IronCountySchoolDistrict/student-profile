@@ -8,7 +8,7 @@ export default class App extends Component {
         return (
             <div>
                 <NavBar />
-                <Main studentsDcid={this.props.studentsDcid} yearId={this.props.yearId}/>
+                <Main studentsDcid={this.props.studentsDcid} yearId={this.props.yearId} host={this.props.host} portal={this.props.portal} />
             </div>
         );
     }

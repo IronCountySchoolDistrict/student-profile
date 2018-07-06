@@ -18,7 +18,7 @@ export default class Overview extends Component {
   }
 
   componentDidMount() {
-    loadOverview(this.props.studentsDcid).then(overview => {
+    loadOverview(this.props.studentsDcid, this.props.host, this.props.portal).then(overview => {
       this.setState({
         avatar: overview.avatar,
         contacts: overview.contacts,
@@ -43,7 +43,7 @@ export default class Overview extends Component {
         <div>
           <div className="row">
             <div className="col-md-2 col-xs-2" id="avatar-container">
-              <Avatar {...this.state.avatar} />
+              <Avatar {...this.state.avatar} host={this.props.host} portal={this.props.portal} />
             </div>
             <div className="col-md-4 col-xs-4" id="school-demo-container">
               <SchoolDemo {...this.state.school_demo} />

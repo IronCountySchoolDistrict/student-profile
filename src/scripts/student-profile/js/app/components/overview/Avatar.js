@@ -1,14 +1,12 @@
 import React, {Component} from 'react';
 import PropTypes from 'prop-types';
 
-import {getPortal} from '../../util';
-
 export default class Avatar extends Component {
 
   constructor(props) {
     super(props);
     this.state = {
-      avatarImgUrl: `/${getPortal()}/stp/${this.props.student_id}ph.jpeg`
+      avatarImgUrl: `${this.props.host}/${this.props.portal}/stp/${this.props.student_id}ph.jpeg`
     };
   }
 
@@ -24,7 +22,7 @@ export default class Avatar extends Component {
 
   onError() {
     this.setState({
-      avatarImgUrl: '/images/student-profile/blank-profile-picture.png'
+      avatarImgUrl: `${this.props.host}/images/student-profile/blank-profile-picture.png`
     });
   }
 

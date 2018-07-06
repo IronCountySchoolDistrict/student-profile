@@ -3,16 +3,15 @@
 
 <head>
     <meta charset="utf-8" />
+    <title>test</title>
     <link rel="stylesheet" href="https://bootswatch.com/3/flatly/bootstrap.css" />
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/4.7.0/css/font-awesome.min.css" />
     <script>
         window.iFrameResizer = {
-            targetOrigin: '<!-- @echo PS_URL -->'
+            targetOrigin: '<%= htmlWebpackPlugin.options.PS_URL %>'
         };
     </script>
-    <script src="https://cdnjs.cloudflare.com/ajax/libs/iframe-resizer/3.5.15/iframeResizer.contentWindow.js"></script>
-
-    <link rel="stylesheet" href="http://localhost:8081/scripts/student-profile/bundle.css" />
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/iframe-resizer/3.5.5/iframeResizer.contentWindow.js"></script>
 </head>
 
 <body>
@@ -21,8 +20,6 @@
         <div id="profile-container"></div>
     </div>
     <!-- end .container-fluid -->
-    <script src="http://localhost:8081/scripts/student-profile/vendor.js"></script>
-    <script src="http://localhost:8081/scripts/student-profile/bundle.js"></script>
 </body>
 
 </html>

@@ -14,10 +14,8 @@ export default merge(common, {
     mode: 'development',
     output: {
         filename: `scripts/${module.exports.name}/js/[name].js`,
-    //     path: path.resolve(__dirname, 'powerschool_apps/static/bundles'),
-        // publicPath: '/scripts/',
-    //     library: ['PowerschoolApps', '[name]'],
-    //     libraryTarget: 'umd'
+        path: path.resolve(__dirname, 'dist/web_root'),
+        publicPath: 'http://localhost:8081',
     },
     module: {
         rules: [
@@ -34,7 +32,7 @@ export default merge(common, {
     },
     plugins: [
         new MiniCssExtractPlugin({
-            filename: 'scripts/student-profile/css/[name].[hash].css'
+            filename: 'scripts/student-profile/css/[name].css'
         }),
         new webpack.NamedModulesPlugin()
     ],

@@ -13,8 +13,8 @@ export default merge(common, {
     mode: 'production',
     output: {
         filename: `scripts/${module.exports.name}/js/[name].[hash].js`,
-        path: path.resolve(__dirname, 'dist/src'),
-        publicPath: 'http://pstest.irondistrict.org/scripts'
+        path: path.resolve(__dirname, 'dist/web_root'),
+        publicPath: 'http://pstest.irondistrict.org/'
     },
     module: {
         rules: [{

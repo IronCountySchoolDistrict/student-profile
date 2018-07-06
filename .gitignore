@@ -3,3 +3,5 @@ node_modules/
 config.json
 .idea/
 .yarnclean
+.DS_Store
+.yarn-error.log

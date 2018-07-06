@@ -9,7 +9,7 @@ export default class Main extends Component {
     render() {
         return (
             <Switch>
-                <Route exact path="/" render={() => <Overview studentsDcid={this.props.studentsDcid}/>}/>
+                <Route exact path="/" render={() => <Overview studentsDcid={this.props.studentsDcid} host={this.props.host} portal={this.props.portal} />}/>
                 <Route path="/schedule" render={() => <Schedule studentsDcid={this.props.studentsDcid} yearId={this.props.yearId}/>}/>
                 <Route path="/test-results" render={() => <TestResults studentsDcid={this.props.studentsDcid}/>}/>
             </Switch>

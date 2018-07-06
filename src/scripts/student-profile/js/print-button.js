@@ -1,8 +1,8 @@
 import $ from 'jquery';
 
 export default function(profileIFrameUrl) {
-  const btnPrint = document.getElementById('btnPrint');
   if (btnPrint) {
+    const btnPrint = document.getElementById('btnPrint');
     btnPrint.href = profileIFrameUrl;
     btnPrint.target = '_blank';
   } else {

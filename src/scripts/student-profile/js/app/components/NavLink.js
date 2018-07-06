@@ -15,7 +15,7 @@ const NavLink = ({ label, to, activeOnlyWhenExact, activeClassName }) => (
 
 export default NavLink;
 
-NavLink.PropTypes = {
+NavLink.propTypes = {
   label: PropTypes.string,
   to: PropTypes.string,
   activeOnlyWhenExact: PropTypes.bool,
