@@ -1,43 +1,24 @@
 .result {
+  .card {
+    .button-container {
+      margin-top: -5px;
+    }
+
+    .card-title.test-name-container {
+      width: 70%;
+    }
+    .card-title.button-container {
+      width: 30%;
+    }
+  }
+
   .composite-score,
   .composite-score-header {
     text-align: center;
   }
 
-  .scores-button {
-    margin-top: 30px;
-  }
-
-  .scores-header-button {
-    float: right;
-  }
-
-  .panel-title {
-    white-space: nowrap;
-    text-overflow: ellipsis;
-    overflow: hidden;
-  }
-
-  .hidden-score {
-    display: none;
-  }
-
-  .score-panel {
-    margin-top: 20px;
-  }
-
   .test-score-name {
     font-weight: bold;
-  }
-
-  .test-score,
-  .test-score-name {
-    font-size: 16px;
-  }
-
-  .heading {
-    width: 75%;
-    font-size: 18px;
   }
 }
 
@@ -46,8 +27,11 @@
 }
 
 @media print {
-  * {
-    font-size: 10px !important;
+  h3 {
+    font-size: 17px !important;
+  }
+  h2 {
+    font-size: 14px !important;
   }
   .result .panel {
     margin-bottom: 0 !important;

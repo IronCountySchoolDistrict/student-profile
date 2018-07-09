@@ -13,12 +13,11 @@ const config = {
         fs: 'empty'
     },
     entry: {
-        bundle: './src/scripts/student-profile/js/app/index',
+        app: './src/scripts/student-profile/js/app/index',
         'studentpages-insert-link': './src/scripts/student-profile/js/studentpages-insert-link',
         'insert-link': './src/scripts/student-profile/js/insert-link',
-        'init-iFrameResizer': './src/scripts/student-profile/js/init-iFrameResizer',
-        'print-button': './src/scripts/student-profile/js/print-button',
-        parent: './src/scripts/student-profile/js/parent',
+        'guardian-insert-link': './src/scripts/student-profile/js/guardian-insert-link',
+        container: './src/scripts/student-profile/js/container',
     },
     performance: {
         hints: false
@@ -50,6 +49,9 @@ const config = {
             {
                 test: /\.(png|svg|gif)$/,
                 loader: 'file-loader',
+                exclude: [
+                    '/images/img/guardian.png'
+                ],
                 options: {
                     name: `images/${module.exports.name}/[name].[ext]`,
                 },
@@ -97,34 +99,62 @@ const config = {
         }),
         new HtmlWebpackPlugin({
             template: `src/scripts/student-profile/html/app.ejs`,
-            PS_URL: 'https://pstest.irondistrict.org',
+            PS_URL: 'https://ps.irondistrict.org',
             filename: `scripts/student-profile/html/app.html`,
-            chunks: ['vendor', 'bundle'],
+            chunks: ['vendor', 'app'],
             inject: true
         }),
         new HtmlWebpackPlugin({
             template: 'src/wildcards/teachers_footer_fr_css.student-profile.content.footer.txt',
             PROJECT_NAME: module.exports.name,
             filename: `wildcards/teachers_footer_fr_css.student-profile.content.footer.txt`,
-            chunks: ['studentpages-insert-link'],
+            chunks: ['vendor', 'studentpages-insert-link'],
+            inject: false
+        }),
+        new HtmlWebpackPlugin({
+            template: 'src/teachers/studentpages/student-profile.sp.content.footer.txt',
+            PROJECT_NAME: module.exports.name,
+            filename: `teachers/studentpages/student-profile.sp.content.footer.txt`,
+            chunks: ['vendor', 'container'],
             inject: false
         }),
         new HtmlWebpackPlugin({
             template: 'src/admin/students/more2.student-profile.leftnav.footer.txt',
             PROJECT_NAME: module.exports.name,
             filename: `admin/students/more2.student-profile.leftnav.footer.txt`,
-            chunks: ['insert-link'],
+            chunks: ['vendor', 'insert-link'],
             inject: false
         }),
         new HtmlWebpackPlugin({
             template: 'src/admin/students/student-profile/container.student-profile.content.footer.txt',
             PROJECT_NAME: module.exports.name,
             filename: `admin/students/student-profile/container.student-profile.content.footer.txt`,
-            chunks: ['init-iFrameResizer', 'print-button', 'vendor', 'parent'],
+            chunks: ['vendor', 'container'],
+            inject: false
+        }),
+        new HtmlWebpackPlugin({
+            template: 'src/guardian/student-profile.sp.content.footer.txt',
+            PROJECT_NAME: module.exports.name,
+            filename: `guardian/student-profile.sp.content.footer.txt`,
+            chunks: ['vendor', 'container'],
+            inject: false
+        }),
+        new HtmlWebpackPlugin({
+            template: 'src/wildcards/guardian_header_yui.sp.leftnav.footer.txt',
+            PROJECT_NAME: module.exports.name,
+            filename: `wildcards/guardian_header_yui.sp.leftnav.footer.txt`,
+            chunks: ['vendor', 'guardian-insert-link'],
+            inject: false
+        }),
+        new HtmlWebpackPlugin({
+            template: 'src/wildcards/guardian_header.sp.leftnav.footer.txt',
+            PROJECT_NAME: module.exports.name,
+            filename: `wildcards/guardian_header.sp.leftnav.footer.txt`,
+            chunks: ['vendor', 'guardian-insert-link'],
             inject: false
         }),
         new WriteFileWebpackPlugin({
-            test: /(admin|teachers|guardians|public|wildcards)/
+            test: /(admin|teachers|guardian|public|wildcards)/
         })
     ]
 };

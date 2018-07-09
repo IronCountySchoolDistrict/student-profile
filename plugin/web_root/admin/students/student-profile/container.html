@@ -1,29 +1,28 @@
 <!DOCTYPE html>
 <html>
 
-<head>
-    <meta charset="utf-8">
-    <title>Student Profile</title>
+    <head>
+        <meta charset="utf-8">
+        <title>Student Profile</title>
 
-    <link rel="stylesheet" href="/images/css/screen.css" media="screen" charset="utf-8">
-    <link rel="stylesheet" href="/images/css/print.css" media="print" charset="utf-8">
-    ~[wc:commonscripts]
-</head>
+        <link rel="stylesheet" href="/images/css/screen.css" media="screen" charset="utf-8">
+        <link rel="stylesheet" href="/images/css/print.css" media="print" charset="utf-8">
+        ~[wc:commonscripts]
+    </head>
 
-<body>
-~[wc:admin_header_frame_css]
-<a href="/admin/home.html" target="_top">&nbsp;~[text:psx.html.admin.home.start_page]</a> &gt
-<a href="home.html?selectstudent=nosearch" target="_top">
-    Student Selection
-</a> &gt Student Profile ~[wc:admin_navigation_frame_css]
+    <body>
+        ~[wc:admin_header_frame_css]
+        <a href="/admin/home.html" target="_top">&nbsp;~[text:psx.html.admin.home.start_page]</a> &gt
+        <a href="home.html?selectstudent=nosearch" target="_top">
+            Student Selection
+        </a> &gt Student Profile ~[wc:admin_navigation_frame_css]
 
-<div class="row">
+        <iframe id="profile-iframe" 
+            width="100%" 
+            style="border: none; min-height: 350px" 
+            data-src="<!-- @echo API_URL -->/scripts/student-profile/html/app.html?frn=~[x:studentfrn]&students_frn=~[x:studentfrn]&user=~[x:users_dcid]&yearid=~(curyearid)"></iframe>
 
-    <div id="profile-frame" width="100%" style="border: none; min-height: 350px">
-    </div>
-    <script>
-    </script>
-</div>
-</body>
+        ~[wc:admin_footer_frame_css]
+    </body>
 
 </html>

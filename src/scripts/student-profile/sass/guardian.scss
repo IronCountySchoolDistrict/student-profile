@@ -1,0 +1,6 @@
+@import "variables.scss";
+
+#btn-student-profile a {
+    background: url($PS_URL + "/images/img/alert_guardian.png");
+    background-size: 35px;
+}

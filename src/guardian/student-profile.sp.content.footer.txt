@@ -1,11 +1,4 @@
 <!-- <%= htmlWebpackPlugin.options.PROJECT_NAME %> page fragment start -->
-<script>
-  if (!window.psData) {
-    window.psData = {};
-  }
-  window.psData.students_dcid = '~(studentfrn)'.slice(3);
-</script>
-
 <% for (var css in htmlWebpackPlugin.files.css) { %>
 <link href="<%= htmlWebpackPlugin.files.css[css] %>" rel="stylesheet">
 <% } %>

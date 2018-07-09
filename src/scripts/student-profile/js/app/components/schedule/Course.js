@@ -5,15 +5,15 @@ import GradeList from './GradeList';
 
 export default class Course extends Component {
   render() {
-    const panelDefault = 'panel panel-default panel-course';
-    const teacherContainerClass = 'col-md-2 col-xs-2 teacher-container';
-    const classContainerClass = 'col-md-3 col-xs-4 class-container';
-    const termContainerClass = 'col-md-1 col-xs-2 term-container';
-    const gradesContainerClass = 'col-md-6 col-xs-4 grades-container';
+    const panelDefault = 'card panel-course';
+    const teacherContainerClass = 'col-md-2 col-2 teacher-container';
+    const classContainerClass = 'col-md-3 col-4 class-container';
+    const termContainerClass = 'col-md-1 col-2 term-container';
+    const gradesContainerClass = 'col-md-6 col-4 grades-container';
 
     return (
       <div className={panelDefault}>
-        <div className="panel-body">
+        <div className="card-text panel-body">
           <div className="row">
             <div className={teacherContainerClass}>
               {this.props.teacher_name}

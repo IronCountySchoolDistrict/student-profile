@@ -5,8 +5,8 @@ import PropTypes from 'prop-types';
 
 const NavLink = ({ label, to, activeOnlyWhenExact, activeClassName }) => (
   <Route path={to} exact={activeOnlyWhenExact} children={({match}) => (
-    <li className={match ? activeClassName : ''}>
-      <Link to={to}>
+    <li className={(match ? activeClassName : '') + ' nav-item'}>
+      <Link to={to} className='nav-link'>
         {label}
       </Link>
     </li>

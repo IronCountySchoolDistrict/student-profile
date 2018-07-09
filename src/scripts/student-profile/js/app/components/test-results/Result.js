@@ -40,7 +40,7 @@ export default class Result extends Component {
   }
 
   getViewButtonClass(thisButton) {
-    let btnClass = 'btn-xs btn btn-default';
+    let btnClass = 'btn-sm btn btn-secondary';
     if (this.state.display === thisButton) {
       btnClass += ' active';
     }
@@ -70,36 +70,36 @@ export default class Result extends Component {
     if (!this.props.shouldPrint) {
       return (
         <div className="result">
-          <div className={panelClass}>
-            <div className="panel-heading">
-              <div className="panel-title pull-left heading">
+          <div className="card">
+            <div className="card-body">
+              <h6 className="card-title pull-left test-name-container">
                 {this.props.test_name}
-              </div>
-              <div className="panel-title pull-right">
-                <div className="btn-group" data-toggle="buttons">
+              </h6>
+              <div className="card-title pull-right button-container">
+                <div className="btn-group-toggle btn-group" data-toggle="buttons">
                   <button className={this.getViewButtonClass('composite')} data-container="body" data-toggle="tooltip"
-                          data-placement="top" title="Score Overview" onClick={() => this.toggleDisplay('composite')}>
-                    <i className="fa fa-window-maximize" aria-hidden="true"/>
+                    data-placement="top" title="Score Overview" onClick={() => this.toggleDisplay('composite')}>
+                    <i className="fa fa-window-maximize" aria-hidden="true" />
                   </button>
                   <button className={this.getViewButtonClass('scores')} data-container="body" data-toggle="tooltip"
-                          data-placement="top" title="Score List" onClick={() => this.toggleDisplay('scores')}>
-                    <i className="fa fa-list" aria-hidden="true"/>
+                    data-placement="top" title="Score List" onClick={() => this.toggleDisplay('scores')}>
+                    <i className="fa fa-list" aria-hidden="true" />
                   </button>
                 </div>
               </div>
               <div className="clearfix"></div>
-            </div>
-            <div className="panel-body">
-              {this.state.display === 'composite' &&
-              <div>
-                <h4 className="composite-score-header">{compositeScore.test_score}</h4>
-                <h2 className="composite-score">{this.getScoreWithValue(compositeScore)}</h2>
+              <div className="card-text">
+                {this.state.display === 'composite' &&
+                  <div>
+                    <h4 className="composite-score-header">{compositeScore.test_score}</h4>
+                    <h2 className="composite-score">{this.getScoreWithValue(compositeScore)}</h2>
+                  </div>
+                }
+                {this.state.display === 'scores' &&
+                  <StudentTestScoreList test_name={this.props.test_name} scores={this.props.test_scores}
+                    display={this.state.display} />
+                }
               </div>
-              }
-              {this.state.display === 'scores' &&
-              <StudentTestScoreList test_name={this.props.test_name} scores={this.props.test_scores}
-                                    display={this.state.display}/>
-              }
             </div>
           </div>
         </div>
@@ -108,19 +108,23 @@ export default class Result extends Component {
       const proficiencyScore = this.props.test_scores.filter(testScore => testScore.test_score.toLowerCase().includes('proficiency'));
       return (
         <div className="result">
-          <div className="panel panel-default">
-            <div className="panel-body">
-              <div className="col-xs-4">
+          <div className="card">
+            <div className="card-body">
+              <h6 className="card-subtitle mb-2">
                 {this.props.test_name}
-              </div>
-              <div className="col-xs-4">
-                {compositeScore.test_score}: {this.getScoreWithValue(compositeScore)}
-              </div>
-              {!!proficiencyScore.length &&
-                <div className="col-xs-4">
-                  {proficiencyScore[0].test_score}: {this.getScoreWithValue(proficiencyScore[0])}
+              </h6>
+              <div className="card-text">
+                <div className="row">
+                  <div className="col-6">
+                    {compositeScore.test_score}: {this.getScoreWithValue(compositeScore)}
+                  </div>
+                  {!!proficiencyScore.length &&
+                    <div className="col-6">
+                      {proficiencyScore[0].test_score}: {this.getScoreWithValue(proficiencyScore[0])}
+                    </div>
+                  }
                 </div>
-              }
+              </div>
             </div>
           </div>
         </div>

@@ -42,13 +42,13 @@ export default class Overview extends Component {
       return (
         <div>
           <div className="row">
-            <div className="col-md-2 col-xs-2" id="avatar-container">
+            <div className="col-md-2 col-2" id="avatar-container">
               <Avatar {...this.state.avatar} host={this.props.host} portal={this.props.portal} />
             </div>
-            <div className="col-md-4 col-xs-4" id="school-demo-container">
+            <div className="col-md-4 col-4" id="school-demo-container">
               <SchoolDemo {...this.state.school_demo} />
             </div>
-            <div className="col-md-6 col-xs-6" id="student-demo-container">
+            <div className="col-md-6 col-6" id="student-demo-container">
               <StudentDemo {...this.state.student_demo} />
             </div>
           </div>

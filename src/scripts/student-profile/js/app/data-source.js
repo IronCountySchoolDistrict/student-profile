@@ -27,31 +27,32 @@ function getDataSourcePath(host, portal) {
  * @return {Promise}
  */
 export function loadOverview(studentsDcid, host, portal) {
-  const dataSourcePath = getDataSourcePath(host, portal)
+  const dataSourcePath = getDataSourcePath(host, portal);
+
   const queryStr = URI.buildQuery({ students_dcid: studentsDcid });
 
   return fetch(`${dataSourcePath}/overview.pshtml.json?${queryStr}`, { credentials: 'include' }).then(htmlDecodeToJson);
 
 }
 
-export function loadSchedule(studentsDcid, yearId) {
-  const dataSourcePath = getDataSourcePath();
+export function loadSchedule(studentsDcid, yearId, host, portal) {
+  const dataSourcePath = getDataSourcePath(host, portal);
 
   const queryStr = URI.buildQuery({ students_dcid: studentsDcid, year_id: yearId });
 
   return fetch(`${dataSourcePath}/schedule.pshtml.json?${queryStr}`, { credentials: 'include' }).then(htmlDecodeToJson);
 }
 
-export function loadGpa(studentsDcid, yearId) {
-  const dataSourcePath = getDataSourcePath();
+export function loadGpa(studentsDcid, yearId, host, portal) {
+  const dataSourcePath = getDataSourcePath(host, portal);
 
   const queryStr = URI.buildQuery({ students_dcid: studentsDcid, year_id: yearId });
 
   return fetch(`${dataSourcePath}/gpa.pshtml.json?${queryStr}`, { credentials: 'include' }).then(htmlDecodeToJson);
 }
 
-export function loadTestResults(studentsDcid) {
-  const dataSourcePath = getDataSourcePath();
+export function loadTestResults(studentsDcid, host, portal) {
+  const dataSourcePath = getDataSourcePath(host, portal);
 
   const queryStr = URI.buildQuery({ students_dcid: studentsDcid });
 

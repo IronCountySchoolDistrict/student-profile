@@ -15,7 +15,7 @@ export default class Schedule extends Component {
   }
 
   componentDidMount() {
-    Promise.all([loadSchedule(this.props.studentsDcid, this.props.yearId), loadGpa(this.props.studentsDcid, this.props.yearId)])
+    Promise.all([loadSchedule(this.props.studentsDcid, this.props.yearId, this.props.host, this.props.portal), loadGpa(this.props.studentsDcid, this.props.yearId, this.props.host, this.props.portal)])
       .then(([schedule, gpa]) => {
         this.setState({
           schedule: schedule,
@@ -37,13 +37,13 @@ export default class Schedule extends Component {
       } else {
         return (
           <div>
-            {!!this.state.schedule.length && !this.props.shouldPrint &&
+            {!!this.state.schedule.length &&
             <h3>Courses</h3>
             }
             {!!this.state.schedule.length &&
             <CourseList courses={this.state.schedule}/>
             }
-            {!!this.state.gpa.length && !this.props.shouldPrint &&
+            {!!this.state.gpa.length &&
             <h3>GPA</h3>
             }
             {!!this.state.gpa.length &&

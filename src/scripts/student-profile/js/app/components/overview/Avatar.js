@@ -35,9 +35,7 @@ export default class Avatar extends Component {
         <h4 id="student-name">
           {this.toFullName(this.props.first_name, this.props.middle_name, this.props.last_name)}
         </h4>
-        <div className="thumbnail">
-          <img src={this.state.avatarImgUrl} alt="Student's Photo" onError={() => this.onError()} />
-        </div>
+        <img src={this.state.avatarImgUrl} alt="Student's Photo" className="img-thumbnail" onError={() => this.onError()} />
       </div>
     );
   }

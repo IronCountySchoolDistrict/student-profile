@@ -15,7 +15,7 @@ export default class ContactList extends Component {
       return (
         <div className="contact-list col-md-12">
           <h3>Contacts</h3>
-          <div className="panel-group" id="contacts-accordion" aria-multiselectable="true" role="tablist">
+          <div className="accordion" id="contacts-accordion">
             {contacts}
           </div>
         </div>
@@ -23,6 +23,7 @@ export default class ContactList extends Component {
     } else {
       return (
         <div className="contact-list col-md-12">
+          <h3>Contacts</h3>
           {contacts}
         </div>
       );

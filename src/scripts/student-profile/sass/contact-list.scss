@@ -16,12 +16,15 @@
     padding-top: 5px;
     padding-bottom: 5px;
     * {
-      font-size: 10px;
+      // font-size: 80% !important;
       margin-bottom: 0 !important;
     }
     .relationship {
       font-size: 9px;
       padding-left: 15px;
+    }
+    .card-body{
+      padding: 1.0rem;
     }
   }
 }

@@ -3,7 +3,7 @@ import PropTypes from 'prop-types';
 
 export default class Grade extends Component {
   render() {
-    const gradeContainerClass = 'grade-container col-md-1 col-xs-1';
+    const gradeContainerClass = 'grade-container col-md-1 col-1';
     return (
       <div className={gradeContainerClass}>
         <div>

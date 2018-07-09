@@ -14,7 +14,7 @@ export default merge(common, {
     output: {
         filename: `scripts/${module.exports.name}/js/[name].[hash].js`,
         path: path.resolve(__dirname, 'dist/web_root'),
-        publicPath: 'http://pstest.irondistrict.org/'
+        publicPath: 'https://ps.irondistrict.org/'
     },
     module: {
         rules: [{
@@ -27,7 +27,7 @@ export default merge(common, {
         }],
     },
     plugins: [
-        new CleanWebpackPlugin(['./dist/*']),
+        // new CleanWebpackPlugin(['./dist/*']),
         new MiniCssExtractPlugin({
             filename: `scripts/${module.exports.name}/css/[name].[hash].css`
         }),

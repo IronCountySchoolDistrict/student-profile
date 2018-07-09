@@ -15,7 +15,7 @@ export default class TestResults extends Component {
 
   componentDidMount() {
     const studentsDcid = this.props.studentsDcid;
-    loadTestResults(studentsDcid).then(testResults => {
+    loadTestResults(studentsDcid, this.props.host, this.props.portal).then(testResults => {
       this.setState({
         testResults: testResults
       });
@@ -36,6 +36,9 @@ export default class TestResults extends Component {
       } else {
         return (
           <div>
+            {this.props.shouldPrint && 
+              <h3>Test Results</h3>
+            }
             <ResultList tests={this.state.displayTests} shouldPrint={this.props.shouldPrint} />
           </div>
         );

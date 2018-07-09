@@ -8,15 +8,16 @@ import ContactAddress from './ContactAddress';
 export default class Contact extends Component {
 
   render() {
-    const panelClass = 'panel panel-default';
-    const panelId = `collapse${this.props.index}`;
-    const panelIdSelector = `#collapse${this.props.index}`;
-    const contactAnchorClass = 'collapsed btn-block';
+    const cardId = `collapse${this.props.index}`;
+    const cardHeadingId = `heading${this.props.index}`;
+    const cardHeadingSelector = `#heading${this.props.index}`;
+    const cardIdSelector = `#collapse${this.props.index}`;
+    const contactButtonClass = 'btn btn-link';
 
     // if index is 0, this is the first contact in the list, so
     // we should give it the expanded class. If it's not the first in the list,
     // give it the "collapsed" class
-    const panelContainerClass = this.props.index ? 'panel-collapse collapse' : 'panel-collapse collapse in';
+    const panelContainerClass = this.props.index ? 'collapse' : 'collapse show';
 
     const faEnvelope = 'fa fa-envelope';
     const faLegal = 'fa fa-gavel';
@@ -45,54 +46,54 @@ export default class Contact extends Component {
 
     if (hasAddress) {
       if (hasTwoUniqueAddresses) {
-        address1 = <ContactAddress title='Mailing Address' address={fullMailingAddress}/>;
-        address2 = <ContactAddress title='Residence Address' address={fullResidenceAddress}/>;
+        address1 = <ContactAddress title='Mailing Address' address={fullMailingAddress} />;
+        address2 = <ContactAddress title='Residence Address' address={fullResidenceAddress} />;
       } else {
         if (fullMailingAddress) {
-          address1 = <ContactAddress title='Address' address={fullMailingAddress}/>;
+          address1 = <ContactAddress title='Address' address={fullMailingAddress} />;
         }
-        address1 = <ContactAddress title='Address' address={fullResidenceAddress}/>;
+        address1 = <ContactAddress title='Address' address={fullResidenceAddress} />;
       }
     }
 
     if (!this.props.shouldPrint) {
       return (
-        <div className={panelClass}>
-          <div className="panel-heading" role="tab" id="collapseListGroupHeading1">
-            <h4 className="panel-title">
-              <a href={panelIdSelector} className={contactAnchorClass} role="button" data-toggle="collapse"
-                 aria-expanded="false" aria-controls="collapseListGroup1">
+        <div className="card">
+          <div className="card-header" id={cardHeadingId}>
+            <h5 className="mb-0">
+              <button href={cardIdSelector} className={contactButtonClass} role="button" data-toggle="collapse"
+                aria-expanded="false" aria-controls={cardIdSelector}>
                 {this.props.legal_guardian &&
-                <i className={faLegal} data-toggle="tooltip" data-placement="top" title="Legal Guardian"
-                   aria-hidden="true"/>
+                  <i className={faLegal} data-toggle="tooltip" data-placement="top" title="Legal Guardian"
+                    aria-hidden="true" />
                 }
                 <span className="contact-header-name">
                   {this.props.first_name} {this.props.last_name}
                   {!!this.props.relationship && '(' + this.props.relationship + ')'}
-              </span>
-              </a>
-            </h4>
+                </span>
+              </button>
+            </h5>
           </div>
 
-          <div id={panelId} className={!this.props.shouldPrint && panelContainerClass} role="tabpanel"
-               aria-labelledby="collapseListGroupHeading1"
-               aria-expanded="true">
-            <div className="panel-body">
+          <div id={cardId} className={!this.props.shouldPrint && panelContainerClass} role="tabpanel"
+            aria-labelledby={cardHeadingSelector}
+            aria-expanded="true">
+            <div className="card-body">
               <div className="row">
-                <div className="col-md-6 col-xs-6">
+                <div className="col-md-6 col-6">
                   {address1}
                   {address2}
                   {this.props.employer &&
-                  <div>
-                    <strong>Employer:</strong> {this.props.employer}
-                  </div>
+                    <div>
+                      <strong>Employer:</strong> {this.props.employer}
+                    </div>
                   }
                 </div>
-                <div className="col-md-6 col-xs-6">
+                <div className="col-md-6 col-6">
                   {this.props.email_address &&
-                  <div>
-                    <i className={faEnvelope} aria-hidden="true"/> {this.props.email_address}
-                  </div>
+                    <div>
+                      <i className={faEnvelope} aria-hidden="true" /> {this.props.email_address}
+                    </div>
                   }
                   <PhoneList phones={this.props.phones} shouldPrint={this.props.shouldPrint} />
                 </div>
@@ -103,36 +104,41 @@ export default class Contact extends Component {
       );
     } else {
       return (
-        <div className="panel panel-default">
-          <div className="panel-body">
-            <div className="col-xs-3">
-              <div>
-                {this.props.legal_guardian &&
-                <i className={faLegal} data-toggle="tooltip" data-placement="top" title="Legal Guardian"
-                   aria-hidden="true"/>
-                }
-                {this.props.first_name} {this.props.last_name}
+        <div className="card">
+          <div className="card-body">
+            <div className="card-text">
+              <div className="row">
+                <div className="col-3">
+                  <div>
+                    {this.props.legal_guardian &&
+                      <i className={faLegal} data-toggle="tooltip" data-placement="top" title="Legal Guardian"
+                        aria-hidden="true" />
+                    }
+                    {this.props.first_name} {this.props.last_name}
+                  </div>
+                  <div className="relationship">
+                    {!!this.props.relationship && this.props.relationship}
+                  </div>
+                </div>
+                <div className="col-4">
+                  {address1}
+                  {address2}
+                  {this.props.employer &&
+                    <div>
+                      <strong>Employer:</strong> {this.props.employer}
+                    </div>
+                  }
+                </div>
+                <div className="col-5">
+                  {this.props.email_address &&
+                    <div>
+                      <i className={faEnvelope} aria-hidden="true" /> {this.props.email_address}
+                    </div>
+                  }
+                  <PhoneList phones={this.props.phones} shouldPrint={this.props.shouldPrint} />
+                </div>
               </div>
-              <div className="relationship">
-                {!!this.props.relationship && this.props.relationship}
-              </div>
-            </div>
-            <div className="col-xs-4">
-              {address1}
-              {address2}
-              {this.props.employer &&
-              <div>
-                <strong>Employer:</strong> {this.props.employer}
-              </div>
-              }
-            </div>
-            <div className="col-xs-5">
-              {this.props.email_address &&
-              <div>
-                <i className={faEnvelope} aria-hidden="true"/> {this.props.email_address}
-              </div>
-              }
-              <PhoneList phones={this.props.phones} shouldPrint={this.props.shouldPrint}/>
+
             </div>
           </div>
         </div>

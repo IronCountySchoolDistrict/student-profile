@@ -31,5 +31,5 @@ StudentTestScore.propTypes = {
   test_score: PropTypes.string,
   num_score: PropTypes.number,
   percent_score: PropTypes.string,
-  alpha_score: PropTypes.number
+  alpha_score: PropTypes.string
 };

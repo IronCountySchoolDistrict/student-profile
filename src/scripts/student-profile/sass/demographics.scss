@@ -14,19 +14,21 @@
     font-size: 24px;
     padding-right: 5px;
   }
+}
 
-  @media print {
-    font-size: 10px !important;
-    .fa-medkit {
-      font-size: 15px;
-      padding-right: 5px;
-    }
-    .field-row {
-      margin-bottom: 0 !important;
-    }
-    .doctor-phone-container {
-      display: inline;
-      padding-left: 5px;
-    }
+@media print {
+  .demographics {
+    padding-top: 0;
+  }
+  .fa-medkit {
+    font-size: 15px;
+    padding-right: 5px;
+  }
+  .field-row {
+    margin-bottom: 0 !important;
+  }
+  .doctor-phone-container {
+    display: inline;
+    padding-left: 5px;
   }
 }
