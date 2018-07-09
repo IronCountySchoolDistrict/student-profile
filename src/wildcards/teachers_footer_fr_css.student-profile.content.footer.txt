@@ -1,0 +1,16 @@
+<!-- <%= htmlWebpackPlugin.options.PROJECT_NAME %> page fragment start -->
+<script>
+  if (!window.psData) {
+    window.psData = {};
+  }
+  window.psData.students_dcid = '~(studentfrn)'.slice(3);
+</script>
+
+<% for (var css in htmlWebpackPlugin.files.css) { %>
+<link href="<%= htmlWebpackPlugin.files.css[css] %>" rel="stylesheet">
+<% } %>
+
+<% for (var chunk in htmlWebpackPlugin.files.chunks) { %>
+<script src="<%= htmlWebpackPlugin.files.chunks[chunk].entry %>"></script>
+<% } %>
+<!-- <%= htmlWebpackPlugin.options.PROJECT_NAME %> page fragment end -->

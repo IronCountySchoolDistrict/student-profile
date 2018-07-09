@@ -1,0 +1,36 @@
+<!--NoLink-->
+<html>
+
+<head>
+    <title>Student Profile</title>
+    ~[wc:commonscripts]
+    <link href="/images/css/screen.css" rel="stylesheet" media="screen">
+    <link href="/images/css/print.css" rel="stylesheet" media="print">
+
+    <script>
+      function formHandler(form) {
+        window.location.href = document.navigation.page.options[document.navigation.page.selectedIndex].value;
+      }
+    </script>
+</head>
+
+<body>
+
+~[wc:teachers_header_fr_css]
+
+<form name="navigation">
+    <span class="account-photo">~[studenttitlephoto]</span>
+    <h1>
+        Student Profile
+        ~[studentalert]
+    </h1>
+
+    <div class="row">
+        <iframe id="profile-iframe"
+                data-src="<!-- @echo API_URL -->/scripts/student-profile/html/app.html?frn=~[x:studentfrn]&students_frn=~[x:studentfrn]&user=~[x:users_dcid]&yearid=~(curyearid)"
+                width="100%" style="border: none;" scrolling="no"></iframe>
+    </div>
+    ~[wc:teachers_footer_fr_css]
+</body>
+
+</html>

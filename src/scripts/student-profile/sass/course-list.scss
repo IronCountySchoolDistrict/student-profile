@@ -1,4 +1,12 @@
 .course-list {
+  .header-term-container {
+    margin-left: 5px;
+  }
+
+  .term-grade-container {
+    margin-left: 5px;
+  }
+
   .panel-course {
     margin-bottom: 5px;
   }
@@ -33,8 +41,13 @@
       margin-left: -20px;
     }
   }
+}
 
-  .gpa-list .gpa-container {
+.gpa-list {
+  .panel-body {
+    padding: 5px;
+  }
+  .gpa-container {
     text-align: center;
   }
 }
@@ -46,7 +59,7 @@
     }
 
     * {
-      font-size: 10px !important;
+      // font-size: 80% !important;
     }
 
     .attendance-container {

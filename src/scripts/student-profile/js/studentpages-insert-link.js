@@ -1,6 +1,7 @@
 /* global students_dcid */
 import $ from 'jquery';
 import { template } from 'underscore';
+import studentPagesTemplate from '../html/studentpages-student-profile.html';
 
 /**
  * sort two DOM Elements based on the unicode sort of the their innerHTML text
@@ -69,7 +70,7 @@ function _alphabeticOptionInsert(pageSelect, insertOption) {
   }
 }
 
-export default function() {
+$(() => {
   let contentDocument;
   
   // Detect if this script is running on a page with frames
@@ -81,16 +82,10 @@ export default function() {
   
   const pageSelect = $(contentDocument).find('[name="page"]');
   if (pageSelect.length) {
-    fetch('/scripts/student-profile/html/studentpages-student-profile.html', {
-      credentials: 'include'
-    })
-      .then(r => r.text())
-      .then(r => {
-        const renderedTemplate = template(r);
-        const compiledTemplate = renderedTemplate({
-          students_dcid: students_dcid
-        });
-        _alphabeticOptionInsert(pageSelect, compiledTemplate);
-      });
+    const renderedTemplate = template(studentPagesTemplate);
+    const compiledTemplate = renderedTemplate({
+      students_dcid: window.psData.students_dcid
+    });
+    _alphabeticOptionInsert(pageSelect, compiledTemplate);
   }
-}
+})
