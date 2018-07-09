@@ -1,6 +1,7 @@
 dist/
 node_modules/
 config.json
+gulp.config.json
 .idea/
 .yarnclean
 .DS_Store
