@@ -21,7 +21,6 @@ export default class Overview extends Component {
     loadOverview(this.props.studentsDcid, this.props.host, this.props.portal).then(overview => {
       this.setState({
         avatar: overview.avatar,
-        contacts: overview.contacts,
         medical: overview.medical,
         school_demo: overview.school_demo,
         student_demo: overview.student_demo
@@ -57,11 +56,6 @@ export default class Overview extends Component {
             <div className="col-md-12">
               <Medical {...this.state.medical} />
             </div>
-          </div>
-          }
-          {this.state.contacts.length !== 0 &&
-          <div className="row">
-            <ContactList contacts={this.state.contacts} shouldPrint={this.props.shouldPrint} />
           </div>
           }
         </div>
