@@ -5,7 +5,6 @@ import SchoolDemo from './SchoolDemo';
 import StudentDemo from './StudentDemo';
 import Avatar from './Avatar';
 import Medical from './Medical';
-import ContactList from './ContactList';
 import { loadOverview } from '../../data-source';
 
 export default class Overview extends Component {

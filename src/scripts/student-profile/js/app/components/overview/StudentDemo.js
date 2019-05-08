@@ -60,11 +60,11 @@ export default class StudentDemo extends Component {
           <span className="field-value">{this.getAge(this.props.dob)}</span>
         </div>
         <div className="field-row">
-          <span className="field-label">Mother: </span>
+          <span className="field-label">Parent: </span>
           <span className="field-value">{this.props.mother}</span>
         </div>
         <div className="field-row">
-          <span className="field-label">Father: </span>
+          <span className="field-label">Parent: </span>
           <span className="field-value">{this.props.father}</span>
         </div>
         {address1}
