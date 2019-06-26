@@ -14,9 +14,9 @@ const config = {
     },
     entry: {
         app: './src/scripts/student-profile/js/app/index',
-        'studentpages-insert-link': './src/scripts/student-profile/js/studentpages-insert-link',
+        // 'studentpages-insert-link': './src/scripts/student-profile/js/studentpages-insert-link',
         'insert-link': './src/scripts/student-profile/js/insert-link',
-        'guardian-insert-link': './src/scripts/student-profile/js/guardian-insert-link',
+        // 'guardian-insert-link': './src/scripts/student-profile/js/guardian-insert-link',
         container: './src/scripts/student-profile/js/container',
     },
     performance: {
