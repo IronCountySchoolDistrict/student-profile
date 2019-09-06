@@ -14,9 +14,9 @@ const config = {
     },
     entry: {
         app: './src/scripts/student-profile/js/app/index',
-        'studentpages-insert-link': './src/scripts/student-profile/js/studentpages-insert-link',
+        // 'studentpages-insert-link': './src/scripts/student-profile/js/studentpages-insert-link',
         'insert-link': './src/scripts/student-profile/js/insert-link',
-        'guardian-insert-link': './src/scripts/student-profile/js/guardian-insert-link',
+        // 'guardian-insert-link': './src/scripts/student-profile/js/guardian-insert-link',
         container: './src/scripts/student-profile/js/container',
     },
     performance: {
@@ -104,20 +104,20 @@ const config = {
             chunks: ['vendor', 'app'],
             inject: true
         }),
-        new HtmlWebpackPlugin({
-            template: 'src/wildcards/teachers_footer_fr_css.student-profile.content.footer.txt',
-            PROJECT_NAME: module.exports.name,
-            filename: `wildcards/teachers_footer_fr_css.student-profile.content.footer.txt`,
-            chunks: ['vendor', 'studentpages-insert-link'],
-            inject: false
-        }),
-        new HtmlWebpackPlugin({
-            template: 'src/teachers/studentpages/student-profile.sp.content.footer.txt',
-            PROJECT_NAME: module.exports.name,
-            filename: `teachers/studentpages/student-profile.sp.content.footer.txt`,
-            chunks: ['vendor', 'container'],
-            inject: false
-        }),
+        // new HtmlWebpackPlugin({
+        //     template: 'src/wildcards/teachers_footer_fr_css.student-profile.content.footer.txt',
+        //     PROJECT_NAME: module.exports.name,
+        //     filename: `wildcards/teachers_footer_fr_css.student-profile.content.footer.txt`,
+        //     chunks: ['vendor', 'studentpages-insert-link'],
+        //     inject: false
+        // }),
+        // new HtmlWebpackPlugin({
+        //     template: 'src/teachers/studentpages/student-profile.sp.content.footer.txt',
+        //     PROJECT_NAME: module.exports.name,
+        //     filename: `teachers/studentpages/student-profile.sp.content.footer.txt`,
+        //     chunks: ['vendor', 'container'],
+        //     inject: false
+        // }),
         new HtmlWebpackPlugin({
             template: 'src/admin/students/more2.student-profile.leftnav.footer.txt',
             PROJECT_NAME: module.exports.name,
@@ -132,27 +132,27 @@ const config = {
             chunks: ['vendor', 'container'],
             inject: false
         }),
-        new HtmlWebpackPlugin({
-            template: 'src/guardian/student-profile.sp.content.footer.txt',
-            PROJECT_NAME: module.exports.name,
-            filename: `guardian/student-profile.sp.content.footer.txt`,
-            chunks: ['vendor', 'container'],
-            inject: false
-        }),
-        new HtmlWebpackPlugin({
-            template: 'src/wildcards/guardian_header_yui.sp.leftnav.footer.txt',
-            PROJECT_NAME: module.exports.name,
-            filename: `wildcards/guardian_header_yui.sp.leftnav.footer.txt`,
-            chunks: ['vendor', 'guardian-insert-link'],
-            inject: false
-        }),
-        new HtmlWebpackPlugin({
-            template: 'src/wildcards/guardian_header.sp.leftnav.footer.txt',
-            PROJECT_NAME: module.exports.name,
-            filename: `wildcards/guardian_header.sp.leftnav.footer.txt`,
-            chunks: ['vendor', 'guardian-insert-link'],
-            inject: false
-        }),
+        // new HtmlWebpackPlugin({
+        //     template: 'src/guardian/student-profile.sp.content.footer.txt',
+        //     PROJECT_NAME: module.exports.name,
+        //     filename: `guardian/student-profile.sp.content.footer.txt`,
+        //     chunks: ['vendor', 'container'],
+        //     inject: false
+        // }),
+        // new HtmlWebpackPlugin({
+        //     template: 'src/wildcards/guardian_header_yui.sp.leftnav.footer.txt',
+        //     PROJECT_NAME: module.exports.name,
+        //     filename: `wildcards/guardian_header_yui.sp.leftnav.footer.txt`,
+        //     chunks: ['vendor', 'guardian-insert-link'],
+        //     inject: false
+        // }),
+        // new HtmlWebpackPlugin({
+        //     template: 'src/wildcards/guardian_header.sp.leftnav.footer.txt',
+        //     PROJECT_NAME: module.exports.name,
+        //     filename: `wildcards/guardian_header.sp.leftnav.footer.txt`,
+        //     chunks: ['vendor', 'guardian-insert-link'],
+        //     inject: false
+        // }),
         new WriteFileWebpackPlugin({
             test: /(admin|teachers|guardian|public|wildcards)/
         })
