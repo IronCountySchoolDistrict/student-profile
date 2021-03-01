@@ -37,7 +37,7 @@
     "react-router": "5.0.0",
     "react-router-dom": "5.0.0",
     "underscore": "^1.9.1",
-    "urijs": "^1.19.0",
+    "urijs": "^1.19.6",
     "version": "^0.1.2"
   },
   "devDependencies": {
