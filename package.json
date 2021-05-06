@@ -36,7 +36,7 @@
     "react-dom": "^16.2.0",
     "react-router": "5.0.0",
     "react-router-dom": "5.0.0",
-    "underscore": "^1.9.1",
+    "underscore": "^1.12.1",
     "urijs": "^1.19.0",
     "version": "^0.1.2"
   },
